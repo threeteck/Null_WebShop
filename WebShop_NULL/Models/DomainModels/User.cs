@@ -4,10 +4,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace WebShop_NULL.Models.DomainModels
 {
-    public enum UserRole
+    public enum UserRoleEnum
     {
-        Normal,
-        Admin
+        Normal = 0,
+        Admin = 1
     }
     
     public class User
@@ -22,7 +22,7 @@ namespace WebShop_NULL.Models.DomainModels
         public string HashedPassword { get; set; }
         
         public virtual UserImage Image { get; set; }
-        public UserRole Role;
+        public virtual UserRole Role { get; set; }
         public decimal TotalPayment { get; set; }
         
         public virtual ICollection<Product> Basket { get; set; }

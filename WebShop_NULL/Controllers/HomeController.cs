@@ -11,11 +11,13 @@ namespace WebShop_NULL.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly ApplicationContext _dbContext;
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, ApplicationContext dbContext)
         {
             _logger = logger;
+            _dbContext = dbContext;
         }
 
         public IActionResult Index()
