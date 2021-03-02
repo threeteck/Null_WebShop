@@ -1,0 +1,14 @@
+﻿@model IntegerFilterViewModel
+
+<div>
+    <p>
+        @Model.PropertyName:
+    </p>
+    <input type="hidden" name="filters.Index" value="@Model.PropertyId">
+    <input type="hidden" name="filters[@Model.PropertyId].propertyId" value="@Model.PropertyId"/>
+    <input type="hidden" name="filters[@Model.PropertyId].propertyType" value="@Model.PropertyType"/>
+    <label for="filters[@Model.PropertyId].Min">Min</label>
+    <input id="filters[@Model.PropertyId].Min" type="number" name="filters[@Model.PropertyId].Min" value="@Model.Min"/>
+    <label for="filters[@Model.PropertyId].Max">Max</label>
+    <input id="filters[@Model.PropertyId].Max" type="number" name="filters[@Model.PropertyId].Max" value="@Model.Max"/>
+</div>
