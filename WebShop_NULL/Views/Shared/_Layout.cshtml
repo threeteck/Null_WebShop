@@ -10,17 +10,17 @@
     <!-- Bootstrap CSS-->
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css">
     <!-- Font Awesome CSS-->
-    <link rel="stylesheet" href="~/font-awesome.min.css">
+    <link rel="stylesheet" href="~/css/font-awesome.min.css">
     <!-- Google fonts - Roboto -->
-    <link rel="stylesheet" href="~/css">
+    <link rel="stylesheet" href="~/css/font.css?family=Roboto:100,300,400,700">
     <!-- owl carousel-->
-    <link rel="stylesheet" href="~/owl.carousel.css">
-    <link rel="stylesheet" href="~/owl.theme.default.css">
+    <link rel="stylesheet" href="~/css/owl.carousel.css">
+    <link rel="stylesheet" href="~/css/owl.theme.default.css">
     <!-- theme stylesheet-->
-    <link rel="stylesheet" href="~/style.default.css" id="theme-stylesheet">
-    <link id="new-stylesheet" rel="stylesheet" href="~/style.red.css">
+    <link rel="stylesheet" href="~/css/style.default.css" id="theme-stylesheet">
+    <link id="new-stylesheet" rel="stylesheet" href="~/css/style.red.css">
     <!-- Custom stylesheet - for your changes-->
-    <link rel="stylesheet" href="~/custom.css">
+    <link rel="stylesheet" href="~/css/custom.css">
     <!-- Favicon-->
     <link rel="shortcut icon" href="https://demo.bootstrapious.com/obaju/2-1-1/favicon.png">
     <!-- Tweaks for older IEs-->
@@ -33,7 +33,7 @@
     <header class="header mb-5">
         <nav class="navbar navbar-expand-lg">
             <div class="container">
-                <a href="https://demo.bootstrapious.com/obaju/2-1-1/index.html" class="navbar-brand home"><img src="./Obaju _ e-commerce template_files/logo.png" alt="Obaju logo" class="d-none d-md-inline-block"><img src="./Obaju _ e-commerce template_files/logo-small.png" alt="Obaju logo" class="d-inline-block d-md-none"><span class="sr-only">Obaju - go to homepage</span></a>
+                <a href="https://demo.bootstrapious.com/obaju/2-1-1/index.html" class="navbar-brand home"><img src="~/images/logo.png" alt="Obaju logo" class="d-none d-md-inline-block"><img src="" alt="Obaju logo" class="d-inline-block d-md-none"><span class="sr-only">Obaju - go to homepage</span></a>
                 <div class="navbar-buttons">
                     <button type="button" data-toggle="collapse" data-target="#navigation" class="btn btn-outline-secondary navbar-toggler"><span class="sr-only">Toggle navigation</span><i class="fa fa-align-justify"></i></button>
                     <button type="button" data-toggle="collapse" data-target="#search" class="btn btn-outline-secondary navbar-toggler"><span class="sr-only">Toggle search</span><i class="fa fa-search"></i></button><a href="https://demo.bootstrapious.com/obaju/2-1-1/basket.html" class="btn btn-outline-secondary navbar-toggler"><i class="fa fa-shopping-cart"></i></a>
@@ -41,6 +41,14 @@
                 <div id="navigation" class="collapse navbar-collapse">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item"><a href="https://demo.bootstrapious.com/obaju/2-1-1/basket.html#" class="nav-link active">Home</a></li>
+                        <li class="nav-item dropdown menu-large">
+                            <form class="mb-3 dropdown menu-large">
+                                <select name="location" id="location" class="form-control">
+                                    <option value="default">Kazan</option>
+                                    <option value="default">Moscow</option>
+                                </select>
+                            </form>
+                        </li>
                         <li class="nav-item dropdown menu-large">
                             <a href="https://demo.bootstrapious.com/obaju/2-1-1/basket.html#" data-toggle="dropdown" data-hover="dropdown" data-delay="200" class="dropdown-toggle nav-link">Men<b class="caret"></b></a>
                             <ul class="dropdown-menu megamenu">
@@ -268,12 +276,12 @@
         <p class="text-muted text-small">Stylesheet switching is done via JavaScript and can cause a blink while page loads. This will not happen in your production code.</p>
     </div>
     <!-- JavaScript files-->
-    <script src="./Obaju _ e-commerce template_files/jquery.min.js.download"></script>
-    <script src="./Obaju _ e-commerce template_files/bootstrap.bundle.min.js.download"></script>
-    <script src="./Obaju _ e-commerce template_files/jquery.cookie.js.download"></script>
-    <script src="./Obaju _ e-commerce template_files/owl.carousel.min.js.download"></script>
-    <script src="./Obaju _ e-commerce template_files/owl.carousel2.thumbs.js.download"></script>
-    <script src="./Obaju _ e-commerce template_files/front.js.download"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~js/jquery.cookie.js"></script>
+    <script src="~/js/owl.carousel.min.js"></script>
+    <script src="~/js/owl.carousel2.thumbs.js"></script>
+    <script src="~/js/front.js"></script>
 
 </body>
 </html>
