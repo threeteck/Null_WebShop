@@ -1,1 +1,7 @@
 /* your styles go here */
+.cursor-pointer{
+    cursor: pointer;
+}
+.position-relative{
+    position: relative!important;
+}
