@@ -5,3 +5,6 @@
 .position-relative{
     position: relative!important;
 }
+.border-bottom-none{
+    border-bottom:none!important;
+}
