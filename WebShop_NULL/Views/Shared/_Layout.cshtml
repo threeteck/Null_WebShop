@@ -33,14 +33,14 @@
     <header class="header mb-5">
         <nav class="navbar navbar-expand-lg">
             <div class="container">
-                <a href="https://demo.bootstrapious.com/obaju/2-1-1/index.html" class="navbar-brand home"><img src="~/images/logo.png" alt="Obaju logo" class="d-none d-md-inline-block"><img src="" alt="Obaju logo" class="d-inline-block d-md-none"><span class="sr-only">Obaju - go to homepage</span></a>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand home"><img src="~/images/logo.png" alt="Obaju logo" class="d-none d-md-inline-block"><img src="~/images/logo-small.png" alt="Obaju logo" class="d-inline-block d-md-none"><span class="sr-only">Obaju - go to homepage</span></a>
                 <div class="navbar-buttons">
                     <button type="button" data-toggle="collapse" data-target="#navigation" class="btn btn-outline-secondary navbar-toggler"><span class="sr-only">Toggle navigation</span><i class="fa fa-align-justify"></i></button>
                     <button type="button" data-toggle="collapse" data-target="#search" class="btn btn-outline-secondary navbar-toggler"><span class="sr-only">Toggle search</span><i class="fa fa-search"></i></button><a asp-area="" asp-controller="Home" asp-action="ShoppingCart" class="btn btn-outline-secondary navbar-toggler"><i class="fa fa-shopping-cart"></i></a><a asp-area="" asp-controller="Home" asp-action="SignIn" class="btn btn-outline-secondary navbar-toggler"><i class="fa fa-sign-in"></i></a><a class="btn btn-outline-secondary navbar-toggler" data-toggle="collapse"><i class="fa fa-user"></i></a>
                 </div>
                 <div id="navigation" class="collapse navbar-collapse">
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item"><a asp-area="" asp-controller="Home asp-" class="nav-link active">Home</a></li>
+                        <li class="nav-item"><a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link active">Home</a></li>
                         <li class="nav-item dropdown position-relative menu-large">
                             <a href="#" data-toggle="dropdown" data-hover="dropdown" data-delay="200" class="dropdown-toggle nav-link">Kazan<b class="caret"></b></a>
                             <ul class="dropdown-menu megamenu">
@@ -65,7 +65,7 @@
                             </ul>
                         </li>
                         <li class="nav-item dropdown menu-large">
-                            <a href="https://demo.bootstrapious.com/obaju/2-1-1/basket.html#" data-toggle="dropdown" data-hover="dropdown" data-delay="200" class="dropdown-toggle nav-link">Catalog<b class="caret"></b></a>
+                            <a href="#" data-toggle="dropdown" data-hover="dropdown" data-delay="200" class="dropdown-toggle nav-link">Catalog<b class="caret"></b></a>
                             <ul class="dropdown-menu megamenu">
                                 <li>
                                     <div class="row">
