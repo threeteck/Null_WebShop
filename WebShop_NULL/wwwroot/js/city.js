@@ -1,4 +1,5 @@
-﻿window.onload = function initCityOnClick() {
+﻿//artemgur
+window.onload = function initCityOnClick() {
     let cityLi = document.getElementsByClassName('set_city_manual')
     for (var i = 0; i < cityLi.length; i++){
         let a = i//just in case, not sure if necessary
@@ -36,7 +37,7 @@ async function setCityAutomaticallyCallback(position) {
         let city = json.city
         document.getElementById('city_modal_title').innerHTML = 'Ваш город - '+city+'?'
         document.getElementById('city_modal_yes').onclick = function () {
-            setCity(city)
+            setCity(city)//TODO check if the city is in some list of possible cities
             cityModalClose()
         }
         $('#city_modal').modal('show')
