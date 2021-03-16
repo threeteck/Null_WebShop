@@ -1,12 +1,13 @@
 ﻿window.onload = function initCityOnClick() {
     let cityLi = document.getElementsByClassName('set_city_manual')
     for (var i = 0; i < cityLi.length; i++){
-        let a = i//just in case, not sure if necessary 
-        let text = cityLi[a].innerHTML
-        cityLi[a].onClick = setCityManualOnClick(text)
+        let a = i//just in case, not sure if necessary
+        let li = cityLi[a]
+        let text = li.innerHTML
+        li.onclick = function() {setCityManualOnClick(text)}
     }
-    if (getCookie('city') === '')
-        setCityAutomatically()
+    //if (getCookie('city') === '')
+    //    setCityAutomatically()
 }
 
 //Gets cookie value by cookie name
