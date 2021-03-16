@@ -6,8 +6,10 @@
         let text = li.innerHTML
         li.onclick = function() {setCityManualOnClick(text)}
     }
-    //if (getCookie('city') === '')
-    //    setCityAutomatically()
+    if (getCookie('city') === '')
+       setCityAutomatically()
+    else
+        setCityInHeaderFromCookies()
 }
 
 //Gets cookie value by cookie name
@@ -32,9 +34,12 @@ async function setCityAutomaticallyCallback(position) {
     if (response.ok){
         let json = await response.json()
         let city = json.city
-        //TODO show some popup asking if the city is correct
-        //setCity(city)
-        alert(city)//TODO do something useful with the city
+        document.getElementById('city_modal_title').innerHTML = 'Ваш город - '+city+'?'
+        document.getElementById('city_modal_yes').onclick = function () {
+            setCity(city)
+            cityModalClose()
+        }
+        $('#city_modal').modal('show')
     }
     else
         alert("Html error")
@@ -43,8 +48,17 @@ async function setCityAutomaticallyCallback(position) {
 //Can be used to set city manually
 function setCity(city){
     document.cookie = "city="+city
+    setCityInHeaderFromCookies()
 }
 
 function setCityManualOnClick(text){
     setCity(text)
+}
+
+function cityModalClose(){
+    $('#city_modal').modal('hide')
+}
+
+function setCityInHeaderFromCookies(){
+    document.getElementById('city_name_header').innerHTML = getCookie('city')
 }
