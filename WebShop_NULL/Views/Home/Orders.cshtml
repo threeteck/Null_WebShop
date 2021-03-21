@@ -9,8 +9,8 @@
                     <!-- breadcrumb-->
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a asp-are="" asp-controller="Home" asp-action="Index">Home</a></li>
-                            <li aria-current="page" class="breadcrumb-item active">Orders</li>
+                            <li class="breadcrumb-item"><a asp-are="" asp-controller="Home" asp-action="Index">Главная</a></li>
+                            <li aria-current="page" class="breadcrumb-item active">Мои заказы</li>
                         </ol>
                     </nav>
                 </div>
@@ -25,9 +25,9 @@
                         </div>
                         <div class="card-body">
                             <ul class="nav nav-pills flex-column">
-                                <li><a asp-controller="Home" asp-action="Orders" class="nav-link active"><i class="fa fa-list"></i> My orders</a></li>
-                                <li><a asp-controller="Home" asp-action="PersonalArea" class="nav-link"><i class="fa fa-user"></i> My account</a></li>
-                                <li><a asp-controller="" asp-action="" class="nav-link"><i class="fa fa-sign-out"></i> Logout</a></li>
+                                <li><a asp-controller="Home" asp-action="Orders" class="nav-link active"><i class="fa fa-list"></i> Мои заказы</a></li>
+                                <li><a asp-controller="Home" asp-action="PersonalArea" class="nav-link"><i class="fa fa-user"></i> Мой аккаунт</a></li>
+                                <li><a asp-controller="" asp-action="" class="nav-link"><i class="fa fa-sign-out"></i> Выйти</a></li>
                             </ul>
                         </div>
                     </div>
@@ -38,17 +38,17 @@
                 <div id="customer-orders" class="col-lg-9">
                     <div class="box">
                         <h1>My orders</h1>
-                        <p class="lead">Your orders on one place.</p>
+                        <p class="lead">Все заказы в одном месте</p>
                         <hr>
                         <div class="table-responsive">
                             <table class="table table-hover">
                                 <thead>
                                     <tr>
-                                        <th>Order</th>
-                                        <th>Date</th>
-                                        <th>Total</th>
-                                        <th>Status</th>
-                                        <th>Action</th>
+                                        <th>Заказ</th>
+                                        <th>Дата</th>
+                                        <th>Сумма</th>
+                                        <th>Статус</th>
+                                        <th>Действие</th>
                                     </tr>
                                 </thead>
                                 <tbody>
