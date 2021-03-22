@@ -40,6 +40,11 @@ namespace WebShop_NULL.Controllers
             return View();
         }
 
+        public IActionResult Registration()
+        {
+            return View();
+        }
+
         public IActionResult PersonalArea()
         {
             return View();
