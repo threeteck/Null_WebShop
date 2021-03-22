@@ -26,5 +26,6 @@ namespace WebShop_NULL.Models.DomainModels
         public decimal TotalPayment { get; set; }
         
         public virtual ICollection<Product> Basket { get; set; }
+        public bool IsConfirmed { get; set; }
     }
 }
