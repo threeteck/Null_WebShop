@@ -10,7 +10,8 @@ namespace WebShop_NULL.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            throw new NotImplementedException();
+           // return View();
         }
     }
 }
