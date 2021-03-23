@@ -1,4 +1,5 @@
-﻿@{
+﻿@model UserViewModel
+@{
     ViewData["Title"] = "Personal Area";
 }
 <div id="all">
@@ -14,32 +15,12 @@
                         </ol>
                     </nav>
                 </div>
-                <div class="col-lg-3">
-                    <!--
-                    *** CUSTOMER MENU ***
-                    _________________________________________________________
-                    -->
-                    <div class="card sidebar-menu">
-                        <div class="card-header">
-                            <h3 class="h4 card-title">Customer section</h3>
-                        </div>
-                        <div class="card-body">
-                            <ul class="nav nav-pills flex-column">
-                                <li><a asp-controller="Home" asp-action="Orders" class="nav-link"><i class="fa fa-list"></i> Мои заказы</a></li>
-                                <li><a asp-controller="Home" asp-action="PersonalArea" class="nav-link active"><i class="fa fa-user"></i> Мой аккаунт</a></li>
-                                <li><a asp-controller="" asp-action="" class="nav-link"><i class="fa fa-sign-out"></i> Выйти</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- /.col-lg-3-->
-                    <!-- *** CUSTOMER MENU END ***-->
-                </div>
+                @Html.Partial("ProfileMenu")
                 <div class="col-lg-9">
                     <div class="box">
-                        <h1>Мой аккаунт</h1>
                         <h3 class="mt-5">Фото профиля</h3>
                         <p class="lead">Зарузить фото профиля</p>
-                        <form id="upload-container" class="form-group" method="POST" action="">
+                        <form id="upload-container" class="form-group" method="POST" action="uploadImage">
                             <img id="upload-image" src="~/images/upload.svg">
                             <div>
                                 <input id="file-input" type="file" name="file" multiple>
@@ -77,29 +58,25 @@
                             </div>
                         </form>
                         <h3 class="mt-5">Данные</h3>
-                        <form>
+                        <form action="" method="post">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="firstname">Имя</label>
-                                        <input id="firstname" type="text" class="form-control">
+                                        @Html.LabelFor(m => m.Name, "Имя")
+                                        @Html.EditorFor(m => m.Name, new {htmlAttributes = new {@class = "form-control"}})
+                                        @Html.ValidationMessageFor(m => m.Name)
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="lastname">Фамилия</label>
-                                        <input id="lastname" type="text" class="form-control">
+                                        @Html.LabelFor(m => m.Surname, "Фамилия")
+                                        @Html.EditorFor(m => m.Surname, new {htmlAttributes = new {@class = "form-control"}})
+                                        @Html.ValidationMessageFor(m => m.Surname)
                                     </div>
                                 </div>
                             </div>
                             <!-- /.row-->
                             <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="email">Email</label>
-                                        <input id="email" type="text" class="form-control">
-                                    </div>
-                                </div>
                                 <div class="col-md-12 text-center">
                                     <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Сохранить изменения</button>
                                 </div>
