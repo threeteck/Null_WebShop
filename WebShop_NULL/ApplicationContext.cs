@@ -19,23 +19,5 @@ namespace WebShop_NULL
         {
             Database.EnsureCreated();
         }
-        
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            string adminRoleName = "admin";
-            string userRoleName = "user";
- 
-            string adminEmail = "admin@mail.ru";
-            string adminPassword = "123456";
- 
-            // добавляем роли
-            UserRole adminRole = new UserRole { Id = 1, Name = adminRoleName };
-            UserRole userRole = new UserRole { Id = 2, Name = userRoleName };
-            User adminUser = new User { Id = 1, Email = adminEmail, HashedPassword = adminPassword, Role = adminRole};
- 
-            modelBuilder.Entity<UserRole>().HasData(new UserRole[] { adminRole, userRole });
-            modelBuilder.Entity<User>().HasData( new User[] { adminUser });
-            base.OnModelCreating(modelBuilder);
-        }
     }
 }
