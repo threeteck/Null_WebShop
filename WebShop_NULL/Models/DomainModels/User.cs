@@ -21,7 +21,8 @@ namespace WebShop_NULL.Models.DomainModels
         public string Email { get; set; }
         public string HashedPassword { get; set; }
         
-        public virtual UserImage Image { get; set; }
+        public int ImageId { get; set; }
+        public virtual ImageMetadata Image { get; set; }
         public virtual UserRole Role { get; set; }
         public int RoleId { get; set; }
         

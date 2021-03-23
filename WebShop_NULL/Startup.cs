@@ -42,7 +42,7 @@ namespace WebShop_NULL
             services.AddSingleton<IEmailSender, EmailService>();
             var settings = Configuration.GetSection("EmailSettings").Get<EmailSettings>();
             services.AddSingleton(settings);
-            services.AddSingleton(new EmailConfirmationService(TimeSpan.FromMinutes(5)));
+            services.AddSingleton(new EmailConfirmationService(TimeSpan.FromMinutes(1)));
             services.AddControllersWithViews();
         }
 

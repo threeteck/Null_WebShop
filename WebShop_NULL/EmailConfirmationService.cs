@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace WebShop_NULL
 {
@@ -30,6 +31,7 @@ namespace WebShop_NULL
         {
             _expirationTime = expirationTime;
             _tokens = new ConcurrentDictionary<string, EmailConfirmationToken>();
+            _keys = new ConcurrentDictionary<int, string>();
             _expirationTimerCancellationSource = new CancellationTokenSource();
             ExpirationTimer(_expirationTimerCancellationSource.Token);
         }

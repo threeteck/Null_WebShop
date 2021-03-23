@@ -16,7 +16,8 @@ namespace WebShop_NULL.Models.DomainModels
         
         public int CategoryId { get; set; }
         public virtual Category Category { get; set; }
-        public virtual ProductImage Image { get; set; }
+        public int ImageId { get; set; }
+        public virtual ImageMetadata Image { get; set; }
 
         public JsonDocument AttributeValues { get; set; }
 

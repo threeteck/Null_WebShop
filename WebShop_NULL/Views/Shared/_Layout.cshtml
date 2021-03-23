@@ -47,13 +47,13 @@
                         <span class="sr-only">Toggle search</span>
                         <i class="fa fa-search"></i>
                     </button>
-                    <a asp-area="" asp-controller="Home" asp-action="ShoppingCart" class="btn btn-outline-secondary navbar-toggler">
+                    <a asp-area="" asp-controller="Profile" asp-action="ShoppingCart" class="btn btn-outline-secondary navbar-toggler">
                         <i class="fa fa-shopping-cart"></i>
                     </a>
-                    <a asp-area="" asp-controller="Home" asp-action="SignIn" class="btn btn-outline-secondary navbar-toggler">
+                    <a asp-area="" asp-controller="Account" asp-action="Login" class="btn btn-outline-secondary navbar-toggler">
                         <i class="fa fa-sign-in"></i>
                     </a>
-                    <a asp-area="" asp-controller="Home" asp-action="PersonalArea" class="btn btn-outline-secondary navbar-toggler">
+                    <a asp-area="" asp-controller="Profile" asp-action="Profile" class="btn btn-outline-secondary navbar-toggler">
                         <i class="fa fa-user"></i>
                     </a>
                 </div>
@@ -118,9 +118,17 @@
                     <div class="navbar-buttons d-flex justify-content-end">
                         <!-- /.nav-collapse-->
                         <div id="search-not-mobile" class="navbar-collapse collapse"></div><a data-toggle="collapse" href="#search" class="btn navbar-btn btn-primary d-none d-lg-inline-block"><span class="sr-only">Toggle search</span><i class="fa fa-search"></i></a>
-                        <div id="basket-overview" class="navbar-collapse collapse d-none d-lg-block"><a class="btn btn-primary navbar-btn" asp-area="" asp-controller="Home" asp-action="ShoppingCart"><i class="fa fa-shopping-cart"></i><span>Корзина</span></a></div>
-                        <div id="sign-in-page-link" class="navbar-collapse collapse text-center d-none d-lg-block"></div><a asp-area="" asp-controller="Home" asp-action="SignIn" class="btn btn-primary navbar-btn d-lg-inline-block"><i class="fa fa-sign-in"></i><span>Войти</span></a>
-                        <div id="personal-page-link" class="navbar-collapse collapse text-center"></div><a class="btn btn-primary navbar-btn d-none d-lg-inline-block" asp-area="" asp-controller="Home" asp-action="PersonalArea"><i class="fa fa-user"></i>Username</a>
+                        <div id="basket-overview" class="navbar-collapse collapse d-none d-lg-block"><a class="btn btn-primary navbar-btn" asp-area="" asp-controller="Profile" asp-action="ShoppingCart"><i class="fa fa-shopping-cart"></i><span>Корзина</span></a></div>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <div id="personal-page-link" class="navbar-collapse collapse text-center"></div>
+                            <a class="btn btn-primary navbar-btn d-none d-lg-inline-block" asp-area="" asp-controller="Profile" asp-action="Profile"><i class="fa fa-user"></i>@User.GetName()</a>
+                        }
+                        else
+                        {
+                            <div id="sign-in-page-link" class="navbar-collapse collapse text-center d-none d-lg-block"></div><a asp-area="" asp-controller="Account" asp-action="Login" class="btn btn-primary navbar-btn d-lg-inline-block"><i class="fa fa-sign-in"></i><span>Войти</span></a>
+                            <div id="sign-in-page-link" class="navbar-collapse collapse text-center d-none d-lg-block"></div><a asp-area="" asp-controller="Account" asp-action="Register" class="btn btn-primary navbar-btn d-lg-inline-block"><i class="fa fa-sign-in"></i><span>Регистрация</span></a>
+                        }
                     </div>
                 </div>
             </div>
@@ -243,8 +251,10 @@
             <p class="text-muted text-small">Stylesheet switching is done via JavaScript and can cause a blink while page loads. This will not happen in your production code.</p>
         </div>*@
     <!-- JavaScript files-->
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js"></script>
     <script src="~/js/jquery.cookie.js"></script>
     <script src="~/js/owl.carousel.min.js"></script>

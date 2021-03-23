@@ -84,6 +84,11 @@ namespace WebShop_NULL.Controllers
                     UserRole userRole = await _dbContext.UserRoles.FirstOrDefaultAsync(r => r.Name == "user");
                     if (userRole != null)
                         user.Role = userRole;
+                    var image = ImageMetadata.DefaultImage;
+                    _dbContext.ImageMetadata.Add(image);
+                    await _dbContext.SaveChangesAsync();
+
+                    user.Image = image;
                     _dbContext.Users.Add(user);
                     await _dbContext.SaveChangesAsync();
 
@@ -96,9 +101,9 @@ namespace WebShop_NULL.Controllers
             return View(model);
         }
 
-        public async Task<IActionResult> ConfirmEmail(int id)
+        public async Task<IActionResult> ConfirmEmail(int userId)
         {
-            var user = _dbContext.Users.FirstOrDefault(u => u.Id == id);
+            var user = _dbContext.Users.FirstOrDefault(u => u.Id == userId);
             if (user == null)
                 return RedirectToAction("Register");
 
@@ -107,8 +112,8 @@ namespace WebShop_NULL.Controllers
             
             var key = _confirmationService.GenerateEmailConfirmationToken(user.Id);
             await _sender.SendEmailAsync(user.Email, "Подтверждение Email",
-                $"Перейдите по ссылке для окончания регистрации: \n {Url.Action("EmailConfirmationEnd")}?key={key}");
-            return View(user.Email);
+                $"Перейдите по ссылке для окончания регистрации: \n {Url.Action("EmailConfirmationEnd", "Account", null, Request.Scheme)}?key={key}");
+            return View(model: user.Email);
         }
 
         public IActionResult EmailConfirmationEnd(string key)
@@ -154,7 +159,7 @@ namespace WebShop_NULL.Controllers
             }
         }
 
-        private string HashPassword(string password) 
+        public static string HashPassword(string password) 
         {
             var hashBuilder = new StringBuilder();
             using (var hash = SHA256.Create())

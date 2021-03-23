@@ -38,7 +38,7 @@ function sendFiles(files) {
     let Data = new FormData();
     $(files).each(function (index, file) {
         if ((file.size <= maxFileSize) && ((file.type == 'image/png') || (file.type == 'image/jpeg'))) {
-            Data.append('images[]', file);
+            Data.append('image', file);
         }
     });
     $.ajax({

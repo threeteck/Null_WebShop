@@ -29,30 +29,7 @@ namespace WebShop_NULL.Controllers
         {
             return View();
         }
-
-        public IActionResult ShoppingCart()
-        {
-            return View();
-        }
-
-        public IActionResult SignIn()
-        {
-            return View();
-        }
-
-        public IActionResult Registration()
-        {
-            return View();
-        }
-
-        public IActionResult PersonalArea()
-        {
-            return View();
-        }
-        public IActionResult Orders()
-        {
-            return View();
-        }
+        
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
