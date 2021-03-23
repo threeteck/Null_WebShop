@@ -69,12 +69,12 @@
                                     <div class="row">
                                         <div class="col-md-6 col-lg-3">
                                             <ul class="list-unstyled mb-3">
-                                                <li class="nav-item border-bottom-none"><a class="nav-link cursor-pointer set_city_manual">Москва</a></li>
-                                                <li class="nav-item border-bottom-none"><a class="nav-link cursor-pointer set_city_manual">Казань</a></li>
-                                                <li class="nav-item border-bottom-none"><a class="nav-link cursor-pointer set_city_manual">Санкт-Петербург</a></li>
+                                                @foreach (var city in (List<string>)Context.Items["cities"])
+                                                {
+                                                    <li class="nav-item border-bottom-none"><a class="nav-link cursor-pointer set_city_manual">@city</a></li>
+                                                }
                                             </ul>
                                         </div>
-
                                     </div>
                                 </li>
                             </ul>

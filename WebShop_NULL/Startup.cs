@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WebShop_NULL.Middleware;
 
 namespace WebShop_NULL
 {
@@ -67,7 +68,9 @@ namespace WebShop_NULL
 
             app.UseAuthentication();
             app.UseAuthorization();
-
+            
+            app.UseMiddleware<CitiesMiddleware>();
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
