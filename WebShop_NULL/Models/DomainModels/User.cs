@@ -23,8 +23,11 @@ namespace WebShop_NULL.Models.DomainModels
         
         public virtual UserImage Image { get; set; }
         public virtual UserRole Role { get; set; }
+        public int RoleId { get; set; }
+        
         public decimal TotalPayment { get; set; }
         
         public virtual ICollection<Product> Basket { get; set; }
+        public bool IsConfirmed { get; set; }
     }
 }
