@@ -50,7 +50,7 @@ namespace WebShop_NULL.Controllers
                 }
                 else
                 {
-                    await Authenticate(user);
+                    await Authenticate(user,model.RememberMe);
                     return RedirectToAction("Index", "Home");
                 }
             }
@@ -136,7 +136,7 @@ namespace WebShop_NULL.Controllers
             return RedirectToAction("Login");
         }
 
-        private async Task Authenticate(User user)
+        private async Task Authenticate(User user, bool rememberMe)
         {
             var claims = new List<Claim>
             {
@@ -147,7 +147,16 @@ namespace WebShop_NULL.Controllers
             };
             ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie",
                 ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
+            if(!rememberMe)
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
+            else
+            {
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id)
+                    ,new AuthenticationProperties
+                    {
+                        IsPersistent = true
+                    });
+            }
         }
 
         public static string HashPassword(string password) 

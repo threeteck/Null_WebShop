@@ -24,6 +24,8 @@ namespace WebShop_NULL.Models.DomainModels
         public int ImageId { get; set; }
         public virtual ImageMetadata Image { get; set; }
         public virtual UserRole Role { get; set; }
+        public int RoleId { get; set; }
+        
         public decimal TotalPayment { get; set; }
         
         public virtual ICollection<Product> Basket { get; set; }
