@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Sign-In";
+    ViewData["Title"] = "Регистрация";
 }
 <div id="all">
     <div id="content">
@@ -12,18 +12,21 @@
                             <li class="breadcrumb-item">
                                 <a asp-area="" asp-controller="Home" asp-action="Index">Главная</a>
                             </li>
-                            <li aria-current="page" class="breadcrumb-item active">Авторизация</li>
+                            <li aria-current="page" class="breadcrumb-item active">Регистрация</li>
                         </ol>
                     </nav>
                 </div>
                 <div class="container d-flex justify-content-center">
                     <div class="col-lg-6">
                         <div class="box">
-                            <h1>Авторизация</h1>
-                            <p class="lead">Уже являетесь нашим покупателем?</p>
-                            <p class="text-muted">Введите ваши данные, чтобы получить доступ ко всем возможностям сайта</p>
-                            <hr>
+                            <h1>Новый аккаунт</h1>
+                            <p class="lead">Всё ещё не являетесь нашим покупателм?</p>
+                            <p>Вам нужно зарегистрироваться, чтобы получить дступ к дополнительным возможностям нашего сайта</p>
                             <form action="#" method="post">
+                                <div class="form-group">
+                                    <label for="name">Имя</label>
+                                    <input id="name" type="text" class="form-control">
+                                </div>
                                 <div class="form-group">
                                     <label for="email">Email</label>
                                     <input id="email" type="text" class="form-control">
@@ -32,18 +35,8 @@
                                     <label for="password">Пароль</label>
                                     <input id="password" type="password" class="form-control">
                                 </div>
-                                <div class="d-flex justify-content-between">
-                                    <div class="form-group">
-                                        <input id="remember-me" type="checkbox">
-                                        <label for="remember-me">Запомнить меня</label>
-                                    </div>
-                                    <a  asp-area="" asp-controller="Home" asp-action="Registration">Зарегистрироваться</a>
-                                </div>
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-primary">
-                                        <i class="fa fa-sign-in"></i>
-                                        Войти
-                                    </button>
+                                    <button type="submit" class="btn btn-primary"><i class="fa fa-user-md"></i> Зарегистрироваться</button>
                                 </div>
                             </form>
                         </div>
