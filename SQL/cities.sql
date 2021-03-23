@@ -1,1 +1,1 @@
-INSERT INTO "Cities" VALUES ('Москва'), ('Санкт-Перербург'), ('Казань')
+INSERT INTO "Cities" VALUES ('Москва'), ('Санкт-Петербург'), ('Казань')

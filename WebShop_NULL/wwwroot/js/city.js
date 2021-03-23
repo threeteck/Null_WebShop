@@ -35,12 +35,14 @@ async function setCityAutomaticallyCallback(position) {
     if (response.ok){
         let json = await response.json()
         let city = json.city
-        document.getElementById('city_modal_title').innerHTML = 'Ваш город - '+city+'?'
-        document.getElementById('city_modal_yes').onclick = function () {
-            setCity(city)//TODO check if the city is in some list of possible cities
-            cityModalClose()
+        if (isCitySupported(city)) {
+            document.getElementById('city_modal_title').innerHTML = 'Ваш город - ' + city + '?'
+            document.getElementById('city_modal_yes').onclick = function () {
+                setCity(city)//TODO check if the city is in some list of possible cities
+                cityModalClose()
+            }
+            $('#city_modal').modal('show')
         }
-        $('#city_modal').modal('show')
     }
     else
         alert("Html error")
@@ -62,4 +64,14 @@ function cityModalClose(){
 
 function setCityInHeaderFromCookies(){
     document.getElementById('city_name_header').innerHTML = getCookie('city')
+}
+
+function isCitySupported(city){
+    let cityLi = document.getElementsByClassName('set_city_manual')
+    for (var i = 0; i < cityLi.length; i++){
+        let cityFromFrontend = cityLi[i].innerHTML
+        if (cityFromFrontend === city)
+            return true
+    }
+    return false
 }
