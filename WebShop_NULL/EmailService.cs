@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using MailKit.Net.Smtp;
+using MailKit.Net.Smtp; 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using MimeKit;
@@ -18,7 +18,7 @@ namespace WebShop_NULL
         {
             var emailMessage = new MimeMessage();
  
-            emailMessage.From.Add(new MailboxAddress("NULL_WebShop", "timur.122@yandex.ru"));
+            emailMessage.From.Add(new MailboxAddress("NULL_WebShop", _settings.Username));
             emailMessage.To.Add(new MailboxAddress("", email));
             emailMessage.Subject = subject;
             emailMessage.Body = new TextPart("Plain")

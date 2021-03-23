@@ -15,9 +15,15 @@
                         </ol>
                     </nav>
                 </div>
-                @Html.Partial("ProfileMenu")
+                @Html.Partial("ProfileMenuPartial")
                 <div class="col-lg-9">
                     <div class="box">
+                        @if (!ViewData.ModelState.IsValid)
+                        {
+                            <div class="alert alert-danger">
+                                @Html.ValidationSummary()
+                            </div>
+                        }
                         <h3 class="mt-5">Фото профиля</h3>
                         <p class="lead">Зарузить фото профиля</p>
                         <form id="upload-container" class="form-group" method="POST" action="uploadImage">
@@ -29,34 +35,11 @@
                             </div>
                         </form>
                         <h3>Поменять пароль</h3>
-                        <form>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="password_old">Старый пароль</label>
-                                        <input id="password_old" type="password" class="form-control">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="password_1">Новый пароль</label>
-                                        <input id="password_1" type="password" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="password_2">Повторите пароль</label>
-                                        <input id="password_2" type="password" class="form-control">
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- /.row-->
-                            <div class="col-md-12 text-center">
-                                <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i>Поменять пароль</button>
-                            </div>
-                        </form>
+                        @if ((bool) (ViewData["PasswordChangeSuccess"] ?? false))
+                        {
+                            <div class="alert alert-success">Пароль успешно изменен.</div>
+                        }
+                        @Html.Partial("EditPasswordPartial", new PasswordChangeModel())
                         <h3 class="mt-5">Данные</h3>
                         <form action="" method="post">
                             <div class="row">

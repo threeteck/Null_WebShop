@@ -21,7 +21,7 @@ namespace WebShop_NULL
         {
             if (principal.Identity.IsAuthenticated)
             {
-                var id = principal.FindFirst("name")?.Value;
+                var id = principal.FindFirst("username")?.Value;
                 return id;
             }
 

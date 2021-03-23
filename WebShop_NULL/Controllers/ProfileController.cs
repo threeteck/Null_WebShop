@@ -81,9 +81,10 @@ namespace WebShop_NULL.Controllers
             var oldImagePath = Path.Combine(_appEnvironment.WebRootPath, imageData.ImagePath);
 
             var imageName = Path.GetFileNameWithoutExtension(Path.GetRandomFileName()) + Path.GetExtension(image.FileName);
-            var imagePath = Path.Combine(_appEnvironment.WebRootPath, "applicationData/profileImages", imageName);
+            var virtualImagePath = Path.Combine("applicationData/profileImages", imageName);
+            var imagePath = Path.Combine(_appEnvironment.WebRootPath, virtualImagePath);
             
-            if (System.IO.File.Exists(oldImagePath))
+            if (Path.GetFileNameWithoutExtension(oldImagePath) != "default" && System.IO.File.Exists(oldImagePath))
                 System.IO.File.Delete(oldImagePath);
 
             await using (var fileStream = new FileStream(imagePath, FileMode.Create))
@@ -92,7 +93,7 @@ namespace WebShop_NULL.Controllers
             }
 
             imageData.ContentType = image.ContentType;
-            imageData.ImagePath = imagePath;
+            imageData.ImagePath = virtualImagePath;
 
             await _dbContext.SaveChangesAsync();
             
@@ -127,6 +128,35 @@ namespace WebShop_NULL.Controllers
             }
 
             return RedirectToAction("ProfileEdit");
+        }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult ProfileEditPassword(PasswordChangeModel data)
+        {
+            var user = _dbContext.Users.ById(User.GetId()).FirstOrDefault();
+            if (user == null)
+                return RedirectToAction("Login", "Account");
+            
+            if(user.HashedPassword != AccountController.HashPassword(data.OldPassword))
+                ModelState.AddModelError("", "Старый пароль не совпадает.");
+            
+            var model = new UserViewModel()
+            {
+                Email = user.Email,
+                Id = user.Id,
+                Name = user.Name,
+                Surname = user.Surname
+            };
+
+            if (!ModelState.IsValid)
+                return View("ProfileEdit", model);
+
+            user.HashedPassword = AccountController.HashPassword(data.NewPassword);
+            _dbContext.SaveChanges();
+            ViewData["PasswordChangeSuccess"] = true;
+
+            return View("ProfileEdit", model);
         }
 
         [Authorize]
