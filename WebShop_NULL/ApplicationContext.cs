@@ -12,6 +12,7 @@ namespace WebShop_NULL
         public DbSet<User> Users { get; set; }
         public DbSet<ImageMetadata> ImageMetadata { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
+        public DbSet<City> Cities { get; set; }
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
             : base(options)
