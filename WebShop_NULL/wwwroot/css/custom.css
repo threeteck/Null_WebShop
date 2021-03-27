@@ -1,4 +1,11 @@
 /* your styles go here */
+html,body {
+    height: 100%;
+}
+body{
+    display: flex;
+    flex-direction: column;
+}
 .cursor-pointer{
     cursor: pointer;
 }
@@ -66,4 +73,10 @@
 
 .margin-bottom-40px{
     margin-bottom: 48px;
+}
+content{
+    flex: 1 0 auto;
+}
+footer{
+    flex-shrink: 0;
 }
