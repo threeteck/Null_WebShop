@@ -80,3 +80,6 @@ content{
 footer{
     flex-shrink: 0;
 }
+.avatar{
+    border-radius:50%;
+}
