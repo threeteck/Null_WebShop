@@ -50,12 +50,18 @@
                     <a asp-area="" asp-controller="Profile" asp-action="ShoppingCart" class="btn btn-outline-secondary navbar-toggler">
                         <i class="fa fa-shopping-cart"></i>
                     </a>
-                    <a asp-area="" asp-controller="Account" asp-action="Login" class="btn btn-outline-secondary navbar-toggler">
-                        <i class="fa fa-sign-in"></i>
-                    </a>
-                    <a asp-area="" asp-controller="Profile" asp-action="Profile" class="btn btn-outline-secondary navbar-toggler">
-                        <i class="fa fa-user"></i>
-                    </a>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a asp-area="" asp-controller="Profile" asp-action="Profile" class="btn btn-outline-secondary navbar-toggler">
+                            <i class="fa fa-user"></i>
+                        </a>
+                    }
+                    else
+                    {
+                        <a asp-area="" asp-controller="Account" asp-action="Login" class="btn btn-outline-secondary navbar-toggler">
+                            <i class="fa fa-sign-in"></i>
+                        </a>
+                    }
                 </div>
                 <div id="navigation" class="collapse navbar-collapse">
                     <ul class="navbar-nav mr-auto">
@@ -121,13 +127,14 @@
                         <div id="basket-overview" class="navbar-collapse collapse d-none d-lg-block"><a class="btn btn-primary navbar-btn" asp-area="" asp-controller="Profile" asp-action="ShoppingCart"><i class="fa fa-shopping-cart"></i><span>Корзина</span></a></div>
                         @if (User.Identity.IsAuthenticated)
                         {
-                            <div id="personal-page-link" class="navbar-collapse collapse text-center"></div>
-                            <a class="btn btn-primary navbar-btn d-none d-lg-inline-block" asp-area="" asp-controller="Profile" asp-action="Profile"><i class="fa fa-user"></i>@User.GetName()</a>
+                            <div id="personal-page-link" class="navbar-collapse collapse text-center d-none d-lg-block">
+                                <a class="btn btn-primary navbar-btn d-none d-lg-inline-block" asp-area="" asp-controller="Profile" asp-action="Profile"><i class="fa fa-user"></i>@User.GetName()</a>
+                            </div>
                         }
                         else
                         {
-                            <div id="sign-in-page-link" class="navbar-collapse collapse text-center d-none d-lg-block"></div><a asp-area="" asp-controller="Account" asp-action="Login" class="btn btn-primary navbar-btn d-lg-inline-block"><i class="fa fa-sign-in"></i><span>Войти</span></a>
-                            <div id="sign-in-page-link" class="navbar-collapse collapse text-center d-none d-lg-block"></div><a asp-area="" asp-controller="Account" asp-action="Register" class="btn btn-primary navbar-btn d-lg-inline-block"><i class="fa fa-sign-in"></i><span>Регистрация</span></a>
+                            <div id="sign-in-page-link" class="navbar-collapse collapse text-center d-none d-lg-block"><a asp-area="" asp-controller="Account" asp-action="Login" class="btn btn-primary navbar-btn d-lg-inline-block"><i class="fa fa-sign-in"></i><span>Войти</span></a></div>
+                            <div id="sign-in-page-link" class="navbar-collapse collapse text-center d-none d-lg-block"><a asp-area="" asp-controller="Account" asp-action="Register" class="btn btn-primary navbar-btn d-lg-inline-block"><i class="fa fa-sign-in"></i><span>Регистрация</span></a></div>
                         }
                     </div>
                 </div>
