@@ -50,12 +50,18 @@
                     <a asp-area="" asp-controller="Profile" asp-action="ShoppingCart" class="btn btn-outline-secondary navbar-toggler">
                         <i class="fa fa-shopping-cart"></i>
                     </a>
-                    <a asp-area="" asp-controller="Account" asp-action="Login" class="btn btn-outline-secondary navbar-toggler">
-                        <i class="fa fa-sign-in"></i>
-                    </a>
-                    <a asp-area="" asp-controller="Profile" asp-action="Profile" class="btn btn-outline-secondary navbar-toggler">
-                        <i class="fa fa-user"></i>
-                    </a>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a asp-area="" asp-controller="Profile" asp-action="Profile" class="btn btn-outline-secondary navbar-toggler">
+                            <i class="fa fa-user"></i>
+                        </a>
+                    }
+                    else
+                    {
+                        <a asp-area="" asp-controller="Account" asp-action="Login" class="btn btn-outline-secondary navbar-toggler">
+                            <i class="fa fa-sign-in"></i>
+                        </a>
+                    }
                 </div>
                 <div id="navigation" class="collapse navbar-collapse">
                     <ul class="navbar-nav mr-auto">
@@ -117,17 +123,18 @@
                     </ul>
                     <div class="navbar-buttons d-flex justify-content-end">
                         <!-- /.nav-collapse-->
-                        <div id="search-not-mobile" class="navbar-collapse collapse"></div><a data-toggle="collapse" href="#search" class="btn navbar-btn btn-primary d-none d-lg-inline-block"><span class="sr-only">Toggle search</span><i class="fa fa-search"></i></a>
+                        <div id="search-not-mobile" class="navbar-collapse collapse"></div><a data-toggle="collapse" href="#search" class="btn navbar-btn btn-primary d-none d-lg-inline-flex align-items-center"><span class="sr-only">Toggle search</span><i class="fa fa-search"></i></a>
                         <div id="basket-overview" class="navbar-collapse collapse d-none d-lg-block"><a class="btn btn-primary navbar-btn" asp-area="" asp-controller="Profile" asp-action="ShoppingCart"><i class="fa fa-shopping-cart"></i><span>Корзина</span></a></div>
                         @if (User.Identity.IsAuthenticated)
                         {
-                            <div id="personal-page-link" class="navbar-collapse collapse text-center"></div>
-                            <a class="btn btn-primary navbar-btn d-none d-lg-inline-block" asp-area="" asp-controller="Profile" asp-action="Profile"><i class="fa fa-user"></i>@User.GetName()</a>
+                            <div id="personal-page-link" class="navbar-collapse collapse text-center d-none d-lg-block">
+                                <a class="btn btn-primary navbar-btn d-none d-lg-inline-block" asp-area="" asp-controller="Profile" asp-action="Profile"><i class="fa fa-user"></i>@User.GetName()</a>
+                            </div>
                         }
                         else
                         {
-                            <div id="sign-in-page-link" class="navbar-collapse collapse text-center d-none d-lg-block"></div><a asp-area="" asp-controller="Account" asp-action="Login" class="btn btn-primary navbar-btn d-lg-inline-block"><i class="fa fa-sign-in"></i><span>Войти</span></a>
-                            <div id="sign-in-page-link" class="navbar-collapse collapse text-center d-none d-lg-block"></div><a asp-area="" asp-controller="Account" asp-action="Register" class="btn btn-primary navbar-btn d-lg-inline-block"><i class="fa fa-sign-in"></i><span>Регистрация</span></a>
+                            <div id="sign-in-page-link" class="navbar-collapse collapse text-center d-none d-lg-block"><a asp-area="" asp-controller="Account" asp-action="Login" class="btn btn-primary navbar-btn d-lg-inline-block"><i class="fa fa-sign-in"></i><span>Войти</span></a></div>
+                            <div id="sign-in-page-link" class="navbar-collapse collapse text-center d-none d-lg-block"><a asp-area="" asp-controller="Account" asp-action="Register" class="btn btn-primary navbar-btn d-lg-inline-block"><i class="fa fa-sign-in"></i><span>Регистрация</span></a></div>
                         }
                     </div>
                 </div>
@@ -146,91 +153,95 @@
             </div>
         </div>
     </header>
-    @RenderBody();
-    <div id="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3 col-md-6">
-                    <h4 class="mb-3">Pages</h4>
-                    <ul class="list-unstyled">
-                        <li><a href="https://demo.bootstrapious.com/obaju/2-1-1/text.html">About us</a></li>
-                        <li><a href="https://demo.bootstrapious.com/obaju/2-1-1/text.html">Terms and conditions</a></li>
-                        <li><a href="https://demo.bootstrapious.com/obaju/2-1-1/faq.html">FAQ</a></li>
-                        <li><a href="https://demo.bootstrapious.com/obaju/2-1-1/contact.html">Contact us</a></li>
-                    </ul>
-                    <hr>
-                    <h4 class="mb-3">User section</h4>
-                    <ul class="list-unstyled">
-                        <li><a href="https://demo.bootstrapious.com/obaju/2-1-1/basket.html#" data-toggle="modal" data-target="#login-modal">Login</a></li>
-                        <li><a href="https://demo.bootstrapious.com/obaju/2-1-1/register.html">Regiter</a></li>
-                    </ul>
+    <content>
+        @RenderBody()
+    </content>
+    <footer>
+        <div id="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6">
+                        <h4 class="mb-3">Pages</h4>
+                        <ul class="list-unstyled">
+                            <li><a href="https://demo.bootstrapious.com/obaju/2-1-1/text.html">About us</a></li>
+                            <li><a href="https://demo.bootstrapious.com/obaju/2-1-1/text.html">Terms and conditions</a></li>
+                            <li><a href="https://demo.bootstrapious.com/obaju/2-1-1/faq.html">FAQ</a></li>
+                            <li><a href="https://demo.bootstrapious.com/obaju/2-1-1/contact.html">Contact us</a></li>
+                        </ul>
+                        <hr>
+                        <h4 class="mb-3">User section</h4>
+                        <ul class="list-unstyled">
+                            <li><a href="https://demo.bootstrapious.com/obaju/2-1-1/basket.html#" data-toggle="modal" data-target="#login-modal">Login</a></li>
+                            <li><a href="https://demo.bootstrapious.com/obaju/2-1-1/register.html">Regiter</a></li>
+                        </ul>
+                    </div>
+                    <!-- /.col-lg-3-->
+                    <div class="col-lg-3 col-md-6">
+                        <h4 class="mb-3">Top categories</h4>
+                        <h5>Men</h5>
+                        <ul class="list-unstyled">
+                            <li><a href="https://demo.bootstrapious.com/obaju/2-1-1/category.html">T-shirts</a></li>
+                            <li><a href="https://demo.bootstrapious.com/obaju/2-1-1/category.html">Shirts</a></li>
+                            <li><a href="https://demo.bootstrapious.com/obaju/2-1-1/category.html">Accessories</a></li>
+                        </ul>
+                        <h5>Ladies</h5>
+                        <ul class="list-unstyled">
+                            <li><a href="https://demo.bootstrapious.com/obaju/2-1-1/category.html">T-shirts</a></li>
+                            <li><a href="https://demo.bootstrapious.com/obaju/2-1-1/category.html">Skirts</a></li>
+                            <li><a href="https://demo.bootstrapious.com/obaju/2-1-1/category.html">Pants</a></li>
+                            <li><a href="https://demo.bootstrapious.com/obaju/2-1-1/category.html">Accessories</a></li>
+                        </ul>
+                    </div>
+                    <!-- /.col-lg-3-->
+                    <div class="col-lg-3 col-md-6">
+                        <h4 class="mb-3">Where to find us</h4>
+                        <p><strong>Obaju Ltd.</strong><br>13/25 New Avenue<br>New Heaven<br>45Y 73J<br>England<br><strong>Great Britain</strong></p><a href="https://demo.bootstrapious.com/obaju/2-1-1/contact.html">Go to contact page</a>
+                        <hr class="d-block d-md-none">
+                    </div>
+                    <!-- /.col-lg-3-->
+                    <div class="col-lg-3 col-md-6">
+                        <h4 class="mb-3">Get the news</h4>
+                        <p class="text-muted">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
+                        <form>
+                            <div class="input-group">
+                                <input type="text" class="form-control"><span class="input-group-append">
+                                    <button type="button" class="btn btn-outline-secondary">Subscribe!</button>
+                                </span>
+                            </div>
+                            <!-- /input-group-->
+                        </form>
+                        <hr>
+                        <h4 class="mb-3">Stay in touch</h4>
+                        <p class="social"><a href="https://demo.bootstrapious.com/obaju/2-1-1/basket.html#" class="facebook external"><i class="fa fa-facebook"></i></a><a href="https://demo.bootstrapious.com/obaju/2-1-1/basket.html#" class="twitter external"><i class="fa fa-twitter"></i></a><a href="https://demo.bootstrapious.com/obaju/2-1-1/basket.html#" class="instagram external"><i class="fa fa-instagram"></i></a><a href="https://demo.bootstrapious.com/obaju/2-1-1/basket.html#" class="gplus external"><i class="fa fa-google-plus"></i></a><a href="https://demo.bootstrapious.com/obaju/2-1-1/basket.html#" class="email external"><i class="fa fa-envelope"></i></a></p>
+                    </div>
+                    <!-- /.col-lg-3-->
                 </div>
-                <!-- /.col-lg-3-->
-                <div class="col-lg-3 col-md-6">
-                    <h4 class="mb-3">Top categories</h4>
-                    <h5>Men</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="https://demo.bootstrapious.com/obaju/2-1-1/category.html">T-shirts</a></li>
-                        <li><a href="https://demo.bootstrapious.com/obaju/2-1-1/category.html">Shirts</a></li>
-                        <li><a href="https://demo.bootstrapious.com/obaju/2-1-1/category.html">Accessories</a></li>
-                    </ul>
-                    <h5>Ladies</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="https://demo.bootstrapious.com/obaju/2-1-1/category.html">T-shirts</a></li>
-                        <li><a href="https://demo.bootstrapious.com/obaju/2-1-1/category.html">Skirts</a></li>
-                        <li><a href="https://demo.bootstrapious.com/obaju/2-1-1/category.html">Pants</a></li>
-                        <li><a href="https://demo.bootstrapious.com/obaju/2-1-1/category.html">Accessories</a></li>
-                    </ul>
-                </div>
-                <!-- /.col-lg-3-->
-                <div class="col-lg-3 col-md-6">
-                    <h4 class="mb-3">Where to find us</h4>
-                    <p><strong>Obaju Ltd.</strong><br>13/25 New Avenue<br>New Heaven<br>45Y 73J<br>England<br><strong>Great Britain</strong></p><a href="https://demo.bootstrapious.com/obaju/2-1-1/contact.html">Go to contact page</a>
-                    <hr class="d-block d-md-none">
-                </div>
-                <!-- /.col-lg-3-->
-                <div class="col-lg-3 col-md-6">
-                    <h4 class="mb-3">Get the news</h4>
-                    <p class="text-muted">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
-                    <form>
-                        <div class="input-group">
-                            <input type="text" class="form-control"><span class="input-group-append">
-                                <button type="button" class="btn btn-outline-secondary">Subscribe!</button>
-                            </span>
-                        </div>
-                        <!-- /input-group-->
-                    </form>
-                    <hr>
-                    <h4 class="mb-3">Stay in touch</h4>
-                    <p class="social"><a href="https://demo.bootstrapious.com/obaju/2-1-1/basket.html#" class="facebook external"><i class="fa fa-facebook"></i></a><a href="https://demo.bootstrapious.com/obaju/2-1-1/basket.html#" class="twitter external"><i class="fa fa-twitter"></i></a><a href="https://demo.bootstrapious.com/obaju/2-1-1/basket.html#" class="instagram external"><i class="fa fa-instagram"></i></a><a href="https://demo.bootstrapious.com/obaju/2-1-1/basket.html#" class="gplus external"><i class="fa fa-google-plus"></i></a><a href="https://demo.bootstrapious.com/obaju/2-1-1/basket.html#" class="email external"><i class="fa fa-envelope"></i></a></p>
-                </div>
-                <!-- /.col-lg-3-->
+                <!-- /.row-->
             </div>
-            <!-- /.row-->
+            <!-- /.container-->
         </div>
-        <!-- /.container-->
-    </div>
-    <!-- /#footer-->
-    <!-- *** FOOTER END ***-->
-    <!--
-    *** COPYRIGHT ***
-    _________________________________________________________
-    -->
-    <div id="copyright">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6 mb-2 mb-lg-0">
-                    <p class="text-center text-lg-left">©2021 NullTeam.</p>
-                </div>
-                <div class="col-lg-6">
-                    <p class="text-center text-lg-right">
-                        Template design by <a href="https://bootstrapious.com/p/big-bootstrap-tutorial">Bootstrapious</a>
-                        <!-- If you want to remove this backlink, pls purchase an Attribution-free License  https://bootstrapious.com/p/obaju-e-commerce-template. Big thanks!-->
-                    </p>
+        <!-- /#footer-->
+        <!-- *** FOOTER END ***-->
+        <!--
+        *** COPYRIGHT ***
+        _________________________________________________________
+        -->
+        <div id="copyright">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 mb-2 mb-lg-0">
+                        <p class="text-center text-lg-left">©2021 NullTeam.</p>
+                    </div>
+                    <div class="col-lg-6">
+                        <p class="text-center text-lg-right">
+                            Template design by <a href="https://bootstrapious.com/p/big-bootstrap-tutorial">Bootstrapious</a>
+                            <!-- If you want to remove this backlink, pls purchase an Attribution-free License  https://bootstrapious.com/p/obaju-e-commerce-template. Big thanks!-->
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </footer>
     <!-- *** COPYRIGHT END ***-->
     @*<button type="button" data-toggle="collapse" data-target="#style-switch" id="style-switch-button" class="btn btn-primary btn-sm d-none d-lg-inline-block collapsed" aria-expanded="false"><i class="fa fa-cog fa-2x"></i></button>
         <div id="style-switch" class="collapse" style="">

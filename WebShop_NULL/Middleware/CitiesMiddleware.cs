@@ -19,7 +19,7 @@ namespace WebShop_NULL.Middleware
 		{
 			cities ??= dbContext.Cities.Select(x => x.Name).ToList();
 			context.Items["cities"] = cities;
-			next.Invoke(context);
+			await next.Invoke(context);
 		}
 	}
 }

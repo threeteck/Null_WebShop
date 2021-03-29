@@ -22,7 +22,9 @@
                 }
                 <div class="@(isCurrentUser?"col-lg-9":"col-lg-12")">
                     <div class="box d-flex align-items-center flex-column">
-                        <img src="@Url.Content($"~/profile/{Model.Id}/image")?date=@DateTime.Now.ToString()"/>
+                        <div class="container-fluid justify-content-lg-start">
+                            <img class="avatar" src="@Url.Content($"~/profile/{Model.Id}/image")?date=@DateTime.Now.ToString()" height="200" width="200" />
+                        </div>
                         <div class="row mt-5 w-100">
                             <div class="list-group-flush list-group w-100">
                                 <div class="list-group-item p-4 no-cursor-action d-flex justify-content-between align-items-center">

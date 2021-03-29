@@ -1,4 +1,11 @@
 /* your styles go here */
+html,body {
+    height: 100%;
+}
+body{
+    display: flex;
+    flex-direction: column;
+}
 .cursor-pointer{
     cursor: pointer;
 }
@@ -62,4 +69,19 @@
 #upload-container.dragover {
      background-color: #fafafa;
      outline-offset: -17px;
+}
+
+.margin-bottom-40px{
+    margin-bottom: 48px;
+}
+content{
+    flex: 1 0 auto;
+}
+footer{
+    flex-shrink: 0;
+}
+.avatar {
+    border-radius: 50%;
+    border: 1px solid #ff3f3f;
+    box-shadow: #963c3c 1px 1px;
 }

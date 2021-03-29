@@ -1,10 +1,14 @@
 ﻿<div>
     @if (ViewData.ModelState.IsValid)
     {
-        <p>Регистрация завершена успешно.</p>
+        <div class="container justify-content-center align-items-center margin-bottom-40px">
+            <p class="lead text-center">Регистрация завершена успешно.</p>
+        </div>
     }
     else
     {
-        <p>Регистрация не завершена. Попробуйте снова.</p>
+        <div class="container justify-content-center align-items-center margin-bottom-40px">
+            <p class="lead text-center">Регистрация не завершена. Попробуйте снова.</p>
+        </div>
     }
 </div>
