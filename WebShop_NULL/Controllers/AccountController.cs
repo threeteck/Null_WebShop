@@ -44,9 +44,13 @@ namespace WebShop_NULL.Controllers
             {
                 User user = await _dbContext.Users.Include(u => u.Role).FirstOrDefaultAsync(u =>
                     u.Email == model.Email && u.HashedPassword == HashPassword(model.Password));
-                if (user == null || !user.IsConfirmed)
+                if (user == null)
                 {
                     ModelState.AddModelError("", "Некорректные логин и(или) пароль");
+                }
+                else if (!user.IsConfirmed)
+                {
+                    ModelState.AddModelError("", "Email не подтвержден");
                 }
                 else
                 {
@@ -111,23 +115,26 @@ namespace WebShop_NULL.Controllers
                 return RedirectToAction("Index", "Home"); //TODO: Redirect to Personal page
             
             var key = _confirmationService.GenerateEmailConfirmationToken(user.Id);
-            await _sender.SendEmailAsync(user.Email, "Подтверждение Email",
-                $"Перейдите по ссылке для окончания регистрации: \n {Url.Action("EmailConfirmationEnd", "Account", null, Request.Scheme)}?key={key}");
+            var success = await _sender.SendEmailAsync(user.Email, "Подтверждение Email",
+                $"Перейдите по ссылке для окончания регистрации: \n {Url.Action("EmailConfirmationEnd", "Account", null, Request.Scheme)}?key={key}&userId={userId}");
+            if (!success)
+                ModelState.AddModelError("", $"Письмо не может быть отправлено, т.к оно заблокированно по подозрению в спаме.\n {Url.Action("EmailConfirmationEnd", "Account", null, Request.Scheme)}?key={key}&userId={userId}");
+            
             return View(model: user.Email);
         }
 
-        public IActionResult EmailConfirmationEnd(string key)
+        public IActionResult EmailConfirmationEnd(string key, int userId)
         {
-            var userId = _confirmationService.ConfirmEmail(key);
+            var actualUserId = _confirmationService.ConfirmEmail(key);
             var user = _dbContext.Users.FirstOrDefault(u => u.Id == userId);
-            if (user != null)
+            if (user != null && actualUserId == userId)
             {
                 user.IsConfirmed = true;
                 _dbContext.SaveChanges();
             }
             else ModelState.AddModelError("","Your token is expired. Try again");
 
-            return View();
+            return View(userId);
         }
 
         public async Task<IActionResult> Logout()

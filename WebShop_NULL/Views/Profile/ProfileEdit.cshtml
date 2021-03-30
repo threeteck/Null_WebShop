@@ -1,6 +1,8 @@
 ﻿@model UserViewModel
 @{
     ViewData["Title"] = "Personal Area";
+    var passwordChangeError = TempData["PasswordNotMatch"];
+    var passwordChangeSuccess = TempData["PasswordChangeSuccess"];
 }
 <div id="all">
     <div id="content">
@@ -18,24 +20,32 @@
                 @Html.Partial("ProfileMenuPartial", 1)
                 <div class="col-lg-9">
                     <div class="box">
-                        @if (!ViewData.ModelState.IsValid)
+                        @if (!ViewData.ModelState.IsValid || passwordChangeError != null)
                         {
                             <div class="alert alert-danger">
+                                @if (passwordChangeError != null)
+                                {
+                                    <p>@passwordChangeError</p>
+                                }
+                                
                                 @Html.ValidationSummary()
                             </div>
                         }
-                        <h3 class="mt-5">Фото профиля</h3>
-                        <p class="lead">Зарузить фото профиля</p>
-                        <form id="upload-container" class="form-group" method="POST" action="uploadImage">
-                            <img id="upload-image" src="~/images/upload.svg">
-                            <div>
-                                <input id="file-input" type="file" name="file" multiple>
-                                <label for="file-input">Выберите фото</label>
-                                <span>или перетащите его сюда</span>
-                            </div>
-                        </form>
+                        <div class="d-flex flex-column align-items-lg-center">
+                            <h3 class="mt-5">Фото профиля</h3>
+                            <p class="lead">Зарузить фото профиля</p>
+                            <div id="upload-alert" class="alert alert-success w-100 text-center" hidden>Фото успешно изменено.</div>
+                            <form id="upload-container" class="form-group" method="POST" action="uploadImage">
+                                <img id="upload-image" src="~/images/upload.svg">
+                                <div>
+                                    <input id="file-input" type="file" name="file" multiple>
+                                    <label for="file-input">Выберите фото</label>
+                                    <span>или перетащите его сюда</span>
+                                </div>
+                            </form>
+                        </div>
                         <h3>Поменять пароль</h3>
-                        @if ((bool) (ViewData["PasswordChangeSuccess"] ?? false))
+                        @if (passwordChangeSuccess != null)
                         {
                             <div class="alert alert-success">Пароль успешно изменен.</div>
                         }

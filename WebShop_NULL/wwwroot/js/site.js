@@ -48,7 +48,7 @@ function sendFiles(files) {
         contentType: false,
         processData: false,
         success: function (data) {
-            alert('Файлы были успешно загружены');
+            $('#upload-alert').removeAttr('hidden');
         }
     });
 };
