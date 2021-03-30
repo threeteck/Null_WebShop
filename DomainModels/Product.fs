@@ -1,7 +1,9 @@
 ﻿namespace DomainModels
 
-open System.ComponentModel.DataAnnotations;
-//TODO
+open System.Collections.Generic;
+open System.ComponentModel.DataAnnotations
+open System.Text.Json
+
 [<CLIMutable>]
 type Product =
     {
@@ -13,5 +15,12 @@ type Product =
         Rating:decimal
         
         CategoryId:int
+        Category:Category
         
+        ImageId:int
+        Image:ImageMetadata
+        
+        AttributeValues:JsonDocument
+        
+        InBasketOf:ICollection<User>
     }

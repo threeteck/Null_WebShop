@@ -5,8 +5,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Compile Include="City.fs" />
+      <Compile Include="ImageMetadata.fs" />
+      <Compile Include="PropertyType.fs" />
+      <Compile Include="Property.fs" />
+      <Compile Include="Category.fs" />
+      <Compile Include="UserRole.fs" />
       <Compile Include="Product.fs" />
+      <Compile Include="User.fs" />
+      <Compile Include="City.fs" />
     </ItemGroup>
 
 </Project>
