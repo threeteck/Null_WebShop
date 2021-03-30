@@ -27,11 +27,22 @@ namespace WebShop_NULL
         private CancellationTokenSource _expirationTimerCancellationSource;
         private bool _isDisposed = false;
 
-        public EmailConfirmationService(TimeSpan expirationTime)
+        private CommandService _commandService;
+
+        public EmailConfirmationService(TimeSpan expirationTime, CommandService commandService)
         {
             _expirationTime = expirationTime;
+            _commandService = commandService;
             _tokens = new ConcurrentDictionary<string, EmailConfirmationToken>();
             _keys = new ConcurrentDictionary<int, string>();
+            
+            _commandService.AddCommand("TokenClear",
+                (_) =>
+            {
+                ClearTokens();
+                return true;
+            });
+            
             _expirationTimerCancellationSource = new CancellationTokenSource();
             ExpirationTimer(_expirationTimerCancellationSource.Token);
         }
@@ -89,6 +100,14 @@ namespace WebShop_NULL
                 {
                     // ignored
                 }
+            }
+        }
+
+        private void ClearTokens()
+        {
+            foreach (var (key, token) in _tokens)
+            {
+                ExpireToken(key);
             }
         }
         

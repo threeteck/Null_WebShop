@@ -28,9 +28,7 @@ namespace WebShop_NULL
         {
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<ApplicationContext>(option =>
-                option
-                    .UseLazyLoadingProxies()
-                    .UseNpgsql(connectionString));
+                option.UseNpgsql(connectionString));
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
                 {
@@ -38,13 +36,17 @@ namespace WebShop_NULL
                     options.AccessDeniedPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
                 });
 
+            services.AddSingleton<CommandService>();
             services.AddAuthorization();
             services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
             services.AddSingleton<IEmailSender, EmailService>();
             var settings = Configuration.GetSection("EmailSettings").Get<EmailSettings>();
             services.AddSingleton(settings);
-            services.AddSingleton(new EmailConfirmationService(TimeSpan.FromMinutes(1)));
+            services.AddSingleton(serviceProvider => 
+                new EmailConfirmationService(TimeSpan.FromMinutes(5), serviceProvider.GetService<CommandService>())
+            );
             services.AddControllersWithViews();
+            services.AddHttpContextAccessor();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

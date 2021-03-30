@@ -4,6 +4,6 @@ namespace WebShop_NULL
 {
     public interface IEmailSender
     {
-        public Task SendEmailAsync(string email, string subject, string message);
+        public Task<bool> SendEmailAsync(string email, string subject, string message);
     }
 }    
