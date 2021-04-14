@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using WebShop_NULL.Models.DomainModels;
+﻿using DomainModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace WebShop_NULL
 {

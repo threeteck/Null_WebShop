@@ -1,6 +1,5 @@
 ﻿using System.Linq;
-using Microsoft.EntityFrameworkCore;
-using WebShop_NULL.Models.DomainModels;
+using DomainModels;
 
 namespace WebShop_NULL
 {

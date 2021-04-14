@@ -1,5 +1,4 @@
 ﻿using System.Security.Claims;
-using WebShop_NULL.Models.DomainModels;
 
 namespace WebShop_NULL
 {

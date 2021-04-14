@@ -12,6 +12,13 @@
       <Compile Include="UserRole.fs" />
       <Compile Include="ProductAndUser.fs" />
       <Compile Include="City.fs" />
+      <Compile Include="ApplicationContext.fs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.3" />
+      <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.2" />
+      <PackageReference Include="Portable.BouncyCastle" Version="1.8.10" />
     </ItemGroup>
 
 </Project>

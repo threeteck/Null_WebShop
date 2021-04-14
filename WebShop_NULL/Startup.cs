@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DomainModels;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -28,9 +29,7 @@ namespace WebShop_NULL
         {
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<ApplicationContext>(option =>
-                option
-                    .UseLazyLoadingProxies()
-                    .UseNpgsql(connectionString));
+                option.UseNpgsql(connectionString));
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
                 {

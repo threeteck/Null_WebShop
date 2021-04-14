@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using DomainModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;

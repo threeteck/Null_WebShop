@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DomainModels;
 using Microsoft.AspNetCore.Http;
 
 namespace WebShop_NULL.Middleware
