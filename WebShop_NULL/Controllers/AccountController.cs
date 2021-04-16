@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using WebShop_FSharp;
 using WebShop_NULL.Models.AuthtorizationModels;
 
 namespace WebShop_NULL.Controllers
