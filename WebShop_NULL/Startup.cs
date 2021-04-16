@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using WebShop_NULL.Middleware;
+using WebShop_FSharp.Middleware;
 
 namespace WebShop_NULL
 {
