@@ -8,6 +8,7 @@
       <Compile Include="Middleware\CitiesMiddleware.fs" />
       <Compile Include="IEmailSender.fs" />
       <Compile Include="QueryableExtensions.fs" />
+      <Compile Include="EmailSettings.fs" />
     </ItemGroup>
 
     <ItemGroup>
