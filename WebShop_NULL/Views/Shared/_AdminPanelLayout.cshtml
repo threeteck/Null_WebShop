@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html>
+<!-- saved from url=(0054)https://demo.bootstrapious.com/obaju/2-1-1/basket.html -->
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="all,follow">
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css">
+    <!-- Font Awesome CSS-->
+    <link rel="stylesheet" href="~/css/font-awesome.min.css">
+    <!-- Google fonts - Roboto -->
+    <link rel="stylesheet" href="~/css/font.css?family=Roboto:100,300,400,700">
+    <!-- owl carousel-->
+    <link rel="stylesheet" href="~/css/owl.carousel.css">
+    <link rel="stylesheet" href="~/css/owl.theme.default.css">
+    <!-- theme stylesheet-->
+    <link rel="stylesheet" href="~/css/style.default.css" id="theme-stylesheet">
+    <link id="new-stylesheet" rel="stylesheet" href="~/css/style.red.css">
+    <!-- Custom stylesheet - for your changes-->
+    <link rel="stylesheet" href="~/css/custom.css">
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="~/images/NullIcon.png">
+    <!-- Tweaks for older IEs-->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+</head>
+<body>
+    <!-- navbar-->
+    <header class="header mb-5">
+        <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid">
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand home">
+                    <img src="~/images/logo.png" alt="Null Web Shop logo" class="d-none d-md-inline-block" height="70px">
+                    <img src="~/images/logo.png" alt="Null Web Shop logo" class="d-inline-block d-md-none" height="70px">
+                    <span class="sr-only">NullShop — go to homepage</span>
+                </a>
+                <div class="navbar-buttons">
+                    <button type="button" data-toggle="collapse" data-target="#navigation" class="btn btn-outline-secondary navbar-toggler">
+                        <span class="sr-only">Toggle navigation</span>
+                        <i class="fa fa-align-justify"></i>
+                    </button>
+                </div>
+                <div id="navigation" class="collapse navbar-collapse">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link active">Админка</a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link">Главная</a>
+                        </li>
+
+                    </ul>
+                    <a class="admin-info nav-link" asp-controller="Profile" asp-action="Index">
+                        <!-- /.nav-collapse-->
+                        <img class="avatar"  src="@Url.Content($"~/profile/{User.GetId()}/image")?date=@DateTime.Now.ToString()" width="40px" height="40px">
+                        <p>@User.GetName()</p>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <content>
+        @RenderBody()
+    </content>
+    <footer>
+        *** COPYRIGHT ***
+        _________________________________________________________
+        -->
+        <div id="copyright">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 mb-2 mb-lg-0">
+                        <p class="text-center text-lg-left">©2021 NullTeam.</p>
+                    </div>
+                    <div class="col-lg-6">
+                        <p class="text-center text-lg-right">
+                            Template design by <a href="https://bootstrapious.com/p/big-bootstrap-tutorial">Bootstrapious</a>
+                            <!-- If you want to remove this backlink, pls purchase an Attribution-free License  https://bootstrapious.com/p/obaju-e-commerce-template. Big thanks!-->
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- JavaScript files-->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js"></script>
+    <script src="~/js/jquery.cookie.js"></script>
+    <script src="~/js/owl.carousel.min.js"></script>
+    <script src="~/js/owl.carousel2.thumbs.js"></script>
+    <script src="~/js/front.js"></script>
+    <script src="~/js/city.js"></script>
+
+
+</body>
+</html>

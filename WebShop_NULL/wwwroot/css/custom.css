@@ -79,6 +79,7 @@ content{
 }
 footer{
     flex-shrink: 0;
+    z-index:3;
 }
 .avatar {
     border-radius: 50%;
@@ -92,4 +93,17 @@ footer{
 
 .input-validation-error{
     border-color: red;
+}
+
+.admin-info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: #555;
+}
+.admin-info > p{
+    font-size:26px;
+    margin-left: 10px;
+    font-weight:500;
+    margin-bottom: 0px;
 }

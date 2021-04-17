@@ -55,6 +55,13 @@
                         <a asp-area="" asp-controller="Profile" asp-action="Profile" class="btn btn-outline-secondary navbar-toggler">
                             <i class="fa fa-user"></i>
                         </a>
+                        //Изменить условие для доступности только админам
+                        if (true)
+                        {
+                            <a asp-area="" asp-controller="AdminPanel" asp-action="Index" class="btn btn-outline-secondary navbar-toggler">
+                                <i class="fa fa-cogs" aria-hidden="true"></i>
+                            </a>
+                        }
                     }
                     else
                     {
@@ -130,6 +137,14 @@
                             <div id="personal-page-link" class="navbar-collapse collapse text-center d-none d-lg-block">
                                 <a class="btn btn-primary navbar-btn d-none d-lg-inline-block" asp-area="" asp-controller="Profile" asp-action="Profile"><i class="fa fa-user"></i>@User.GetName()</a>
                             </div>
+
+                            //Изменить условие для доступности только админам
+                            if (true)
+                            {
+                                <div id="admin-panel-link" class="navbar-collapse collapse text-center d-none d-lg-block" >
+                                    <a class="btn btn-primary navbar-btn d-none d-lg-inline-block" asp-area="" asp-controller="AdminPanel" asp-action="Index"><i class="fa fa-cogs" aria-hidden="true"></i>Админка</a>
+                                </div>
+                            }
                         }
                         else
                         {
@@ -157,20 +172,6 @@
         @RenderBody()
     </content>
     <footer>
-        <div id="footer">
-            <div class="container">
-                <div class="row">
-                    
-                    
-                    <!-- /.col-lg-3-->
-                </div>
-                <!-- /.row-->
-            </div>
-            <!-- /.container-->
-        </div>
-        <!-- /#footer-->
-        <!-- *** FOOTER END ***-->
-        <!--
         *** COPYRIGHT ***
         _________________________________________________________
         -->

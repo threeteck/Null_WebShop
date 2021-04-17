@@ -25,5 +25,10 @@ namespace WebShop_NULL.Controllers
                 ModelState.AddModelError("", "");
             return View(true);
         }
+
+        public IActionResult Index()
+        {
+            return View();
+        }
     }
 }
