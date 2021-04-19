@@ -107,3 +107,66 @@ footer{
     font-weight:500;
     margin-bottom: 0px;
 }
+.admin-menu{
+    background-color:white;
+    height: 100%;
+}
+.admin-menu h3{
+    text-align:center;
+    text-transform: uppercase;
+    color: dimgrey;
+    padding: 10px 0px 10px 0px;
+    border-bottom: 1px solid rgb(230, 230, 230);
+    min-width:100%;
+    box-sizing:border-box;
+    margin:0px;
+    min-height:60px;
+}
+.admin-menu ul{
+    list-style:none;
+    padding-left:0px;
+    margin-bottom:0px;
+}
+.admin-menu li{
+    text-transform:uppercase;
+    font-size: 16px;
+    font-weight: 500;
+    color: dimgray;
+    box-sizing: content-box;
+}
+.admin-menu a{
+    text-decoration:none;
+    color:inherit;
+    padding: 15px 10px 15px 40px;
+    display:block;
+}
+
+.admin-menu a:hover, a:active, a:focus{
+    text-decoration:none;
+    background-color:rgb(255, 63, 63);
+}
+.admin-content > .header{
+    background-color:white;
+    display:flex!important;
+    flex-direction:row-reverse!important;
+    justify-content: space-between;
+    min-height:60px;
+}
+@media screen and (max-width: 620px){
+    .admin-content > .header {
+        flex-direction: column-reverse !important;
+    }
+}
+.admin-content > .header *{
+    padding:5px;
+    margin:5px 5px 5px 5px;
+}
+.header .btns{
+    display:flex;
+    flex-direction:row;
+    align-items:center;
+    margin-left:15px;
+}
+.admin-content td, th{
+    text-align:center;
+}

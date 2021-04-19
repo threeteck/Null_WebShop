@@ -26,9 +26,13 @@ namespace WebShop_NULL.Controllers
             return View(true);
         }
 
-        public IActionResult Index()
+        public IActionResult Products()
         {
             return View();
+        }
+        public IActionResult GetAdminMenu()
+        {
+            return PartialView("_GetAdminMenu");
         }
     }
 }
