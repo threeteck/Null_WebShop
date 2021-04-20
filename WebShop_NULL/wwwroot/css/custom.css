@@ -115,7 +115,7 @@ footer{
     text-align:center;
     text-transform: uppercase;
     color: dimgrey;
-    padding: 10px 0px 10px 0px;
+    padding: 15px 0px 10px 0px;
     border-bottom: 1px solid rgb(230, 230, 230);
     min-width:100%;
     box-sizing:border-box;
@@ -169,4 +169,42 @@ footer{
 }
 .admin-content td, th{
     text-align:center;
+}
+.admin-content .content, .admin-content-margined .content{
+    background-color:white;
+    display:block;
+
+}
+.admin-content-margined .content .form-control{
+    display:block;
+    margin: 10px 15px 10px 15px;
+}
+.admin-content-margined .content .btn{
+    margin: 0px 15px 10px 15px;
+}
+.admin-content-margined *{
+    margin-right:15px;
+}
+.admin-content-margined h3 {
+    text-transform: uppercase;
+    color: dimgrey;
+    padding: 15px;
+    text-align: center;
+}
+.form-group label{
+    padding-left: 15px;
+}
+.admin-content-margined .input-group{
+    padding-left:15px;
+}
+.admin-content-margined .input-group *{
+    margin-right: 0px;
+}
+.property-field{
+    display:flex;
+    flex-direction: row;
+    margin-right: 0px;
+}
+.property-field > * {
+    margin-right: 0px!important;
 }
