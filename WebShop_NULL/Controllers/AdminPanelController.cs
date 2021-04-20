@@ -3,27 +3,40 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WebShop_NULL.Controllers
 {
-    public class AdminPanel : Controller
+    public class AdminPanelController : Controller
     {
         private CommandService _commandService;
 
-        public AdminPanel(CommandService commandService)
+        public AdminPanelController(CommandService commandService)
         {
             _commandService = commandService;
         }
 
-        [HttpGet("/admin/commandLine")]
+        [HttpGet]
         public IActionResult CommandLine()
         {
             return View(false);
         }
         
-        [HttpPost("/admin/commandLine")]
+        [HttpPost]
         public IActionResult CommandLine(string command)
         {
             if(!_commandService.ExecuteCommand(command))
                 ModelState.AddModelError("", "");
             return View(true);
+        }
+
+        public IActionResult Products()
+        {
+            return View();
+        }
+        public IActionResult GetAdminMenu()
+        {
+            return PartialView("_GetAdminMenu");
+        }
+        public IActionResult CreateProduct()
+        {
+            return View();
         }
     }
 }

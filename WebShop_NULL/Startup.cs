@@ -78,6 +78,9 @@ namespace WebShop_NULL
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute(
+                    name: "AdminPanel",
+                    pattern: "{controller=AdminPanel}/{action=Products}/{id?}");
             });
         }
     }
