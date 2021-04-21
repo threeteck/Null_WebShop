@@ -18,7 +18,7 @@ namespace WebShop_NULL
             _logger = logger;
             _settings = settings.Value;
         }
-        public async Task SendEmailAsync(string email, string subject, string message)
+        public async Task<bool> SendEmailAsync(string email, string subject, string message)
         {
             var emailMessage = new MimeMessage();
  
@@ -39,10 +39,12 @@ namespace WebShop_NULL
                     await client.AuthenticateAsync(_settings.Username, _settings.Password);
                     await client.SendAsync(emailMessage);
                     
+                    return true;
                 }
                 catch (Exception e)
                 {
                     _logger.LogCritical($"message was not sent. Reason: {e.Message}");
+                    return false;
                 }
                 finally
                 {

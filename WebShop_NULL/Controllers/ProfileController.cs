@@ -134,26 +134,21 @@ namespace WebShop_NULL.Controllers
             var user = _dbContext.Users.ById(User.GetId()).FirstOrDefault();
             if (user == null)
                 return RedirectToAction("Login", "Account");
-            
-            if(user.HashedPassword != AccountController.HashPassword(data.OldPassword))
-                ModelState.AddModelError("", "Старый пароль не совпадает.");
-            
-            var model = new UserViewModel()
+
+            if (user.HashedPassword != AccountController.HashPassword(data.OldPassword))
             {
-                Email = user.Email,
-                Id = user.Id,
-                Name = user.Name,
-                Surname = user.Surname
-            };
+                TempData["PasswordNotMatch"] = "Старый пароль не совпадает.";
+                ModelState.AddModelError("", "Старый пароль не совпадает.");
+            }
 
             if (!ModelState.IsValid)
-                return View("ProfileEdit", model);
-
+                return RedirectToAction("ProfileEdit");
+            
             user.HashedPassword = AccountController.HashPassword(data.NewPassword);
             _dbContext.SaveChanges();
-            ViewData["PasswordChangeSuccess"] = true;
+            TempData["PasswordChangeSuccess"] = true;
 
-            return View("ProfileEdit", model);
+            return RedirectToAction("ProfileEdit");
         }
 
         [Authorize]

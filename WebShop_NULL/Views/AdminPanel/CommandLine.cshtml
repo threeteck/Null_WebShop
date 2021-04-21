@@ -1,0 +1,35 @@
+﻿@model bool
+
+@{
+    Layout = "_AdminPanelLayout";
+}
+<div class="row">
+    @await Html.PartialAsync("_GetAdminMenu")
+    <div class="col-lg-10 col-md-12 admin-content-margined">
+        <div class="content">
+            <div class="d-flex flex-column justify-content-center align-items-center w-100">
+                @if (Model)
+                {
+                    if (ViewData.ModelState.IsValid)
+                    {
+                        <div class="alert alert-success w-50">
+                            Команда успешно исполнена
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-danger w-50">
+                            При исполнении команды возникла ошибка
+                        </div>
+                    }
+                }
+
+                <form action="" method="post" class="mt-2 w-50 d-flex flex-column justify-content-center align-items-center">
+                    <label for="command-line">Введите команду</label>
+                    <input id="command-line" class="form-control mt-2" name="command" type="text" />
+                    <input type="submit" value="Исполнить" class="btn btn-primary mt-2" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

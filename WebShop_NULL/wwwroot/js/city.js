@@ -50,7 +50,7 @@ async function setCityAutomaticallyCallback(position) {
 
 //Can be used to set city manually
 function setCity(city){
-    document.cookie = "city="+city
+    document.cookie = "city="+city+";path=/"
     setCityInHeaderFromCookies()
 }
 

@@ -1,0 +1,55 @@
+﻿@{
+    Layout = "_AdminPanelLayout";
+}
+<div class="row">
+    @await Html.PartialAsync("_GetAdminMenu")
+    <div class="col-lg-10 col-md-12 admin-content-margined">
+        <div class="content">
+            <form>
+                <div class="section">
+                    <h3>Товар</h3>
+                    <div class="form-group">
+                        <input class="form-control" id="productName" placeholder="Название товара" type="text" />
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-control" id="productDescription" placeholder="Описание товара" type="text" cols="20" wrap="hard"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" id="productPrice" placeholder="Цена товара" type="number" />
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Ничего не выбрано</span>
+                        </div>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="inputGroupFile01">
+                            <label class="custom-file-label" for="inputGroupFile01">Выберите файл</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="section">
+                    <h3>Характеристики</h3>
+                    <div class="form-group">
+                        <input class="form-control" id="categoryName" placeholder="Название категории" type="text" />
+                    </div>
+                    <div class="property-field">
+                        <input class="form-control" placeholder="Название"/>
+                        <select class="form-control">
+                            <option value="default">Строка</option>
+                            <option>Число</option>
+                            <option>Опция</option>
+                        </select>
+                        <input class="form-control" placeholder="Значение" />
+                    </div>
+                    <div class="form-group">
+                        <input class="btn btn-primary" type="submit" value="Добавить характеристику" />
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <input class="btn btn-primary" type="submit" value="Создать" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

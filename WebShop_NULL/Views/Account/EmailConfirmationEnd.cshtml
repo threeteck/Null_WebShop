@@ -1,14 +1,15 @@
-﻿<div>
+﻿@model int
+<div>
     @if (ViewData.ModelState.IsValid)
     {
-        <div class="container justify-content-center align-items-center margin-bottom-40px">
+        <div class="alert alert-success container d-flex justify-content-center align-items-center margin-bottom-40px">
             <p class="lead text-center">Регистрация завершена успешно.</p>
         </div>
     }
     else
     {
-        <div class="container justify-content-center align-items-center margin-bottom-40px">
-            <p class="lead text-center">Регистрация не завершена. Попробуйте снова.</p>
+        <div class="alert alert-danger container d-flex justify-content-center align-items-center margin-bottom-40px">
+            <p class="lead text-center">Срок действия ключа подтверждения истек, <a href="@Url.Action("ConfirmEmail")?userId=@Model">попробуйте еще раз</a></p>
         </div>
     }
 </div>

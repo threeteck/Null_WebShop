@@ -34,13 +34,17 @@ namespace WebShop_NULL
                     options.AccessDeniedPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
                 });
 
+            services.AddSingleton<CommandService>();
             services.AddAuthorization();
             services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
             services.AddSingleton<IEmailSender, EmailService>();
             var settings = Configuration.GetSection("EmailSettings").Get<EmailSettings>();
             services.AddSingleton(settings);
-            services.AddSingleton(new EmailConfirmationService(TimeSpan.FromMinutes(1)));
+            services.AddSingleton(serviceProvider => 
+                new EmailConfirmationService(TimeSpan.FromMinutes(5), serviceProvider.GetService<CommandService>())
+            );
             services.AddControllersWithViews();
+            services.AddHttpContextAccessor();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -72,6 +76,9 @@ namespace WebShop_NULL
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute(
+                    name: "AdminPanel",
+                    pattern: "{controller=AdminPanel}/{action=Products}/{id?}");
             });
         }
     }
