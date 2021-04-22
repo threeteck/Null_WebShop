@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using WebShop_NULL.Models.DomainModels;
+using DomainModels;
 using WebShop_NULL.Models.ViewModels.СatalogModels;
 
 namespace WebShop_NULL.Controllers
