@@ -1,20 +1,20 @@
-﻿@model bool
+﻿@model WebShop_NULL.Models.ViewModels.AdminPanelModels.CommandLineResponse
 
 <!DOCTYPE html>
 
 <div class="d-flex flex-column justify-content-center align-items-center w-100">
-    @if (Model)
+    @if (Model.IsResponse)
         {
-            if (ViewData.ModelState.IsValid)
+            if (Model.IsSuccessful)
             {
                 <div class="alert alert-success w-50">
-                    Команда успешно исполнена
+                    Команда успешно исполнена@(Model.Message != null? $":{Model.Message}" : "")
                 </div>
             }
             else
             {
                 <div class="alert alert-danger w-50">
-                    При исполнении команды возникла ошибка
+                    При исполнении команды возникла ошибка@(Model.Message != null? $":{Model.Message}" : "")
                 </div>
             }
         }
