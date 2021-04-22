@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace WebShop_NULL
 {
-    public delegate bool CommandAction(params string[] args);
+    public delegate bool CommandAction(out string message, params string[] args);
     public class CommandService
     {
         private ConcurrentDictionary<string, CommandAction> _commands;
@@ -18,15 +18,17 @@ namespace WebShop_NULL
             _commands.TryAdd(keyword, action);
         }
 
-        public bool ExecuteCommand(string command)
+        public bool TryExecuteCommand(string command, out string message)
         {
             var splited = command.Split(' ');
+            message = null;
 
             if (splited.Length <= 0 || 
                 !_commands.TryGetValue(splited[0], out var action))
                 return false;
             
-            return action(splited.Skip(1).ToArray());
+            var result = action(out message, splited.Skip(1).ToArray());
+            return result;
         }
     }
 }
