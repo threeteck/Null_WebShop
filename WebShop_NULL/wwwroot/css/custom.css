@@ -71,6 +71,13 @@ body{
      outline-offset: -17px;
 }
 
+#image-label{
+    height: calc(1.5em + .75rem);
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-right: none;
+}
+
 .margin-bottom-40px{
     margin-bottom: 48px;
 }
@@ -87,12 +94,26 @@ footer{
     box-shadow: #963c3c 1px 1px;
 }
 
+.field-validation-valid{
+    display: none;
+}
+
 .field-validation-error{
     color: red;
 }
 
 .input-validation-error{
     border-color: red;
+}
+
+.property-name{
+    padding: .375rem .75rem;
+    font-size: .9rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    width: 100%;
+    height: calc(1.5em + .75rem + 2px);
 }
 
 .admin-info {
@@ -177,8 +198,20 @@ footer{
 }
 .admin-content-margined .content .form-control{
     display:block;
+    margin: 10px 15px 0 15px;
+}
+
+.admin-content-margined .content .field-validation-error{
+    display:block;
+    margin-left: 15px;
+    margin-top: 5px;
+}
+
+.admin-content-margined .content .property-name{
+    display:block;
     margin: 10px 15px 10px 15px;
 }
+
 .admin-content-margined .content .btn{
     margin: 0px 15px 10px 15px;
 }
