@@ -26,7 +26,7 @@ namespace WebShop_NULL.Controllers
         [Route("~/category")]
         public IActionResult GetAllProductsFromCategory(string category)
         {
-            var products = _dbContext.Products.Select(x => x)
+            var products = _dbContext.Products
                 .Where(x => x.Category.Name.ToLower() == category.ToLower()).ToList();
             var model = new ProductsViewModel()
             {
@@ -47,7 +47,13 @@ namespace WebShop_NULL.Controllers
                 return StatusCode(404);
             }
 
-            return View(product);
+            var productModel = new ProductViewModel()
+            {
+                Name =  product.Name,
+                Description = product.Description,
+                ImageId = product.ImageId
+            };
+            return View(productModel);
         }
     }
 }
