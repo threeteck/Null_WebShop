@@ -54,11 +54,14 @@
                         </li>
 
                     </ul>
-                    <a class="admin-info nav-link" asp-controller="Profile" asp-action="Index">
-                        <!-- /.nav-collapse-->
-                        <img class="avatar"  src="@Url.Content($"~/profile/{User.GetId()}/image")?date=@DateTime.Now.ToString()" width="40px" height="40px">
-                        <p>@User.GetName()</p>
-                    </a>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a class="admin-info nav-link" href="@Url.Content("~/profile")">
+                            <!-- /.nav-collapse-->
+                            <img class="avatar" src="@Url.Content($"~/profile/{User.GetId()}/image")?date=@DateTime.Now.ToString()" width="40px" height="40px">
+                            <p>@User.GetName()</p>
+                        </a>
+                    }
                 </div>
             </div>
         </nav>

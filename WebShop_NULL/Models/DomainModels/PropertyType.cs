@@ -6,7 +6,8 @@ namespace WebShop_NULL.Models.DomainModels
     {
         Integer = 0,
         Decimal = 1,
-        Option = 2
+        Option = 2,
+        Nominal = 3
     }
     
     public class PropertyType

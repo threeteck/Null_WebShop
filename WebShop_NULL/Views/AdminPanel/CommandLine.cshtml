@@ -13,13 +13,13 @@
                 {
                     if (Model.IsSuccessful)
                     {
-                        <div class="alert alert-success w-50">
+                        <div class="alert alert-success w-50 mt-3">
                             Команда успешно исполнена@(Model.Message != null ? $":{Model.Message}" : "")
                         </div>
                     }
                     else
                     {
-                        <div class="alert alert-danger w-50">
+                        <div class="alert alert-danger w-50 mt-3">
                             При исполнении команды возникла ошибка@(Model.Message != null ? $":{Model.Message}" : "")
                         </div>
                     }
