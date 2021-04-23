@@ -10,6 +10,7 @@ type Property =
         Id:int
         Name:string
         Type:PropertyType
+
         
         Constraints:JsonDocument
         FilterInfo:JsonDocument

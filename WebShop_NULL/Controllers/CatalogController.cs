@@ -23,14 +23,18 @@ namespace WebShop_NULL.Controllers
         {
             return View("Catalog");
         }
-        [Route("~/category")]
-        public IActionResult GetAllProductsFromCategory(string category)
+        public async Task<IActionResult> Catalog(string category)
         {
             var products = _dbContext.Products
                 .Where(x => x.Category.Name.ToLower() == category.ToLower()).ToList();
+            var categories = await _dbContext.Categories
+                .Include(c => c.Properties)
+                .FirstOrDefaultAsync(c => c.Name.ToLower() == category.ToLower());
             var model = new ProductsViewModel()
             {
-                ProductList = products
+                ProductList = products,
+                Category = category,
+                Properties = categories.Properties,
             };
             return View(model);
         }
