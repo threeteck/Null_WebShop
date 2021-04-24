@@ -19,14 +19,24 @@ namespace WebShop_NULL.Controllers
             _dbContext = dbContext;
         }
         // GET
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View("Catalog");
+            var products = await _dbContext.Products
+                .OrderBy(x => x.Rating)
+                .Take(6)
+                .Include(p => p.Image)
+                .ToListAsync();
+            var model = new ProductsViewModel()
+            {
+                ProductList = products,
+            };
+            return View("Catalog",model);
         }
         public async Task<IActionResult> Catalog(string category)
         {
-            var products = _dbContext.Products
-                .Where(x => x.Category.Name.ToLower() == category.ToLower()).ToList();
+            var products = await _dbContext.Products
+                .Where(x => x.Category.Name.ToLower() == category.ToLower())
+                .Include(p=>p.Image).ToListAsync();
             var categories = await _dbContext.Categories
                 .Include(c => c.Properties)
                 .FirstOrDefaultAsync(c => c.Name.ToLower() == category.ToLower());

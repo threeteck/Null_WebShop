@@ -25,7 +25,7 @@ namespace WebShop_NULL.Controllers
             _appEnvironment = appEnvironment;
         }
 
-        [Route("~/profile/{userId?}")]
+        [Route("~/profile/{userId:int?}")]
         public IActionResult Profile(int userId = -1)
         {
             if(userId == -1)

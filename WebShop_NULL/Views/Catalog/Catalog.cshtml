@@ -13,9 +13,9 @@
                     <!-- breadcrumb-->
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a asp-controller="Catalog" action="Catalog">Главная</a></li>
+                            <li class="breadcrumb-item"><a asp-controller="Catalog" asp-action="Index">Главная</a></li>
                             @{
-                                if (Model != null)
+                                if (Model != null && Model.Category != null)
                                 {
                                     <li aria-current="page" class="breadcrumb-item active">@Model.Category</li>
                                 }
@@ -48,77 +48,69 @@
                     </div>
                     <div class="card sidebar-menu mb-4">
                         <div class="card-header">
-                            <h3 class="h4 card-title">Brands <a href="#" class="btn btn-sm btn-danger pull-right"><i class="fa fa-times-circle"></i> Clear</a></h3>
+                            <h3 class="h4 card-title">Характеристика 1</h3>
                         </div>
                         <div class="card-body">
                             <form>
                                 <div class="form-group">
-                                    <div class="checkbox">
+                                    <div class="checkbox d-flex flex-md-row justify-content-between">
                                         <label>
-                                            <input type="checkbox"> Armani  (10)
+                                            Значение 1
                                         </label>
+                                        <input type="checkbox">
                                     </div>
-                                    <div class="checkbox">
+                                    <div class="checkbox d-flex flex-md-row justify-content-between">
                                         <label>
-                                            <input type="checkbox"> Versace  (12)
+                                            Значение 2
                                         </label>
+                                        <input type="checkbox">
                                     </div>
-                                    <div class="checkbox">
+                                    <div class="checkbox d-flex flex-md-row justify-content-between">
                                         <label>
-                                            <input type="checkbox"> Carlo Bruni  (15)
+                                            Значение 3
                                         </label>
+                                        <input type="checkbox">
                                     </div>
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox"> Jack Honey  (14)
-                                        </label>
-                                    </div>
+
                                 </div>
-                                <button class="btn btn-default btn-sm btn-primary"><i class="fa fa-pencil"></i> Apply</button>
+                                <button class="btn btn-default btn-sm btn-primary"><i class="fa fa-pencil"></i>Прменить</button>
                             </form>
                         </div>
                     </div>
                     <div class="card sidebar-menu mb-4">
                         <div class="card-header">
-                            <h3 class="h4 card-title">Colours <a href="#" class="btn btn-sm btn-danger pull-right"><i class="fa fa-times-circle"></i> Clear</a></h3>
+                            <h3 class="h4 card-title">Характеристика 2</h3>
                         </div>
                         <div class="card-body">
                             <form>
                                 <div class="form-group">
-                                    <div class="checkbox">
+                                    <div class="checkbox d-flex flex-md-row justify-content-between">
                                         <label>
-                                            <input type="checkbox"><span class="colour white"></span> White (14)
+                                            Значение 1
                                         </label>
+                                        <input type="checkbox">
                                     </div>
-                                    <div class="checkbox">
+                                    <div class="checkbox d-flex flex-md-row justify-content-between">
                                         <label>
-                                            <input type="checkbox"><span class="colour blue"></span> Blue (10)
+                                            Значение 2
                                         </label>
+                                        <input type="checkbox">
                                     </div>
-                                    <div class="checkbox">
+                                    <div class="checkbox d-flex flex-md-row justify-content-between">
                                         <label>
-                                            <input type="checkbox"><span class="colour green"></span>  Green (20)
+                                            Значение 3
                                         </label>
+                                        <input type="checkbox">
                                     </div>
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox"><span class="colour yellow"></span>  Yellow (13)
-                                        </label>
-                                    </div>
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox"><span class="colour red"></span>  Red (10)
-                                        </label>
-                                    </div>
+
                                 </div>
-                                <button class="btn btn-default btn-sm btn-primary"><i class="fa fa-pencil"></i> Apply</button>
+                                <button class="btn btn-default btn-sm btn-primary"><i class="fa fa-pencil"></i>Прменить</button>
                             </form>
                         </div>
                     </div>
                     <!-- *** MENUS AND FILTERS END ***-->
-                    <div class="banner"><a href="#"><img src="https://d19m59y37dris4.cloudfront.net/obaju/2-1-1/img/banner.jpg" alt="sales 2014" class="img-fluid"></a></div>
                 </div>
-                @if (Model != null)
+                @if (Model != null && Model.Category != null)
                 {
                     <div class="col-lg-9">
                         <div class="box">
@@ -128,13 +120,12 @@
                             <div class="row">
                                 <div class="col-md-12 col-lg-7 products-number-sort">
                                     <form class="form-inline d-block d-lg-flex justify-content-between flex-column flex-md-row">
-                                        <div class="products-number"><strong>Show</strong><a href="#" class="btn btn-sm btn-primary">12</a><a href="#" class="btn btn-outline-secondary btn-sm">24</a><a href="#" class="btn btn-outline-secondary btn-sm">All</a><span>products</span></div>
                                         <div class="products-sort-by mt-2 mt-lg-0">
-                                            <strong>Sort by</strong>
+                                            <strong>Сортировать по</strong>
                                             <select name="sort-by" class="form-control">
-                                                <option>Price</option>
-                                                <option>Name</option>
-                                                <option>Sales first</option>
+                                                <option>Цена</option>
+                                                <option>Название</option>
+                                                <option>Рейтинг</option>
                                             </select>
                                         </div>
                                     </form>
@@ -148,40 +139,69 @@
                                     <div class="product">
                                         <div class="flip-container">
                                             <div class="flipper">
-                                                <div class="front"><a href="detail.html"><img src="@p?.Image?.ImagePath" alt="" class="img-fluid"></a></div>
-                                                <div class="back"><a href="detail.html"><img src="@p?.Image?.ImagePath" alt="" class="img-fluid"></a></div>
+                                                <div class="front"><a href="detail.html"><img src="@Url.Content($"~/{p.Image.ImagePath}")" alt="" class="img-fluid"></a></div>
+                                                <div class="back"><a href="detail.html"><img src="@Url.Content($"~/{p.Image.ImagePath}")" alt="" class="img-fluid"></a></div>
                                             </div>
-                                        </div><a href="detail.html" class="invisible"><img src="@p?.Image?.ImagePath" alt="" class="img-fluid"></a>
+                                        </div><a href="detail.html" class="invisible"><img src="@Url.Content($"~/{p.Image.ImagePath}")" alt="" class="img-fluid"></a>
                                         <div class="text">
                                             <h3><a href="detail.html">@p.Name</a></h3>
                                             <p class="price">
-                                                <del></del>@p.Rating
+                                                <del></del>@p.Price
                                             </p>
-                                            <p class="buttons"><a href="detail.html" class="btn btn-outline-secondary">Подробнее</a><a href="basket.html" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Добавить в корзину</a></p>
+                                            <p class="buttons"><a href="detail.html" class="btn btn-outline-secondary">Подробнее</a><a href="basket.html" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>В корзину</a></p>
                                         </div>
                                         <!-- /.text-->
                                     </div>
                                     <!-- /.product            -->
                                 </div>
                             }
-                            
+
                             <!-- /.products-->
                         </div>
                         <div class="pages">
-                            <p class="loadMore"><a href="#" class="btn btn-primary btn-lg"><i class="fa fa-chevron-down"></i> Load more</a></p>
                             <nav aria-label="Page navigation example" class="d-flex justify-content-center">
                                 <ul class="pagination">
                                     <li class="page-item"><a href="#" aria-label="Previous" class="page-link"><span aria-hidden="true">«</span><span class="sr-only">Previous</span></a></li>
-                                    <li class="page-item active"><a href="#" class="page-link">1</a></li>
-                                    <li class="page-item"><a href="#" class="page-link">2</a></li>
-                                    <li class="page-item"><a href="#" class="page-link">3</a></li>
-                                    <li class="page-item"><a href="#" class="page-link">4</a></li>
-                                    <li class="page-item"><a href="#" class="page-link">5</a></li>
                                     <li class="page-item"><a href="#" aria-label="Next" class="page-link"><span aria-hidden="true">»</span><span class="sr-only">Next</span></a></li>
                                 </ul>
                             </nav>
                         </div>
                     </div>
+                }
+                else
+                {
+                    <div class="col-lg-9">
+                        <div class="box">
+                            <h1>Популярное</h1>
+                        </div>
+                        <div class="row products">
+                            @foreach (var p in Model.ProductList)
+                            {
+                                <div class="col-lg-4 col-md-6">
+                                    <div class="product">
+                                        <div class="flip-container">
+                                            <div class="flipper">
+                                                <div class="front"><a href="detail.html"><img src="@Url.Content($"~/{p.Image.ImagePath}")" alt="" class="img-fluid"></a></div>
+                                                <div class="back"><a href="detail.html"><img src="@Url.Content($"~/{p.Image.ImagePath}")" alt="" class="img-fluid"></a></div>
+                                            </div>
+                                        </div><a href="detail.html" class="invisible"><img src="@Url.Content($"~/{p.Image.ImagePath}")" alt="" class="img-fluid"></a>
+                                        <div class="text">
+                                            <h3><a href="detail.html">@p.Name</a></h3>
+                                            <p class="price">
+                                                <del></del>@p.Price
+                                            </p>
+                                            <p class="buttons"><a href="detail.html" class="btn btn-outline-secondary">Подробнее</a><a href="basket.html" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>В корзину</a></p>
+                                        </div>
+                                        <!-- /.text-->
+                                    </div>
+                                    <!-- /.product            -->
+                                </div>
+                            }
+
+                            <!-- /.products-->
+                        </div>
+                    </div>
+
                 }
                 <!-- /.col-lg-9-->
             </div>
