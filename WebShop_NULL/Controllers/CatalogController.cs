@@ -19,20 +19,27 @@ namespace WebShop_NULL.Controllers
             _dbContext = dbContext;
         }
         // GET
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string category = null)
         {
-            var products = await _dbContext.Products
-                .OrderBy(x => x.Rating)
-                .Take(6)
-                .Include(p => p.Image)
-                .ToListAsync();
-            var model = new ProductsViewModel()
+            var categories = await _dbContext.Categories.Select(c => c.Name).ToListAsync();
+            List<Product> products;
+            if (category != null)
             {
+                products = await _dbContext.Products.Where(p => p.Category.Name == category).Include(p => p.Image).ToListAsync();
+            }
+            else
+            {
+                products = await _dbContext.Products.OrderBy(p => p.Rating).Take(6).Include(p => p.Image).ToListAsync();
+            }
+            var model = new CatalogViewModel()
+            {
+                Categories = categories,
+                Category = category,
                 ProductList = products,
             };
             return View("Catalog",model);
         }
-        public async Task<IActionResult> Catalog(string category)
+       /* public async Task<IActionResult> Catalog(string category)
         {
             var products = await _dbContext.Products
                 .Where(x => x.Category.Name.ToLower() == category.ToLower())
@@ -47,15 +54,14 @@ namespace WebShop_NULL.Controllers
                 Properties = categories.Properties,
             };
             return View(model);
-        }
-        [Route("~/category/{ProductId?}")]
-        public async Task<IActionResult> ViewProductPage(int ProductId = -1)
+        }*/
+        public async Task<IActionResult> ProductPage(string category, int ProductId = -1)
         {
             if (ProductId == -1)
             {
                 RedirectToAction("Index", "Home");
             }
-            var product = await _dbContext.Products.FirstOrDefaultAsync(x => x.Id == ProductId);
+            var product = await _dbContext.Products.Include(p=>p.Image).FirstOrDefaultAsync(x => x.Id == ProductId);
             if (product == null)
             {
                 return StatusCode(404);
@@ -63,9 +69,11 @@ namespace WebShop_NULL.Controllers
 
             var productModel = new ProductViewModel()
             {
+                Category = category,
                 Name =  product.Name,
                 Description = product.Description,
-                ImageId = product.ImageId
+                Image = product.Image.ImagePath,
+                Price = product.Price,
             };
             return View(productModel);
         }
