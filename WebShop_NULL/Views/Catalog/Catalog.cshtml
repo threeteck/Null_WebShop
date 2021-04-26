@@ -1,0 +1,170 @@
+﻿@{ 
+    ViewData["Title"] = "Каталог";
+}
+@using WebShop_NULL.Models.ViewModels.СatalogModels
+@using DomainModels
+@model CatalogViewModel
+@inject ApplicationContext context
+<div id="all">
+    <div id="content">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <!-- breadcrumb-->
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a asp-controller="Catalog" asp-action="Index">Главная</a></li>
+                            @{
+                                if (Model != null && Model.Category != null)
+                                {
+                                    <li aria-current="page" class="breadcrumb-item active">@Model.Category</li>
+                                }
+                            }
+                        </ol>
+                    </nav>
+                </div>
+                <div class="col-lg-3">
+                    <!--
+        *** MENUS AND FILTERS ***
+        _________________________________________________________
+        -->
+                    <div class="card sidebar-menu mb-4">
+                        <div class="card-header">
+                            <h3 class="h4 card-title">Категории</h3>
+                        </div>
+                        <div class="card-body">
+                            <ul id="categories" class="nav nav-pills flex-column category-menu">
+                                @foreach (var c in Model.Categories)
+                                {
+                                    <li>
+                                        <a href="@Url.Action("Index","Catalog",new { category = c })" class="nav-link @(Model != null && Model.Category == c ? "active" : "")">@c <span class="badge badge-secondary"></span></a>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card sidebar-menu mb-4">
+                        <div class="card-header">
+                            <h3 class="h4 card-title">Характеристика 1</h3>
+                        </div>
+                        <div class="card-body">
+                            <form>
+                                <div class="form-group">
+                                    <div class="checkbox d-flex flex-md-row justify-content-between">
+                                        <label>
+                                            Значение 1
+                                        </label>
+                                        <input type="checkbox">
+                                    </div>
+                                    <div class="checkbox d-flex flex-md-row justify-content-between">
+                                        <label>
+                                            Значение 2
+                                        </label>
+                                        <input type="checkbox">
+                                    </div>
+                                    <div class="checkbox d-flex flex-md-row justify-content-between">
+                                        <label>
+                                            Значение 3
+                                        </label>
+                                        <input type="checkbox">
+                                    </div>
+
+                                </div>
+                                <button class="btn btn-default btn-sm btn-primary"><i class="fa fa-pencil"></i>Прменить</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card sidebar-menu mb-4">
+                        <div class="card-header">
+                            <h3 class="h4 card-title">Характеристика 2</h3>
+                        </div>
+                        <div class="card-body">
+                            <form>
+                                <div class="form-group">
+                                    <div class="checkbox d-flex flex-md-row justify-content-between">
+                                        <label>
+                                            Значение 1
+                                        </label>
+                                        <input type="checkbox">
+                                    </div>
+                                    <div class="checkbox d-flex flex-md-row justify-content-between">
+                                        <label>
+                                            Значение 2
+                                        </label>
+                                        <input type="checkbox">
+                                    </div>
+                                    <div class="checkbox d-flex flex-md-row justify-content-between">
+                                        <label>
+                                            Значение 3
+                                        </label>
+                                        <input type="checkbox">
+                                    </div>
+
+                                </div>
+                                <button class="btn btn-default btn-sm btn-primary"><i class="fa fa-pencil"></i>Прменить</button>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- *** MENUS AND FILTERS END ***-->
+                </div>
+                <div class="col-lg-9">
+                    <div class="box">
+                        <h1>@(Model.Category!=null ? Model.Category : "Популярное")</h1>
+                    </div>
+                    <div class="box info-bar">
+                        <div class="row">
+                            <div class="col-md-12 col-lg-7 products-number-sort">
+                                <form class="form-inline d-block d-lg-flex justify-content-between flex-column flex-md-row">
+                                    <div class="products-sort-by mt-2 mt-lg-0">
+                                        <strong>Сортировать по</strong>
+                                        <select name="sort-by" class="form-control">
+                                            <option>Цена</option>
+                                            <option>Название</option>
+                                            <option>Рейтинг</option>
+                                        </select>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row products">
+                        @foreach (var p in Model.ProductList)
+                        {
+                            <div class="col-lg-4 col-md-6">
+                                <div class="product">
+                                    <div class="flip-container">
+                                        <div class="flipper">
+                                            <div class="front"><a href="@Url.Action("ProductPage", "Catalog",  new { Category = Model.Category ?? "", ProductId = p.Id })"><img src="@Url.Content($"~/{p.Image.ImagePath}")" alt="" class="img-fluid"></a></div>
+                                            <div class="back"><a href="@Url.Action("ProductPage", "Catalog",  new { Category = Model.Category ?? "", ProductId = p.Id })"><img src="@Url.Content($"~/{p.Image.ImagePath}")" alt="" class="img-fluid"></a></div>
+                                        </div>
+                                    </div><a href="@Url.Action("ProductPage", "Catalog",  new { Category = Model.Category ?? "", ProductId = p.Id })" class="invisible"><img src="@Url.Content($"~/{p.Image.ImagePath}")" alt="" class="img-fluid"></a>
+                                    <div class="text">
+                                        <h3><a href="@Url.Action("ProductPage", "Catalog", new { Category = Model.Category ?? "", ProductId = p.Id })" >@p.Name</a></h3>
+                                        <p class="price">
+                                            <del></del>@p.Price
+                                        </p>
+                                        <p class="buttons"><a href="@Url.Action("ProductPage", "Catalog", new { Category = Model.Category ?? "", ProductId = p.Id })"  class="btn btn-outline-secondary">Подробнее</a><a href="basket.html" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>В корзину</a></p>
+                                    </div>
+                                    <!-- /.text-->
+                                </div>
+                                <!-- /.product            -->
+                            </div>
+                        }
+
+                        <!-- /.products-->
+                    </div>
+                    <div class="pages">
+                        <nav aria-label="Page navigation example" class="d-flex justify-content-center">
+                            <ul class="pagination">
+                                <li class="page-item"><a href="#" aria-label="Previous" class="page-link"><span aria-hidden="true">«</span><span class="sr-only">Previous</span></a></li>
+                                <li class="page-item"><a href="#" aria-label="Next" class="page-link"><span aria-hidden="true">»</span><span class="sr-only">Next</span></a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+
+                <!-- /.col-lg-9-->
+            </div>
+        </div>
+    </div>
+</div>

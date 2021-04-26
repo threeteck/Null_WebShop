@@ -241,3 +241,7 @@ footer{
 .property-field > * {
     margin-right: 0px!important;
 }
+
+#category .a{
+    pointer-events: none;
+}

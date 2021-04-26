@@ -15,4 +15,9 @@
       <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.2" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\DomainModels\DomainModels.fsproj" />
+      <ProjectReference Include="..\WebShop_FSharp\WebShop_FSharp.fsproj" />
+    </ItemGroup>
+
 </Project>

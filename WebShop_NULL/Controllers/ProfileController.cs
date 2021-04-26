@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using DomainModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using WebShop_NULL.Models;
+using WebShop_FSharp;
 using WebShop_NULL.Models.ViewModels;
 
 namespace WebShop_NULL.Controllers
@@ -28,7 +25,7 @@ namespace WebShop_NULL.Controllers
             _appEnvironment = appEnvironment;
         }
 
-        [Route("~/profile/{userId?}")]
+        [Route("~/profile/{userId:int?}")]
         public IActionResult Profile(int userId = -1)
         {
             if(userId == -1)

@@ -1,16 +1,14 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using DomainModels;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using WebShop_NULL.Middleware;
+using WebShop_FSharp;
+using WebShop_FSharp.Middleware;
 
 namespace WebShop_NULL
 {
@@ -76,7 +74,7 @@ namespace WebShop_NULL
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Catalog}/{action=Index}/{id?}");
                 endpoints.MapControllerRoute(
                     name: "AdminPanel",
                     pattern: "{controller=AdminPanel}/{action=Products}/{id?}");
