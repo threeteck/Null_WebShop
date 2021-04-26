@@ -1,10 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
+using System.Xml.XPath;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using DomainModels;
+using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using WebShop_FSharp;
 using WebShop_NULL.Models.ViewModels;
 using WebShop_NULL.Models.ViewModels.СatalogModels;
@@ -73,23 +76,46 @@ namespace WebShop_NULL.Controllers
                 RedirectToAction("Index", "Home");
             }
 
-            var productModel = _dbContext.Products.ById(productId)
-                .Select(p => new ProductViewModel()
+            var result = _dbContext.Products.ById(productId)
+                .Select(p => new
                 {
-                    Id = p.Id,
-                    Category = new CategoryDTO(p.Category.Id, p.Category.Name),
-                    Name = p.Name,
-                    Description = p.Description,
-                    Price = p.Price
-                })
-                .FirstOrDefault();
+                    Product = p,
+                    Category = p.Category,
+                    Properties = p.Category.Properties,
+                    ImagePath = p.Image.ImagePath
+                }).FirstOrDefault();
             
-            if (productModel == null)
+            if (result == null)
             {
                 return StatusCode(404);
             }
             
+            var productModel = new ProductViewModel()
+            {
+                Id = result.Product.Id,
+                Category = new CategoryDTO(result.Category.Id, result.Category.Name),
+                Name = result.Product.Name,
+                Description = result.Product.Description,
+                Price = result.Product.Price,
+                ImagePath = result.ImagePath,
+                Rating = result.Product.Rating,
+                Properties = GetPropertyValues(result.Product.AttributeValues)
+                    .Join(result.Properties, dict => int.Parse(dict.Key), 
+                        prop => prop.Id,
+                        (dict, prop) => new PropertyDTO()
+                        {
+                            Name = prop.Name,
+                            Value = dict.Value
+                        })
+            };
+            
             return View(productModel);
+        }
+        
+        public Dictionary<string, string> GetPropertyValues(JsonDocument jDoc)
+        {
+            return JsonSerializer.Deserialize<Dictionary<string, object>>(jDoc.ToJsonString())
+                .ToDictionary(pair => pair.Key, pair => pair.Value.ToString());
         }
     }
 }
