@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using WebShop_FSharp;
 using WebShop_NULL.Models.ViewModels;
 using WebShop_NULL.Models.ViewModels.AdminPanelModels;
 
@@ -110,6 +111,30 @@ namespace WebShop_NULL.Controllers
             model.Categories = categories;
             
             return View(model);
+        }
+
+        [HttpGet("~/adminpanel/api/deleteProduct")]
+        public async Task<IActionResult> DeleteProduct(int productId)
+        {
+            var imageData = _dbContext.Products.ImageById(productId).FirstOrDefault();
+
+            if (imageData != null)
+            {
+                var imagePath = Path.Combine(_appEnvironment.WebRootPath, imageData.ImagePath);
+                if (System.IO.File.Exists(imagePath))
+                    System.IO.File.Delete(imagePath);
+            }
+
+            var product = _dbContext.Products.ById(productId).FirstOrDefault();
+            if (product != null)
+                _dbContext.Products.Remove(product);
+            
+            if(imageData != null)
+                _dbContext.ImageMetadata.Remove(imageData);
+            
+            await _dbContext.SaveChangesAsync();
+
+            return Ok();
         }
 
         [HttpPost]

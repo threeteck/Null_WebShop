@@ -35,24 +35,24 @@
             <div class="table-responsive">
                 <table class="table">
                     <thead>
-                        <tr>
-                            <th>Название</th>
-                            <th>Рейтинг</th>
-                            <th>Цена</th>
-                            <th></th>
-                        </tr>
+                    <tr>
+                        <th>Название</th>
+                        <th>Рейтинг</th>
+                        <th>Цена</th>
+                        <th></th>
+                    </tr>
                     </thead>
                     <tbody>
                     @foreach (var product in Model.Products)
                     {
-                        <tr>
+                        <tr class="product-item" id="@product.Id">
                             <td>@product.Name</td>
                             <td>@product.Rating</td>
                             <td>@product.Price</td>
                             <td>
-                                <a asp-controller="AdminPanel" asp-action="Products"><i class="fa fa-eye"></i></a>
+                                <a href="@Url.Content($"~/product/{product.Id}")"><i class="fa fa-eye"></i></a>
                                 <a asp-controller="AdminPanel" asp-action="Products"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                                <a asp-controller="AdminPanel" asp-action="Products"><i class="fa fa-trash-o fa-fw"></i></a>
+                                <a class="delete-button"><i class="fa fa-trash-o fa-fw"></i></a>
                             </td>
                         </tr>
                     }
@@ -62,3 +62,8 @@
         </div>
     </div>
 </div>
+
+@section Scripts
+{
+    <script src="~/js/adminpanel_products.js" ></script>
+}
