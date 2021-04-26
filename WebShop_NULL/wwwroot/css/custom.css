@@ -94,6 +94,16 @@ footer{
     box-shadow: #963c3c 1px 1px;
 }
 
+.product-card-img{
+    width: 260px;
+    height: 260px;
+    object-fit: contain;
+}
+
+.page-item.disabled{
+    cursor: auto;
+}
+
 .field-validation-valid{
     display: none;
 }

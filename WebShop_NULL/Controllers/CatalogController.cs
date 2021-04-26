@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using DomainModels;
+using WebShop_FSharp;
+using WebShop_NULL.Models.ViewModels;
 using WebShop_NULL.Models.ViewModels.СatalogModels;
 
 namespace WebShop_NULL.Controllers
@@ -12,69 +14,81 @@ namespace WebShop_NULL.Controllers
     public class CatalogController : Controller
     {
         private readonly ApplicationContext _dbContext;
-        private readonly ILogger<AccountController> _logger;
-        public CatalogController(ILogger<AccountController> logger, ApplicationContext dbContext)
+        private readonly ILogger<CatalogController> _logger;
+        private readonly int _productsPerPage = 6;
+        
+        public CatalogController(ILogger<CatalogController> logger, ApplicationContext dbContext)
         {
             _logger = logger;
             _dbContext = dbContext;
         }
         // GET
-        public async Task<IActionResult> Index(string category = null)
+        public async Task<IActionResult> Index(int? categoryId = null, int page = 0, int sortingOption = 0)
         {
-            var categories = await _dbContext.Categories.Select(c => c.Name).ToListAsync();
-            List<Product> products;
-            if (category != null)
-            {
-                products = await _dbContext.Products.Where(p => p.Category.Name == category).Include(p => p.Image).ToListAsync();
-            }
+            var categories = _dbContext.Categories
+                .Select(c => new CategoryDTO(c.Id, c.Name))
+                .ToList();
+            var query = _dbContext.Products.Select(p => p);
+            if (categoryId != null)
+                query = query.Where(p => p.Category.Id == categoryId.Value);
+
+            if(sortingOption == 0)
+                query = query.OrderByDescending(p => p.Rating).ThenBy(p => p.Name);
             else
+                query = query.OrderBy(p => p.Price).ThenBy(p => p.Name);
+
+            int count = query.Count();
+            
+            query = query.Skip(page * _productsPerPage).Take(_productsPerPage);
+
+            var products = query.Select(p => new ProductCardDTO()
             {
-                products = await _dbContext.Products.OrderBy(p => p.Rating).Take(6).Include(p => p.Image).ToListAsync();
-            }
+                Id = p.Id,
+                Price = p.Price,
+                Name = p.Name,
+                ImagePath = p.Image.ImagePath,
+                Rating = p.Rating
+            }).ToList();
+
+            CategoryDTO category = null;
+            if (categoryId != null)
+                category = categories.FirstOrDefault(c => c.Id == categoryId);
+            
             var model = new CatalogViewModel()
             {
                 Categories = categories,
                 Category = category,
                 ProductList = products,
+                Page = page,
+                NumberOfPages = ((count - 1) / _productsPerPage) + 1
             };
-            return View("Catalog",model);
+            return View("Catalog", model);
         }
-       /* public async Task<IActionResult> Catalog(string category)
+
+        [HttpGet("~/product/{productId}")]
+        public async Task<IActionResult> ProductPage(int productId)
         {
-            var products = await _dbContext.Products
-                .Where(x => x.Category.Name.ToLower() == category.ToLower())
-                .Include(p=>p.Image).ToListAsync();
-            var categories = await _dbContext.Categories
-                .Include(c => c.Properties)
-                .FirstOrDefaultAsync(c => c.Name.ToLower() == category.ToLower());
-            var model = new ProductsViewModel()
-            {
-                ProductList = products,
-                Category = category,
-                Properties = categories.Properties,
-            };
-            return View(model);
-        }*/
-        public async Task<IActionResult> ProductPage(string category, int ProductId = -1)
-        {
-            if (ProductId == -1)
+            if (productId == -1)
             {
                 RedirectToAction("Index", "Home");
             }
-            var product = await _dbContext.Products.Include(p=>p.Image).FirstOrDefaultAsync(x => x.Id == ProductId);
-            if (product == null)
+
+            var productModel = _dbContext.Products.ById(productId)
+                .Select(p => new ProductViewModel()
+                {
+                    Id = p.Id,
+                    Category = new CategoryDTO(p.Category.Id, p.Category.Name),
+                    Name = p.Name,
+                    Description = p.Description,
+                    Price = p.Price
+                })
+                .FirstOrDefault();
+            
+            if (productModel == null)
             {
                 return StatusCode(404);
             }
-
-            var productModel = new ProductViewModel()
-            {
-                Category = category,
-                Name =  product.Name,
-                Description = product.Description,
-                Image = product.Image.ImagePath,
-                Price = product.Price,
-            };
+            
             return View(productModel);
         }
     }

@@ -6,6 +6,7 @@ type PropertyTypeEnum =
     | Integer = 0
     | Decimal = 1
     | Option = 2
+    | Nominal = 3
     
 [<CLIMutable>]
 type PropertyType =

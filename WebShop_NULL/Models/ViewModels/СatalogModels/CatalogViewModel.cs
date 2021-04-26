@@ -8,8 +8,11 @@ namespace WebShop_NULL.Models.ViewModels.СatalogModels
 {
     public class CatalogViewModel
     {
-        public string Category { get; set; }
-        public ICollection<string> Categories { get; set; }
-        public List<Product> ProductList { get; set; }
+        public CategoryDTO Category { get; set; }
+        public int Page { get; set; }
+        public int NumberOfPages { get; set; }
+        public int SortingOption { get; set; }
+        public ICollection<CategoryDTO> Categories { get; set; }
+        public List<ProductCardDTO> ProductList { get; set; }
     }
 }

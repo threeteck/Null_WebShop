@@ -17,7 +17,9 @@
                             <li class="breadcrumb-item"><a asp-controller="Catalog" asp-action="Index">Главная</a></li>
                             @if (Model.Category != null)
                             {
-                                <li class="breadcrumb-item"><a href="@Url.Action("Index", "Catalog", new { category = Model.Category })">@Model.Category</a></li>
+                                <li class="breadcrumb-item">
+                                    <a href="@Url.Action("Index", "Catalog", new {categoryId = Model.Category.Id})">@Model.Category.Name</a>
+                                </li>
                             }
                             <li aria-current="page" class="breadcrumb-item active">@Model.Name</li>
                         </ol>
@@ -27,21 +29,21 @@
                     <div id="productMain" class="row">
                         <div class="col-md-6">
                             <div data-slider-id="1" class="owl-carousel shop-detail-carousel">
-                                <div class="item"> <img src="@Url.Content($"~/{Model.Image}")" alt="" class="img-fluid"></div>
-                                <div class="item"> <img src="@Url.Content($"~/{Model.Image}")" alt="" class="img-fluid"></div>
-                                <div class="item"> <img src="@Url.Content($"~/{Model.Image}")" alt="" class="img-fluid"></div>
+                                <div class="item"> <img src="@Url.Content($"~/{Model.ImagePath}")" alt="" class="img-fluid"></div>
+                                <div class="item"> <img src="@Url.Content($"~/{Model.ImagePath}")" alt="" class="img-fluid"></div>
+                                <div class="item"> <img src="@Url.Content($"~/{Model.ImagePath}")" alt="" class="img-fluid"></div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="box">
                                 <h1 class="text-center">@Model.Name</h1>
                                 <p class="price">@Model.Price</p>
-                                <p class="text-center buttons"><a href="basket.html" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>В корзину</a></p>
+                                <p class="text-center buttons"><a href="#" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>В корзину</a></p>
                             </div>
                             <div data-slider-id="1" class="owl-thumbs">
-                                <button class="owl-thumb-item"><img src="@Url.Content($"~/{Model.Image}")" alt="" class="img-fluid"></button>
-                                <button class="owl-thumb-item"><img src="@Url.Content($"~/{Model.Image}")" alt="" class="img-fluid"></button>
-                                <button class="owl-thumb-item"><img src="@Url.Content($"~/{Model.Image}")" alt="" class="img-fluid"></button>
+                                <button class="owl-thumb-item"><img src="@Url.Content($"~/{Model.ImagePath}")" alt="" class="img-fluid"></button>
+                                <button class="owl-thumb-item"><img src="@Url.Content($"~/{Model.ImagePath}")" alt="" class="img-fluid"></button>
+                                <button class="owl-thumb-item"><img src="@Url.Content($"~/{Model.ImagePath}")" alt="" class="img-fluid"></button>
                             </div>
                         </div>
                     </div>

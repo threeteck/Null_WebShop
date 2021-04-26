@@ -2,9 +2,8 @@
     ViewData["Title"] = "Каталог";
 }
 @using WebShop_NULL.Models.ViewModels.СatalogModels
-@using DomainModels
 @model CatalogViewModel
-@inject ApplicationContext context
+
 <div id="all">
     <div id="content">
         <div class="container">
@@ -13,11 +12,13 @@
                     <!-- breadcrumb-->
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a asp-controller="Catalog" asp-action="Index">Главная</a></li>
+                            <li class="breadcrumb-item">
+                                <a asp-controller="Catalog" asp-action="Index">Главная</a>
+                            </li>
                             @{
                                 if (Model != null && Model.Category != null)
                                 {
-                                    <li aria-current="page" class="breadcrumb-item active">@Model.Category</li>
+                                    <li aria-current="page" class="breadcrumb-item active">@Model.Category.Name</li>
                                 }
                             }
                         </ol>
@@ -25,9 +26,9 @@
                 </div>
                 <div class="col-lg-3">
                     <!--
-        *** MENUS AND FILTERS ***
-        _________________________________________________________
-        -->
+                    *** MENUS AND FILTERS ***
+                    _________________________________________________________
+                    -->
                     <div class="card sidebar-menu mb-4">
                         <div class="card-header">
                             <h3 class="h4 card-title">Категории</h3>
@@ -37,7 +38,9 @@
                                 @foreach (var c in Model.Categories)
                                 {
                                     <li>
-                                        <a href="@Url.Action("Index","Catalog",new { category = c })" class="nav-link @(Model != null && Model.Category == c ? "active" : "")">@c <span class="badge badge-secondary"></span></a>
+                                        <a href="@Url.Action("Index","Catalog",new { categoryId = c.Id })" class="nav-link @(Model.Category != null && Model.Category.Id == c.Id ? "active" : "")">@c.Name
+                                            <span class="badge badge-secondary"></span>
+                                        </a>
                                     </li>
                                 }
                             </ul>
@@ -109,19 +112,25 @@
                 </div>
                 <div class="col-lg-9">
                     <div class="box">
-                        <h1>@(Model.Category!=null ? Model.Category : "Популярное")</h1>
+                        <h1>@(Model.Category != null ? Model.Category.Name : "Популярное")</h1>
                     </div>
                     <div class="box info-bar">
-                        <div class="row">
-                            <div class="col-md-12 col-lg-7 products-number-sort">
-                                <form class="form-inline d-block d-lg-flex justify-content-between flex-column flex-md-row">
+                        <div class="row w-100">
+                            <div class="products-number-sort w-100">
+                                <form id="search-form" action = "" class="form-inline d-block d-lg-flex justify-content-between flex-column flex-md-row w-100">
+                                    @if (Model.Category != null)
+                                    {
+                                        <input type="hidden" name="categoryId" value="@Model.Category.Id">
+                                    }
                                     <div class="products-sort-by mt-2 mt-lg-0">
                                         <strong>Сортировать по</strong>
-                                        <select name="sort-by" class="form-control">
-                                            <option>Цена</option>
-                                            <option>Название</option>
-                                            <option>Рейтинг</option>
+                                        <select class="form-control" name="sortingOption">
+                                            <!option value="0" @(Model.SortingOption == 0?"selected":"")>Рейтинг</!option>
+                                            <!option value="1" @(Model.SortingOption == 1?"selected":"")>Цена</!option>
                                         </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="submit" class="btn btn-primary" value="Поиск">
                                     </div>
                                 </form>
                             </div>
@@ -130,37 +139,55 @@
                     <div class="row products">
                         @foreach (var p in Model.ProductList)
                         {
-                            <div class="col-lg-4 col-md-6">
-                                <div class="product">
-                                    <div class="flip-container">
-                                        <div class="flipper">
-                                            <div class="front"><a href="@Url.Action("ProductPage", "Catalog",  new { Category = Model.Category ?? "", ProductId = p.Id })"><img src="@Url.Content($"~/{p.Image.ImagePath}")" alt="" class="img-fluid"></a></div>
-                                            <div class="back"><a href="@Url.Action("ProductPage", "Catalog",  new { Category = Model.Category ?? "", ProductId = p.Id })"><img src="@Url.Content($"~/{p.Image.ImagePath}")" alt="" class="img-fluid"></a></div>
-                                        </div>
-                                    </div><a href="@Url.Action("ProductPage", "Catalog",  new { Category = Model.Category ?? "", ProductId = p.Id })" class="invisible"><img src="@Url.Content($"~/{p.Image.ImagePath}")" alt="" class="img-fluid"></a>
-                                    <div class="text">
-                                        <h3><a href="@Url.Action("ProductPage", "Catalog", new { Category = Model.Category ?? "", ProductId = p.Id })" >@p.Name</a></h3>
-                                        <p class="price">
-                                            <del></del>@p.Price
-                                        </p>
-                                        <p class="buttons"><a href="@Url.Action("ProductPage", "Catalog", new { Category = Model.Category ?? "", ProductId = p.Id })"  class="btn btn-outline-secondary">Подробнее</a><a href="basket.html" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>В корзину</a></p>
-                                    </div>
-                                    <!-- /.text-->
-                                </div>
-                                <!-- /.product            -->
-                            </div>
+                            @Html.Partial("ProductCardPartial", p)
                         }
 
                         <!-- /.products-->
                     </div>
-                    <div class="pages">
-                        <nav aria-label="Page navigation example" class="d-flex justify-content-center">
-                            <ul class="pagination">
-                                <li class="page-item"><a href="#" aria-label="Previous" class="page-link"><span aria-hidden="true">«</span><span class="sr-only">Previous</span></a></li>
-                                <li class="page-item"><a href="#" aria-label="Next" class="page-link"><span aria-hidden="true">»</span><span class="sr-only">Next</span></a></li>
-                            </ul>
-                        </nav>
-                    </div>
+
+                    @if (Model.NumberOfPages > 1)
+                    {
+                        <div class="pages">
+                            <nav class="d-flex justify-content-center">
+                                <ul class="pagination">
+                                    <li class="page-item @(Model.Page == 0 ? "disabled" : "")">
+                                        <button class="page-link" @(Model.Page == 0 ? "disabled" : "") form="search-form" type="submit" name="page" value="@(Model.Page - 1)">
+                                            <span aria-hidden="true">&laquo;</span>
+                                            <span class="sr-only">Previous</span>
+                                        </button>
+                                    </li>
+                                    @if (Model.Page >= 4)
+                                    {
+                                        <li>
+                                            <button class="btn" form="search-form" type="submit" name="page" value="0">1</button>
+                                        </li>
+                                        <li class="page-item disabled"><span>...</span></li>
+                                    }
+
+                                    @for (int i = Math.Max(0, Model.Page - 3); i < Math.Min(Model.NumberOfPages, Model.Page + 4); i++)
+                                    {
+                                        <li class="page-item @(Model.Page == i ? "active" : "")">
+                                            <button class="page-link" form="search-form" type="submit" name="page" value="@i">@(i + 1)</button>
+                                        </li>
+                                    }
+
+                                    @if (Model.Page + 3 < Model.NumberOfPages - 1)
+                                    {
+                                        <li class="page-item disabled"><span>...</span></li>
+                                        <li class="page-item">
+                                            <button class="page-link" form="search-form" type="submit" name="page" value="@(Model.NumberOfPages - 1)">@Model.NumberOfPages</button>
+                                        </li>
+                                    }
+                                    <li class="page-item @(Model.Page == Model.NumberOfPages - 1 ? "disabled" : "")">
+                                        <button class="page-link" @(Model.Page == Model.NumberOfPages - 1 ? "disabled" : "") form="search-form" type="submit" name="page" value="@(Model.Page + 1)">
+                                            <span aria-hidden="true">&raquo;</span>
+                                            <span class="sr-only">Next</span>
+                                        </button>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    }
                 </div>
 
                 <!-- /.col-lg-9-->
@@ -168,3 +195,8 @@
         </div>
     </div>
 </div>
+
+@section Scripts
+{
+    <script src="~/js/catalog.js" type="text/javascript"></script>
+}
