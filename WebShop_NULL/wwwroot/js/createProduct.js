@@ -35,10 +35,10 @@ function getElementFromProperty(property){
 `;
     
     if(property.propertyType === "Integer" || property.propertyType === "Decimal")
-        html += `<input class="form-control" placeholder="Значение" type="number" name="PropertyInfos[${property.id}].Value">`
+        html += `<input class="form-control" placeholder="Значение" type="number" name="PropertyInfos[${property.id}].Value" max="1000000000">`
     
     if(property.propertyType == "Nominal")
-        html += `<input class="form-control" placeholder="Значение" type="text" name="PropertyInfos[${property.id}].Value">`
+        html += `<input class="form-control" placeholder="Значение" type="text" name="PropertyInfos[${property.id}].Value" maxlength=64>`
 
     if(property.propertyType == "Option") {
         html += `<select class="form-control" name="PropertyInfos[${property.id}].Value">`

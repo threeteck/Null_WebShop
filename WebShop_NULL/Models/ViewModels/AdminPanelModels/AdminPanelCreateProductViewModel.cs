@@ -23,6 +23,7 @@ namespace WebShop_NULL.Models.ViewModels.AdminPanelModels
         [MaxLength(1024)]
         public string ProductDescription { get; set; }
         [Required(ErrorMessage = "Цена товара должна быть указана")]
+        [Range(0, double.MaxValue)]
         public double? ProductPrice { get; set; } = null;
 
         public IEnumerable<CategoryDTO> Categories;

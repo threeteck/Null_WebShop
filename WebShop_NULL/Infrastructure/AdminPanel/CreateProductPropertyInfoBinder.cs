@@ -19,7 +19,7 @@ namespace WebShop_NULL.Infrastructure.AdminPanel
             if (propertyIdResult == ValueProviderResult.None ||
                 propertyValueResult == ValueProviderResult.None ||
                 !int.TryParse(propertyIdResult.FirstValue, out var propertyId) ||
-                propertyValueResult.FirstValue == null)
+                string.IsNullOrWhiteSpace(propertyValueResult.FirstValue))
             {
                 ModelBindingResult.Failed();
                 return Task.CompletedTask;
