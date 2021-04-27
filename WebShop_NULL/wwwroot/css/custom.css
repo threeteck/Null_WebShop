@@ -78,6 +78,12 @@ body{
     border-right: none;
 }
 
+#property-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .margin-bottom-40px{
     margin-bottom: 48px;
 }
@@ -129,6 +135,14 @@ footer{
 .property-name-column{
     color: #5d5d64;
     padding-right: 20px;
+}
+
+.property-field.box{
+    margin: 1rem;
+}
+
+.border-red{
+    border: 1px solid rgba(255, 0, 0, 0.3);
 }
 
 .property-value-column{
@@ -283,6 +297,35 @@ footer{
     flex-direction: row;
     margin-right: 0px;
 }
+
+.option-field{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.cross{
+    cursor: pointer;
+    left: 100%;
+    bottom: 30px;
+    height: 10px;
+    position: relative;
+}
+
+.minus, .plus{
+    cursor: pointer;
+    margin: 0!important;
+    margin-top: 0.6rem!important;
+    width: 32px;
+    height: 32px;
+}
+
+.icon-tab{
+    display: flex;
+}
+
 .property-field > * {
     margin-right: 0px!important;
 }

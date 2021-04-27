@@ -14,6 +14,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using WebShop_FSharp;
 using WebShop_NULL.Models.ViewModels;
 using WebShop_NULL.Models.ViewModels.AdminPanelModels;
+using Property = DomainModels.Property;
 
 namespace WebShop_NULL.Controllers
 {
@@ -49,6 +50,74 @@ namespace WebShop_NULL.Controllers
                 response = CommandLineResponse.Failure(message);
             else response = CommandLineResponse.Success(message);
             return View(response);
+        }
+
+        [HttpGet]
+        public IActionResult CreateCategory()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateCategory(AdminPanelCreateCategoryViewModel data)
+        {
+            if (!ModelState.IsValid)
+                return View();
+
+            var propertyTypes = _dbContext.PropertyTypes.ToList()
+                .ToDictionary(type => type.Name, type => type);
+
+            var properties = new List<Property>();
+            foreach (var propertyInfo in data.PropertyInfos)
+            {
+                var property = new Property()
+                {
+                    Name = propertyInfo.Name,
+                    Type = propertyTypes[GetTypeName(propertyInfo.Type)],
+                };
+
+                if (propertyInfo is CreateCategoryOptionPropertyInfo optionInfo)
+                {
+                    var obj = new
+                    {
+                        options = optionInfo.Options
+                    };
+
+                    var json = JsonSerializer.SerializeToUtf8Bytes(obj);
+                    var jDoc = JsonDocument.Parse(json);
+
+                    property.FilterInfo = jDoc;
+                }
+                else
+                {
+                    property.FilterInfo = JsonDocument.Parse("{}");
+                }
+                
+                properties.Add(property);
+            }
+
+            var category = new Category()
+            {
+                Name = data.CategoryName,
+                Properties = properties
+            };
+
+            _dbContext.Categories.Add(category);
+            await _dbContext.SaveChangesAsync();
+
+            string GetTypeName(int id)
+            {
+                switch (id)
+                {
+                    case 0: return "Nominal";
+                    case 1: return "Decimal";
+                    case 2: return "Option";
+                }
+
+                return null;
+            }
+            
+            return RedirectToAction("Products");
         }
         
         public IActionResult Products(string category, string query, int filterOption = 0)
