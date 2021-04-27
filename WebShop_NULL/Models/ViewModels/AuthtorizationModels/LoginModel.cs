@@ -11,7 +11,7 @@ namespace WebShop_NULL.Models.AuthtorizationModels
         [DataType(DataType.Password)]
         public string Password { get; set; }
         
-        public bool RememberMe { get; set; }
+        public string RememberMe { get; set; }
 
     }
 }

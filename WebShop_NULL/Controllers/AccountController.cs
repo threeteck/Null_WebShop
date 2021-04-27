@@ -54,7 +54,7 @@ namespace WebShop_NULL.Controllers
                 }
                 else
                 {
-                    await Authenticate(user,model.RememberMe);
+                    await Authenticate(user,model.RememberMe != null);
                     return RedirectToAction("Index", "Home");
                 }
             }
@@ -171,7 +171,7 @@ namespace WebShop_NULL.Controllers
             var hashBuilder = new StringBuilder();
             using (var hash = SHA256.Create())
             {
-                var result = hash.ComputeHash(Encoding.UTF8.GetBytes(password));
+                var result = hash.ComputeHash(Encoding.UTF8.GetBytes(password+"considerYourself-Salted"));
                 foreach (var b in result)
                     hashBuilder.Append(b.ToString("x2"));
             }
