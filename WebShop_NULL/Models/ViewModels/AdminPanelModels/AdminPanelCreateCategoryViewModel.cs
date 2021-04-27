@@ -19,7 +19,7 @@ namespace WebShop_NULL.Models.ViewModels.AdminPanelModels
 
     public class AdminPanelCreateCategoryViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Имя категории должно быть указано")]
         public string CategoryName { get; set; }
 
         public List<CreateCategoryPropertyInfo> PropertyInfos { get; set; }
