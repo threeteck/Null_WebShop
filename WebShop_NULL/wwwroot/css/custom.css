@@ -84,6 +84,22 @@ body{
     align-items: center;
 }
 
+#review-rating{
+    grid-area: rating;
+}
+
+#review-text{
+    grid-area: text;
+}
+
+#review-submit{
+    grid-area: button;
+}
+
+#reviews-tab, #properties-tab{
+    cursor: pointer;
+}
+
 .margin-bottom-40px{
     margin-bottom: 48px;
 }
@@ -116,6 +132,69 @@ footer{
     grid-template-columns: repeat(10,minmax(0,1fr));
     display: grid;
     margin: 0 60px;
+}
+
+.review-container{
+    display: grid;
+    grid-template-areas:
+        "text rating"
+        "text button";
+    grid-template-columns: 3fr 1fr;
+    grid-gap: 1rem;
+}
+
+.review-rating-container{
+    grid-area: star;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.review-rating-star{
+    width: 128px;
+    height: 128px;
+}
+
+.review-image-container{
+    grid-area: img;
+}
+
+.review-image{
+    border-radius: 50%;
+    width: 128px;
+    height: 128px;
+    object-fit: contain;
+}
+
+.review-content{
+    grid-area: text;
+    margin-top: 0.3rem;
+}
+
+.review-rating-star-text{
+    color: white;
+    position: absolute;
+    height: 128px;
+    width: 128px;
+    margin-top: 5px;
+    font-size: 2em;
+}
+
+.review-name{
+    grid-area: name;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.review{
+    display: grid;
+    padding: 0.5rem 0;
+    grid-template-areas:
+        "name text star"
+        "img text star";
+    grid-template-columns: 1fr 3fr 1fr;
+    grid-gap: 1rem;
 }
 
 .properties{

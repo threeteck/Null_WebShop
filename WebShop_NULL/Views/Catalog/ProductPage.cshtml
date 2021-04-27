@@ -57,17 +57,43 @@
                         </div>
                     </div>
                     
-                    <div id="details" class="box ">
-                        <ul class="nav nav-tabs d-flex justify-content-center">
+                    <div id="details" class="box \">
+                        <ul class="nav nav-pills d-flex justify-content-center">
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="#">Характеристики</a>
+                                <a id="properties-tab" class="nav-link active" aria-current="page">Характеристики</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Отзывы</a>
+                                <a id="reviews-tab" class="nav-link">Отзывы</a>
                             </li>
                         </ul>
                         
-                        <div class="product-details-container">
+                        <div id="product-reviews-container" class="product-reviews-container mt-3" hidden>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <div class="box p-3">
+                                    <form action="@Url.Content($"~/product/{Model.Id}/sendReview")" method="post">
+                                        <div class="review-container">
+                                            <textarea id="review-text" name="content" placeholder="Текст отзыва"></textarea>
+                                            <select id="review-rating" class="form-control" name="rating">
+                                                @for (int i = 1; i <= 10; i++)
+                                                {
+                                                    <option value="@i">@i</option>
+                                                }
+                                            </select>
+                                            <input id="review-submit" type="submit" class="btn btn-primary" value="Оставить отзыв"/>
+                                        </div>
+                                    </form>
+                                </div>
+                            }
+
+                            @foreach (var review in Model.Reviews)
+                            {
+                                @Html.Partial("ReviewPartial", review)
+                            }
+
+                        </div>
+
+                        <div id="product-details-container" class="product-details-container">
                             <div class="mt-5 properties">
                                 @foreach (var property in Model.Properties)
                                 {
@@ -85,3 +111,8 @@
         </div>
     </div>
 </div>
+
+@section Scripts
+{
+    <script src="~/js/product.js"></script>
+}

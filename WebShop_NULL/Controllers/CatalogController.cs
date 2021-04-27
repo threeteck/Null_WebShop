@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using DomainModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using WebShop_FSharp;
 using WebShop_NULL.Models.ViewModels;
@@ -82,7 +84,16 @@ namespace WebShop_NULL.Controllers
                     Product = p,
                     Category = p.Category,
                     Properties = p.Category.Properties,
-                    ImagePath = p.Image.ImagePath
+                    ImagePath = p.Image.ImagePath,
+                    Reviews = p.Reviews.OrderByDescending(review => review.Date)
+                        .Select(review => new ReviewDTO()
+                    {
+                        Content = review.Content,
+                        Rating = review.Rating,
+                        UserId = review.UserId,
+                        UserImagePath = review.User.Image.ImagePath,
+                        UserName = $"{review.User.Name} {review.User.Surname}"
+                    })
                 }).FirstOrDefault();
             
             if (result == null)
@@ -106,10 +117,31 @@ namespace WebShop_NULL.Controllers
                         {
                             Name = prop.Name,
                             Value = dict.Value
-                        })
+                        }),
+                Reviews = result.Reviews
             };
-            
+
             return View(productModel);
+        }
+
+        [Authorize]
+        [HttpPost("~/product/{productId}/sendReview")]
+        public async Task<IActionResult> SendReview(int productId, string content, int rating)
+        {
+            int userId = User.GetId();
+            var review = new Review()
+            {
+                Content = content,
+                Date = DateTime.Now,
+                ProductId = productId,
+                UserId = userId,
+                Rating = rating
+            };
+
+            _dbContext.Reviews.Add(review);
+            await _dbContext.SaveChangesAsync();
+
+            return Redirect(Url.Content($"~/product/{productId}"));
         }
         
         public Dictionary<string, string> GetPropertyValues(JsonDocument jDoc)

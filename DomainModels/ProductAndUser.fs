@@ -1,5 +1,6 @@
 ﻿namespace DomainModels
 
+open System
 open System.Collections.Generic;
 open System.ComponentModel.DataAnnotations
 open System.Text.Json
@@ -23,6 +24,7 @@ type Product =
         AttributeValues:JsonDocument
         
         InBasketOf:ICollection<User>
+        Reviews:ICollection<Review>
     }
 and [<CLIMutable>] User =
     {
@@ -46,3 +48,18 @@ and [<CLIMutable>] User =
         
         IsConfirmed:bool
     }
+ and [<CLIMutable>] Review =
+        {
+            [<Key>]
+            Id:int
+            
+            ProductId:int
+            Product:Product
+            
+            UserId:int
+            User:User
+            
+            Content:string
+            Rating:int
+            Date:DateTime
+        }
