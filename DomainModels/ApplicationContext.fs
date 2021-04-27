@@ -1,15 +1,16 @@
 namespace DomainModels
 
 open Microsoft.EntityFrameworkCore
+open Microsoft.EntityFrameworkCore.Infrastructure
 
 type ApplicationContext(options : DbContextOptions<ApplicationContext>) =
     inherit DbContext(options)
     
-    //do this.Database.EnsureCreated |> ignore
-
-    
     [<DefaultValue>]
     val mutable categories : DbSet<Category>
+    
+    [<DefaultValue>]
+    val mutable reviews : DbSet<Review>
     
     [<DefaultValue>]
     val mutable products : DbSet<Product>
@@ -32,8 +33,9 @@ type ApplicationContext(options : DbContextOptions<ApplicationContext>) =
     [<DefaultValue>]
     val mutable cities : DbSet<City>
 
-
-
+    member public this.Reviews with get() = this.reviews
+                                  and set p = this.reviews <- p
+                                  
     member public this.Categories with get() = this.categories
                                   and set p = this.categories <- p
     member public this.Products with get() = this.products

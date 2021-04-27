@@ -26,7 +26,7 @@ namespace WebShop_NULL
         {
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<ApplicationContext>(option =>
-                option.UseNpgsql(connectionString));
+                option.UseNpgsql(connectionString, b => b.MigrationsAssembly("WebShop_NULL")));
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
                 {

@@ -16,5 +16,6 @@ namespace WebShop_NULL.Models.ViewModels.СatalogModels
         public decimal Rating { get; set; }
 
         public IEnumerable<PropertyDTO> Properties;
+        public IEnumerable<ReviewDTO> Reviews;
     }
 }
