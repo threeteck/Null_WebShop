@@ -1,6 +1,6 @@
 ﻿namespace WebShop_NULL.Models.ViewModels
 {
-    public class CategoryDTO
+    public class CategoryDTO//Moved to F# TODO test
     {
         public int Id;
         public string Name;

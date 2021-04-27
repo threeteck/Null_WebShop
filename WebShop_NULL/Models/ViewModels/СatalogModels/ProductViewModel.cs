@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-
+//Moved to F# TODO test
 namespace WebShop_NULL.Models.ViewModels.СatalogModels
 {
     public class ProductViewModel

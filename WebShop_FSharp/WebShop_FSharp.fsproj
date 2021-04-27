@@ -5,10 +5,19 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Compile Include="NullCoalescing.fs" />
       <Compile Include="Middleware\CitiesMiddleware.fs" />
       <Compile Include="IEmailSender.fs" />
       <Compile Include="QueryableExtensions.fs" />
       <Compile Include="EmailSettings.fs" />
+      <Compile Include="IdentityExtensions.fs" />
+      <Compile Include="ServicesExtensions.fs" />
+      <Compile Include="ViewModels\ErrorViewModel.fs" />
+      <Compile Include="ViewModels\CategoryDTO.fs" />
+      <Compile Include="ViewModels\CatalogModels\ReviewDTO.fs" />
+      <Compile Include="ViewModels\CatalogModels\PropertyDTO.fs" />
+      <Compile Include="ViewModels\CatalogModels\ProductViewModel.fs" />
+      <Compile Include="Controllers\HomeController.fs" />
     </ItemGroup>
 
     <ItemGroup>
@@ -17,6 +26,7 @@
 
     <ItemGroup>
       <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
+      <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
     </ItemGroup>
 
 </Project>

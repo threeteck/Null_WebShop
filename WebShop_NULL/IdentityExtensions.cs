@@ -1,5 +1,5 @@
 ﻿using System.Security.Claims;
-
+//Converted to C#, TODO check
 namespace WebShop_NULL
 {
     public static class IdentityExtensions
