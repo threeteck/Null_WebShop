@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
 using MailKit.Net.Smtp; 
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MimeKit;
+using WebShop_FSharp;
 
 namespace WebShop_NULL
 {

@@ -35,13 +35,8 @@ namespace WebShop_NULL
             _commandService = commandService;
             _tokens = new ConcurrentDictionary<string, EmailConfirmationToken>();
             _keys = new ConcurrentDictionary<int, string>();
-            
-            _commandService.AddCommand("TokenClear",
-                (_) =>
-            {
-                ClearTokens();
-                return true;
-            });
+
+            _commandService.AddCommand("TokenClear", ClearTokensCommand);
             
             _expirationTimerCancellationSource = new CancellationTokenSource();
             ExpirationTimer(_expirationTimerCancellationSource.Token);
@@ -109,6 +104,13 @@ namespace WebShop_NULL
             {
                 ExpireToken(key);
             }
+        }
+
+        private bool ClearTokensCommand(out string message, params string[] args)
+        {
+            ClearTokens();
+            message = "Все токены авторизации удалены";
+            return true;
         }
         
         public void Dispose()

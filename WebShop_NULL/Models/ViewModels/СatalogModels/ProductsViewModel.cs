@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using WebShop_NULL.Models.DomainModels;
+using DomainModels;
 
 namespace WebShop_NULL.Models.ViewModels.СatalogModels
 {
