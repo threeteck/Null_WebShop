@@ -1,4 +1,9 @@
-﻿namespace WebShop_NULL.Models.ViewModels.СatalogModels
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+
+namespace WebShop_NULL.Models.ViewModels.СatalogModels
 {
     public class ProductViewModel
     {
@@ -8,5 +13,8 @@
         public string ImagePath;
         public decimal Price { get; set; }
         public int Id { get; set; }
+        public decimal Rating { get; set; }
+
+        public IEnumerable<PropertyDTO> Properties;
     }
 }

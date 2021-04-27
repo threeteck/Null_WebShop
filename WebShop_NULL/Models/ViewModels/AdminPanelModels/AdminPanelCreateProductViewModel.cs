@@ -15,15 +15,14 @@ namespace WebShop_NULL.Models.ViewModels.AdminPanelModels
     
     public class AdminPanelCreateProductViewModel
     {
-        [Required] 
+        [Required(ErrorMessage = "Категория должна быть указана")] 
         public int? Category { get; set; } = null;
-        [Required]
+        [Required(ErrorMessage = "Имя товара должно быть указано")]
         [MaxLength(64)]
         public string ProductName { get; set; }
-        [Required]
         [MaxLength(1024)]
         public string ProductDescription { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Цена товара должна быть указана")]
         public double? ProductPrice { get; set; } = null;
 
         public IEnumerable<CategoryDTO> Categories;
