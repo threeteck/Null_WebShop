@@ -1,0 +1,202 @@
+﻿@{ 
+    ViewData["Title"] = "Каталог";
+}
+@using WebShop_NULL.Models.ViewModels.СatalogModels
+@model CatalogViewModel
+
+<div id="all">
+    <div id="content">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <!-- breadcrumb-->
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a asp-controller="Catalog" asp-action="Index">Главная</a>
+                            </li>
+                            @{
+                                if (Model != null && Model.Category != null)
+                                {
+                                    <li aria-current="page" class="breadcrumb-item active">@Model.Category.Name</li>
+                                }
+                            }
+                        </ol>
+                    </nav>
+                </div>
+                <div class="col-lg-3">
+                    <!--
+                    *** MENUS AND FILTERS ***
+                    _________________________________________________________
+                    -->
+                    <div class="card sidebar-menu mb-4">
+                        <div class="card-header">
+                            <h3 class="h4 card-title">Категории</h3>
+                        </div>
+                        <div class="card-body">
+                            <ul id="categories" class="nav nav-pills flex-column category-menu">
+                                @foreach (var c in Model.Categories)
+                                {
+                                    <li>
+                                        <a href="@Url.Action("Index","Catalog",new { categoryId = c.Id })" class="nav-link @(Model.Category != null && Model.Category.Id == c.Id ? "active" : "")">@c.Name
+                                            <span class="badge badge-secondary"></span>
+                                        </a>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card sidebar-menu mb-4">
+                        <div class="card-header">
+                            <h3 class="h4 card-title">Характеристика 1</h3>
+                        </div>
+                        <div class="card-body">
+                            <form>
+                                <div class="form-group">
+                                    <div class="checkbox d-flex flex-md-row justify-content-between">
+                                        <label>
+                                            Значение 1
+                                        </label>
+                                        <input type="checkbox">
+                                    </div>
+                                    <div class="checkbox d-flex flex-md-row justify-content-between">
+                                        <label>
+                                            Значение 2
+                                        </label>
+                                        <input type="checkbox">
+                                    </div>
+                                    <div class="checkbox d-flex flex-md-row justify-content-between">
+                                        <label>
+                                            Значение 3
+                                        </label>
+                                        <input type="checkbox">
+                                    </div>
+
+                                </div>
+                                <button class="btn btn-default btn-sm btn-primary"><i class="fa fa-pencil"></i>Прменить</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card sidebar-menu mb-4">
+                        <div class="card-header">
+                            <h3 class="h4 card-title">Характеристика 2</h3>
+                        </div>
+                        <div class="card-body">
+                            <form>
+                                <div class="form-group">
+                                    <div class="checkbox d-flex flex-md-row justify-content-between">
+                                        <label>
+                                            Значение 1
+                                        </label>
+                                        <input type="checkbox">
+                                    </div>
+                                    <div class="checkbox d-flex flex-md-row justify-content-between">
+                                        <label>
+                                            Значение 2
+                                        </label>
+                                        <input type="checkbox">
+                                    </div>
+                                    <div class="checkbox d-flex flex-md-row justify-content-between">
+                                        <label>
+                                            Значение 3
+                                        </label>
+                                        <input type="checkbox">
+                                    </div>
+
+                                </div>
+                                <button class="btn btn-default btn-sm btn-primary"><i class="fa fa-pencil"></i>Прменить</button>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- *** MENUS AND FILTERS END ***-->
+                </div>
+                <div class="col-lg-9">
+                    <div class="box">
+                        <h1>@(Model.Category != null ? Model.Category.Name : "Популярное")</h1>
+                    </div>
+                    <div class="box info-bar">
+                        <div class="row w-100">
+                            <div class="products-number-sort w-100">
+                                <form id="search-form" action = "" class="form-inline d-block d-lg-flex justify-content-between flex-column flex-md-row w-100">
+                                    @if (Model.Category != null)
+                                    {
+                                        <input type="hidden" name="categoryId" value="@Model.Category.Id">
+                                    }
+                                    <div class="products-sort-by mt-2 mt-lg-0">
+                                        <strong>Сортировать по</strong>
+                                        <select class="form-control" name="sortingOption">
+                                            <!option value="0" @(Model.SortingOption == 0?"selected":"")>Рейтинг</!option>
+                                            <!option value="1" @(Model.SortingOption == 1?"selected":"")>Цена</!option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="submit" class="btn btn-primary" value="Поиск">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row products">
+                        @foreach (var p in Model.ProductList)
+                        {
+                            @Html.Partial("ProductCardPartial", p)
+                        }
+
+                        <!-- /.products-->
+                    </div>
+
+                    @if (Model.NumberOfPages > 1)
+                    {
+                        <div class="pages">
+                            <nav class="d-flex justify-content-center">
+                                <ul class="pagination">
+                                    <li class="page-item @(Model.Page == 0 ? "disabled" : "")">
+                                        <button class="page-link" @(Model.Page == 0 ? "disabled" : "") form="search-form" type="submit" name="page" value="@(Model.Page - 1)">
+                                            <span aria-hidden="true">&laquo;</span>
+                                            <span class="sr-only">Previous</span>
+                                        </button>
+                                    </li>
+                                    @if (Model.Page >= 4)
+                                    {
+                                        <li>
+                                            <button class="btn" form="search-form" type="submit" name="page" value="0">1</button>
+                                        </li>
+                                        <li class="page-item disabled"><span>...</span></li>
+                                    }
+
+                                    @for (int i = Math.Max(0, Model.Page - 3); i < Math.Min(Model.NumberOfPages, Model.Page + 4); i++)
+                                    {
+                                        <li class="page-item @(Model.Page == i ? "active" : "")">
+                                            <button class="page-link" form="search-form" type="submit" name="page" value="@i">@(i + 1)</button>
+                                        </li>
+                                    }
+
+                                    @if (Model.Page + 3 < Model.NumberOfPages - 1)
+                                    {
+                                        <li class="page-item disabled"><span>...</span></li>
+                                        <li class="page-item">
+                                            <button class="page-link" form="search-form" type="submit" name="page" value="@(Model.NumberOfPages - 1)">@Model.NumberOfPages</button>
+                                        </li>
+                                    }
+                                    <li class="page-item @(Model.Page == Model.NumberOfPages - 1 ? "disabled" : "")">
+                                        <button class="page-link" @(Model.Page == Model.NumberOfPages - 1 ? "disabled" : "") form="search-form" type="submit" name="page" value="@(Model.Page + 1)">
+                                            <span aria-hidden="true">&raquo;</span>
+                                            <span class="sr-only">Next</span>
+                                        </button>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    }
+                </div>
+
+                <!-- /.col-lg-9-->
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="~/js/catalog.js" type="text/javascript"></script>
+}

@@ -24,7 +24,7 @@ namespace WebShop_NULL
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var connectionString = Configuration.GetConnectionString("DefaultConnection");
+            var connectionString = Configuration.GetConnectionString("LocalTest");
             services.AddDbContext<ApplicationContext>(option =>
                 option.UseNpgsql(connectionString));
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
@@ -46,7 +46,6 @@ namespace WebShop_NULL
             services.AddControllersWithViews();
             services.AddHttpContextAccessor();
         }
-
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -75,7 +74,7 @@ namespace WebShop_NULL
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Catalog}/{action=Index}/{id?}");
                 endpoints.MapControllerRoute(
                     name: "AdminPanel",
                     pattern: "{controller=AdminPanel}/{action=Products}/{id?}");

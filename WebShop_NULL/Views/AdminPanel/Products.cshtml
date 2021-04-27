@@ -1,3 +1,4 @@
+@model WebShop_NULL.Models.ViewModels.AdminPanelModels.AdminPanelProductsViewModel
 @{ 
     Layout = "_AdminPanelLayout";
 }
@@ -7,13 +8,21 @@
         <div class="header">
             <div class="search">
                 <form class="form-inline">
-                    <input type="text" placeholder="Текст запроса" class="form-control" />
-                    <select class="form-control">
-                        <option value="default">Название</option>
-                        <option>Рейтинг</option>
-                        <option>Цена</option>
+                    <select class="form-control" name="category">
+                        <!option value="none" disabled @(Model.Category == null? "selected": "")>Категория</!option>
+                        <!option value="all"  @(Model.Category != null && Model.Category == "all"? "selected": "")>Все</!option>
+                        @foreach (var category in Model.Categories)
+                        {
+                            <!option value="@category.Id"  @(Model.Category != null && Model.Category == category.Id.ToString()? "selected": "")>@category.Name</!option>
+                        }
                     </select>
-                    <input type="submit" class="btn btn-primary" value="Фильтровать" />
+                    <input type="text" placeholder="Текст запроса" class="form-control" name="query" value="@(Model.Query ?? "")"/>
+                    <select class="form-control" name="filterOption">
+                        <!option value="0" @(Model.FilterOption == 0? "selected": "")>Название</!option>
+                        <!option value="1" @(Model.FilterOption == 1? "selected": "")>Рейтинг</!option>
+                        <!option value="2" @(Model.FilterOption == 2? "selected": "")>Цена</!option>
+                    </select>
+                    <input type="submit" class="btn btn-primary" value="Фильтровать"/>
                 </form>
             </div>
             <div class="btns">
@@ -26,197 +35,35 @@
             <div class="table-responsive">
                 <table class="table">
                     <thead>
-                        <tr>
-                            <th>Название</th>
-                            <th>Рейтинг</th>
-                            <th>Цена</th>
-                            <th></th>
-                        </tr>
+                    <tr>
+                        <th>Название</th>
+                        <th>Рейтинг</th>
+                        <th>Цена</th>
+                        <th></th>
+                    </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Телефон</td>
-                            <td>4</td>
-                            <td>35 000</td>
+                    @foreach (var product in Model.Products)
+                    {
+                        <tr class="product-item" id="@product.Id">
+                            <td>@product.Name</td>
+                            <td>@product.Rating</td>
+                            <td>@product.Price</td>
                             <td>
-                                <a asp-controller="AdminPanel" asp-action="Products"><i class="fa fa-eye"></i></a>
+                                <a href="@Url.Content($"~/product/{product.Id}")"><i class="fa fa-eye"></i></a>
                                 <a asp-controller="AdminPanel" asp-action="Products"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                                <a asp-controller="AdminPanel" asp-action="Products"><i class="fa fa-trash-o fa-fw"></i></a>
+                                <a class="delete-button"><i class="fa fa-trash-o fa-fw"></i></a>
                             </td>
                         </tr>
-                        <tr>
-                            <td>Телефон</td>
-                            <td>4</td>
-                            <td>35 000</td>
-                            <td>
-                                <a asp-controller="AdminPanel" asp-action="Products"><i class="fa fa-eye"></i></a>
-                                <a asp-controller="AdminPanel" asp-action="Products"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                                <a asp-controller="AdminPanel" asp-action="Products"><i class="fa fa-trash-o fa-fw"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Телефон</td>
-                            <td>4</td>
-                            <td>35 000</td>
-                            <td>
-                                <a asp-controller="AdminPanel" asp-action="Products"><i class="fa fa-eye"></i></a>
-                                <a asp-controller="AdminPanel" asp-action="Products"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                                <a asp-controller="AdminPanel" asp-action="Products"><i class="fa fa-trash-o fa-fw"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Телефон</td>
-                            <td>4</td>
-                            <td>35 000</td>
-                            <td>
-                                <a asp-controller="AdminPanel" asp-action="Products"><i class="fa fa-eye"></i></a>
-                                <a asp-controller="AdminPanel" asp-action="Products"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                                <a asp-controller="AdminPanel" asp-action="Products"><i class="fa fa-trash-o fa-fw"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Телефон</td>
-                            <td>4</td>
-                            <td>35 000</td>
-                            <td>
-                                <a asp-controller="AdminPanel" asp-action="Products"><i class="fa fa-eye"></i></a>
-                                <a asp-controller="AdminPanel" asp-action="Products"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                                <a asp-controller="AdminPanel" asp-action="Products"><i class="fa fa-trash-o fa-fw"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Телефон</td>
-                            <td>4</td>
-                            <td>35 000</td>
-                            <td>
-                                <a asp-controller="AdminPanel" asp-action="Products"><i class="fa fa-eye"></i></a>
-                                <a asp-controller="AdminPanel" asp-action="Products"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                                <a asp-controller="AdminPanel" asp-action="Products"><i class="fa fa-trash-o fa-fw"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Телефон</td>
-                            <td>4</td>
-                            <td>35 000</td>
-                            <td>
-                                <a asp-controller="AdminPanel" asp-action="Products"><i class="fa fa-eye"></i></a>
-                                <a asp-controller="AdminPanel" asp-action="Products"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                                <a asp-controller="AdminPanel" asp-action="Products"><i class="fa fa-trash-o fa-fw"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Телефон</td>
-                            <td>4</td>
-                            <td>35 000</td>
-                            <td>
-                                <a asp-controller="AdminPanel" asp-action="Products"><i class="fa fa-eye"></i></a>
-                                <a asp-controller="AdminPanel" asp-action="Products"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                                <a asp-controller="AdminPanel" asp-action="Products"><i class="fa fa-trash-o fa-fw"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Телефон</td>
-                            <td>4</td>
-                            <td>35 000</td>
-                            <td>
-                                <a asp-controller="AdminPanel" asp-action="Products"><i class="fa fa-eye"></i></a>
-                                <a asp-controller="AdminPanel" asp-action="Products"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                                <a asp-controller="AdminPanel" asp-action="Products"><i class="fa fa-trash-o fa-fw"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Телефон</td>
-                            <td>4</td>
-                            <td>35 000</td>
-                            <td>
-                                <a asp-controller="AdminPanel" asp-action="Products"><i class="fa fa-eye"></i></a>
-                                <a asp-controller="AdminPanel" asp-action="Products"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                                <a asp-controller="AdminPanel" asp-action="Products"><i class="fa fa-trash-o fa-fw"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Телефон</td>
-                            <td>4</td>
-                            <td>35 000</td>
-                            <td>
-                                <a asp-controller="AdminPanel" asp-action="Products"><i class="fa fa-eye"></i></a>
-                                <a asp-controller="AdminPanel" asp-action="Products"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                                <a asp-controller="AdminPanel" asp-action="Products"><i class="fa fa-trash-o fa-fw"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Телефон</td>
-                            <td>4</td>
-                            <td>35 000</td>
-                            <td>
-                                <a asp-controller="AdminPanel" asp-action="Products"><i class="fa fa-eye"></i></a>
-                                <a asp-controller="AdminPanel" asp-action="Products"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                                <a asp-controller="AdminPanel" asp-action="Products"><i class="fa fa-trash-o fa-fw"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Телефон</td>
-                            <td>4</td>
-                            <td>35 000</td>
-                            <td>
-                                <a asp-controller="AdminPanel" asp-action="Products"><i class="fa fa-eye"></i></a>
-                                <a asp-controller="AdminPanel" asp-action="Products"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                                <a asp-controller="AdminPanel" asp-action="Products"><i class="fa fa-trash-o fa-fw"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Телефон</td>
-                            <td>4</td>
-                            <td>35 000</td>
-                            <td>
-                                <a asp-controller="AdminPanel" asp-action="Products"><i class="fa fa-eye"></i></a>
-                                <a asp-controller="AdminPanel" asp-action="Products"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                                <a asp-controller="AdminPanel" asp-action="Products"><i class="fa fa-trash-o fa-fw"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Телефон</td>
-                            <td>4</td>
-                            <td>35 000</td>
-                            <td>
-                                <a asp-controller="AdminPanel" asp-action="Products"><i class="fa fa-eye"></i></a>
-                                <a asp-controller="AdminPanel" asp-action="Products"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                                <a asp-controller="AdminPanel" asp-action="Products"><i class="fa fa-trash-o fa-fw"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Телефон</td>
-                            <td>4</td>
-                            <td>35 000</td>
-                            <td>
-                                <a asp-controller="AdminPanel" asp-action="Products"><i class="fa fa-eye"></i></a>
-                                <a asp-controller="AdminPanel" asp-action="Products"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                                <a asp-controller="AdminPanel" asp-action="Products"><i class="fa fa-trash-o fa-fw"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Телефон</td>
-                            <td>4</td>
-                            <td>35 000</td>
-                            <td>
-                                <a asp-controller="AdminPanel" asp-action="Products"><i class="fa fa-eye"></i></a>
-                                <a asp-controller="AdminPanel" asp-action="Products"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                                <a asp-controller="AdminPanel" asp-action="Products"><i class="fa fa-trash-o fa-fw"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Телефон</td>
-                            <td>4</td>
-                            <td>35 000</td>
-                            <td>
-                                <a asp-controller="AdminPanel" asp-action="Products"><i class="fa fa-eye"></i></a>
-                                <a asp-controller="AdminPanel" asp-action="Products"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                                <a asp-controller="AdminPanel" asp-action="Products"><i class="fa fa-trash-o fa-fw"></i></a>
-                            </td>
-                        </tr>
+                    }
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 </div>
+
+@section Scripts
+{
+    <script src="~/js/adminpanel_products.js" ></script>
+}

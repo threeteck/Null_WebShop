@@ -1,28 +1,32 @@
-﻿@{
+﻿@model WebShop_NULL.Models.ViewModels.AdminPanelModels.AdminPanelCreateProductViewModel
+@{
     Layout = "_AdminPanelLayout";
 }
 <div class="row">
     @await Html.PartialAsync("_GetAdminMenu")
     <div class="col-lg-10 col-md-12 admin-content-margined">
         <div class="content">
-            <form>
+            <form action="" method="post" enctype="multipart/form-data">
                 <div class="section">
                     <h3>Товар</h3>
                     <div class="form-group">
-                        <input class="form-control" id="productName" placeholder="Название товара" type="text" />
+                        <input class="form-control" placeholder="Название товара" type="text" asp-for="ProductName"/>
+                        <span asp-validation-for="ProductName"></span>
                     </div>
                     <div class="form-group">
-                        <textarea class="form-control" id="productDescription" placeholder="Описание товара" type="text" cols="20" wrap="hard"></textarea>
+                        <textarea class="form-control" placeholder="Описание товара" type="text" cols="20" wrap="hard" asp-for="ProductDescription"></textarea>
+                        <span asp-validation-for="ProductDescription"></span>
                     </div>
                     <div class="form-group">
-                        <input class="form-control" id="productPrice" placeholder="Цена товара" type="number" />
+                        <input class="form-control" placeholder="Цена товара" type="number" asp-for="ProductPrice"/>
+                        <span asp-validation-for="ProductPrice"></span>
                     </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
-                            <span class="input-group-text">Ничего не выбрано</span>
+                            <span class="input-group-text" id="image-label">Ничего не выбрано</span>
                         </div>
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="inputGroupFile01">
+                            <input type="file" class="custom-file-input" id="inputGroupFile01" name="Image">
                             <label class="custom-file-label" for="inputGroupFile01">Выберите файл</label>
                         </div>
                     </div>
@@ -30,26 +34,29 @@
                 <div class="section">
                     <h3>Характеристики</h3>
                     <div class="form-group">
-                        <input class="form-control" id="categoryName" placeholder="Название категории" type="text" />
-                    </div>
-                    <div class="property-field">
-                        <input class="form-control" placeholder="Название"/>
-                        <select class="form-control">
-                            <option value="default">Строка</option>
-                            <option>Число</option>
-                            <option>Опция</option>
+                        <span asp-validation-for="Category"></span>
+                        <select class="form-control mt-2" asp-for="Category">
+                            <!option value="-1" disabled @(Model.Category == null ? "selected" : "")>Категория</!option>
+                            @foreach (var category in Model.Categories)
+                            {
+                                <!option value="@category.Id" @(Model.Category != null && Model.Category.Value == category.Id ? "selected" : "")>@category.Name</!option>
+                            }
                         </select>
-                        <input class="form-control" placeholder="Значение" />
                     </div>
-                    <div class="form-group">
-                        <input class="btn btn-primary" type="submit" value="Добавить характеристику" />
+                    
+                    <div id="properties-container">
+                        
                     </div>
                 </div>
                 
-                <div class="form-group">
-                    <input class="btn btn-primary" type="submit" value="Создать" />
+                <div class="form-group d-flex justify-content-center align-items-center mt-2">
+                    <input class="btn btn-primary" type="submit" id="submit-button" value="Создать" disabled/>
                 </div>
             </form>
         </div>
     </div>
 </div>
+
+@section Scripts{
+    <script src="~/js/createProduct.js"></script>
+}

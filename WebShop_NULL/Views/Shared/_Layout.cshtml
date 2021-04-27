@@ -141,7 +141,7 @@
                             //Изменить условие для доступности только админам
                             if (true)
                             {
-                                <div id="admin-panel-link" class="navbar-collapse collapse text-center d-none d-lg-block" >
+                                <div id="admin-panel-link" class="navbar-collapse collapse text-center d-none d-lg-block">
                                     <a class="btn btn-primary navbar-btn d-none d-lg-inline-block" asp-area="" asp-controller="AdminPanel" asp-action="Index"><i class="fa fa-cogs" aria-hidden="true"></i>Админка</a>
                                 </div>
                             }
@@ -208,12 +208,12 @@
             <p class="text-muted text-small">Stylesheet switching is done via JavaScript and can cause a blink while page loads. This will not happen in your production code.</p>
         </div>*@
     <!-- JavaScript files-->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
-<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 
     <script src="~/js/site.js"></script>
     <script src="~/js/jquery.cookie.js"></script>
@@ -221,6 +221,7 @@
     <script src="~/js/owl.carousel2.thumbs.js"></script>
     <script src="~/js/front.js"></script>
     <script src="~/js/city.js"></script>
+    @RenderSection("Scripts", false)
 
     <div class="modal" id="city_modal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-sm" role="document">
