@@ -1,6 +1,6 @@
 ﻿namespace WebShop_NULL.Models.ViewModels.AdminPanelModels
 {
-    public class CommandLineResponse
+    public class CommandLineResponse//Moved to F# TODO test
     {
         public bool IsResponse = true;
         public bool IsSuccessful = true;

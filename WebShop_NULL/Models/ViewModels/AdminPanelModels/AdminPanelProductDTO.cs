@@ -1,6 +1,6 @@
 ﻿namespace WebShop_NULL.Models.ViewModels.AdminPanelModels
 {
-    public class AdminPanelProductDTO
+    public class AdminPanelProductDTO//Moved to F# TODO test
     {
         public int Id;
         public string Name;

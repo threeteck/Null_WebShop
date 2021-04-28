@@ -23,6 +23,11 @@
       <Compile Include="ViewModels\ProfileModels\UserViewModel.fs" />
       <Compile Include="ViewModels\AuthtorizationModels\LoginModel.fs" />
       <Compile Include="ViewModels\AuthtorizationModels\RegisterModel.fs" />
+      <Compile Include="ViewModels\AdminPanelModels\AdminPanelProductDTO.fs" />
+      <Compile Include="ViewModels\AdminPanelModels\AdminPanelProductsViewModel.fs" />
+      <Compile Include="ViewModels\AdminPanelModels\CommandLineResponse.fs" />
+      <Compile Include="ViewModels\AdminPanelModels\AdminPanelCreateProductViewModel.fs" />
+      <Compile Include="ViewModels\AdminPanelModels\AdminPanelCreateCategoryViewModel.fs" />
       <Compile Include="Controllers\HomeController.fs" />
     </ItemGroup>
 
