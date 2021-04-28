@@ -6,7 +6,7 @@ using DomainModels;
 
 namespace WebShop_NULL.Models.ViewModels.СatalogModels
 {
-    public class CatalogViewModel
+    public class CatalogViewModel//Moved to F# TODO test
     {
         public CategoryDTO Category { get; set; }
         public int Page { get; set; }

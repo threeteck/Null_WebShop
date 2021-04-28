@@ -2,7 +2,7 @@
 
 namespace WebShop_NULL.Models.ViewModels
 {
-    public class UserViewModel
+    public class UserViewModel//Moved to F# TODO test
     {
         public int Id;
         [MaxLength(16)]

@@ -2,16 +2,16 @@ namespace WebShop_FSharp.ViewModels.CatalogModels
 
 type ReviewDTO() =
     [<DefaultValue>]
-    val mutable UserName : string
+    val mutable public UserName : string
     
     [<DefaultValue>]
-    val mutable UserId : int
+    val mutable public UserId : int
     
     [<DefaultValue>]
-    val mutable UserImagePath : string
+    val mutable public UserImagePath : string
     
     [<DefaultValue>]
-    val mutable Rating : int
+    val mutable public Rating : int
     
     [<DefaultValue>]
-    val mutable Content : string
+    val mutable public Content : string

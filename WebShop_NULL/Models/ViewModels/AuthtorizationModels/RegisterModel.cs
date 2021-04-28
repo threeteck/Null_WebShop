@@ -2,7 +2,7 @@
 
 namespace WebShop_NULL.Models.AuthtorizationModels
 {
-    public class RegisterModel
+    public class RegisterModel//Moved to F# TODO test
     {
         [Required(ErrorMessage = "Не указан Email")]
         public string Email { get; set; }

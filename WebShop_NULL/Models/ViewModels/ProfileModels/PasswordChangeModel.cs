@@ -2,7 +2,7 @@
 
 namespace WebShop_NULL.Models.ViewModels
 {
-    public class PasswordChangeModel
+    public class PasswordChangeModel//Moved to F# TODO test
     {
         [Required(ErrorMessage = "Не указан пароль")]
         [DataType(DataType.Password)]
