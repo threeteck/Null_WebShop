@@ -14,7 +14,7 @@ type ProductCardDTO() =
     val mutable public ImagePath: string
 
     [<DefaultValue>]
-    val mutable private rating: int
+    val mutable private rating: decimal
     
     member public this.Rating with get() = this.rating
                                 and set p = this.rating <- p

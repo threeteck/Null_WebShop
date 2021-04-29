@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using WebShop_FSharp;
-using WebShop_NULL.Models.AuthtorizationModels;
+using WebShop_FSharp.ViewModels.AuthtorizationModels;
 
 namespace WebShop_NULL.Controllers
 {

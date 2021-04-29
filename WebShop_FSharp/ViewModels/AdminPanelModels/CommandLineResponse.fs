@@ -15,4 +15,4 @@ type CommandLineResponse(isResponse: bool, isSuccessful: bool, message: string) 
     
     static member public Failure() = CommandLineResponse.Failure(null)
     
-    static member public Empty() = CommandLineResponse(true, false, null)
+    static member public Empty() = CommandLineResponse(false, false, null)

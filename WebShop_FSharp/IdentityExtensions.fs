@@ -14,7 +14,8 @@ type IdentityExtensions =
             let parseSuccessful, result = Int32.TryParse id
             if parseSuccessful then result else -1
         else -1
-       
+        
+    [<Extension>]
     static member inline public GetName(principal: ClaimsPrincipal) =
         if principal.Identity.IsAuthenticated then
             let first = principal.FindFirst("username")

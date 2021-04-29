@@ -3,7 +3,7 @@ namespace WebShop_FSharp.ViewModels.AdminPanelModels
 open System.Collections.Generic
 open WebShop_FSharp.ViewModels
 
-type AdminPanelProductDTO() =
+type AdminPanelProductsViewModel() =
     [<DefaultValue>]
     val mutable public Category: string
     
