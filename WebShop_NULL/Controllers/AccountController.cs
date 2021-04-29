@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using DomainModels;
@@ -10,6 +9,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using PinnedMemory;
 using WebShop_FSharp;
 using WebShop_NULL.Models.AuthtorizationModels;
 
@@ -166,17 +166,11 @@ namespace WebShop_NULL.Controllers
             }
         }
 
-        public static string HashPassword(string password) 
+        public static string HashPassword(string password)
         {
-            var hashBuilder = new StringBuilder();
-            using (var hash = SHA256.Create())
-            {
-                var result = hash.ComputeHash(Encoding.UTF8.GetBytes(password+"considerYourself-Salted"));
-                foreach (var b in result)
-                    hashBuilder.Append(b.ToString("x2"));
-            }
-
-            return hashBuilder.ToString();
+            var passwordPinnedMemory = new PinnedMemory<byte>(Encoding.UTF8.GetBytes(password));
+            var argon2 = new Argon2.NetCore.Argon2(passwordPinnedMemory, Encoding.UTF8.GetBytes("considerYourself-Salted"));
+            return argon2.ToString();
         }
     }
 }
