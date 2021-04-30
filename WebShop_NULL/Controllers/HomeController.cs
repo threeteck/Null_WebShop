@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using DomainModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using WebShop_NULL.Models;
+using WebShop_FSharp.ViewModels;
 
+//F# version exists, currently doesn't work. TODO fix F# version
 namespace WebShop_NULL.Controllers
 {
     public class HomeController : Controller
