@@ -227,188 +227,238 @@ footer{
 .property-value-column{
     padding-left: 30px;
 }
+@media screen and (max-width: 500px) {
+    .product-details-container {
+        margin: 0px;
+    }
 
-.page-item.disabled{
-    cursor: auto;
-}
+    .properties {
+        display: flex;
+        flex-direction: column;
+    }
 
-.field-validation-valid{
-    display: none;
-}
-
-.field-validation-error{
-    color: red;
-}
-
-.input-validation-error{
-    border-color: red;
-}
-
-.property-name{
-    padding: .375rem .75rem;
-    font-size: .9rem;
-    line-height: 1.5;
-    color: #495057;
-    background-color: #fff;
-    width: 100%;
-    height: calc(1.5em + .75rem + 2px);
-}
-
-.admin-info {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    color: #555;
-}
-.admin-info > p{
-    font-size:26px;
-    margin-left: 10px;
-    font-weight:500;
-    margin-bottom: 0px;
-}
-.admin-menu{
-    background-color:white;
-    height: 100%;
-}
-.admin-menu h3{
-    text-align:center;
-    text-transform: uppercase;
-    color: dimgrey;
-    padding: 15px 0px 10px 0px;
-    border-bottom: 1px solid rgb(230, 230, 230);
-    min-width:100%;
-    box-sizing:border-box;
-    margin:0px;
-    min-height:60px;
-}
-.admin-menu ul{
-    list-style:none;
-    padding-left:0px;
-    margin-bottom:0px;
-}
-.admin-menu li{
-    text-transform:uppercase;
-    font-size: 16px;
-    font-weight: 500;
-    color: dimgray;
-    box-sizing: content-box;
-}
-.admin-menu a{
-    text-decoration:none;
-    color:inherit;
-    padding: 15px 10px 15px 40px;
-    display:block;
-}
-
-.admin-menu a:hover, a:active, a:focus{
-    text-decoration:none;
-    background-color:rgb(255, 63, 63);
-}
-.admin-content > .header{
-    background-color:white;
-    display:flex!important;
-    flex-direction:row-reverse!important;
-    justify-content: space-between;
-    min-height:60px;
-}
-@media screen and (max-width: 620px){
-    .admin-content > .header {
-        flex-direction: column-reverse !important;
+    .property-row {
+        display: flex;
+        justify-content: space-between;
     }
 }
-.admin-content > .header *{
-    padding:5px;
-    margin:5px 5px 5px 5px;
-}
-.header .btns{
-    display:flex;
-    flex-direction:row;
-    align-items:center;
-    margin-left:15px;
-}
-.admin-content td, th{
-    text-align:center;
-}
-.admin-content .content, .admin-content-margined .content{
-    background-color:white;
-    display:block;
-
-}
-.admin-content-margined .content .form-control{
-    display:block;
-    margin: 10px 15px 0 15px;
+@media screen and (max-width: 992px) {
+    .properties {
+        grid-column-start: 3 !important;
+    }
 }
 
-.admin-content-margined .content .field-validation-error{
-    display:block;
-    margin-left: 15px;
-    margin-top: 5px;
+@media screen and (max-width: 767px) {
+    .properties {
+        grid-column-start: 2 !important;
+    }
 }
 
-.admin-content-margined .content .property-name{
-    display:block;
-    margin: 10px 15px 10px 15px;
-}
+@media screen and (max-width: 576px) {
+    .properties {
+        grid-column-start: 1 !important;
+    }
 
-.admin-content-margined .content .btn{
-    margin: 0px 15px 10px 15px;
-}
-.admin-content-margined *{
-    margin-right:15px;
-}
-.admin-content-margined h3 {
-    text-transform: uppercase;
-    color: dimgrey;
-    padding: 15px;
-    text-align: center;
-}
-.form-group label{
-    padding-left: 15px;
-}
-.admin-content-margined .input-group{
-    padding-left:15px;
-}
-.admin-content-margined .input-group *{
-    margin-right: 0px;
-}
-.property-field{
-    display:flex;
-    flex-direction: row;
-    margin-right: 0px;
-}
 
-.option-field{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-}
+    .page-item.disabled {
+        cursor: auto;
+    }
 
-.cross{
-    cursor: pointer;
-    left: 100%;
-    bottom: 30px;
-    height: 10px;
-    position: relative;
-}
+    .field-validation-valid {
+        display: none;
+    }
 
-.minus, .plus{
-    cursor: pointer;
-    margin: 0!important;
-    margin-top: 0.6rem!important;
-    width: 32px;
-    height: 32px;
-}
+    .field-validation-error {
+        color: red;
+    }
 
-.icon-tab{
-    display: flex;
-}
+    .input-validation-error {
+        border-color: red;
+    }
 
-.property-field > * {
-    margin-right: 0px!important;
-}
+    .property-name {
+        padding: .375rem .75rem;
+        font-size: .9rem;
+        line-height: 1.5;
+        color: #495057;
+        background-color: #fff;
+        width: 100%;
+        height: calc(1.5em + .75rem + 2px);
+    }
 
-#category .a{
-    pointer-events: none;
-}
+    .admin-info {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        color: #555;
+    }
+
+        .admin-info > p {
+            font-size: 26px;
+            margin-left: 10px;
+            font-weight: 500;
+            margin-bottom: 0px;
+        }
+
+    .admin-menu {
+        background-color: white;
+        height: 100%;
+    }
+
+        .admin-menu h3 {
+            text-align: center;
+            text-transform: uppercase;
+            color: dimgrey;
+            padding: 15px 0px 10px 0px;
+            border-bottom: 1px solid rgb(230, 230, 230);
+            min-width: 100%;
+            box-sizing: border-box;
+            margin: 0px;
+            min-height: 60px;
+        }
+
+        .admin-menu ul {
+            list-style: none;
+            padding-left: 0px;
+            margin-bottom: 0px;
+        }
+
+        .admin-menu li {
+            text-transform: uppercase;
+            font-size: 16px;
+            font-weight: 500;
+            color: dimgray;
+            box-sizing: content-box;
+        }
+
+        .admin-menu a {
+            text-decoration: none;
+            color: inherit;
+            padding: 15px 10px 15px 40px;
+            display: block;
+        }
+
+            .admin-menu a:hover, a:active, a:focus {
+                text-decoration: none;
+                background-color: rgb(255, 63, 63);
+            }
+
+    .admin-content > .header {
+        background-color: white;
+        display: flex !important;
+        flex-direction: row-reverse !important;
+        justify-content: space-between;
+        min-height: 60px;
+    }
+
+    @media screen and (max-width: 620px) {
+        .admin-content > .header {
+            flex-direction: column-reverse !important;
+        }
+    }
+
+    .admin-content > .header * {
+        padding: 5px;
+        margin: 5px 5px 5px 5px;
+    }
+
+    .header .btns {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-left: 15px;
+    }
+
+    .admin-content td, th {
+        text-align: center;
+    }
+
+    .admin-content .content, .admin-content-margined .content {
+        background-color: white;
+        display: block;
+    }
+
+        .admin-content-margined .content .form-control {
+            display: block;
+            margin: 10px 15px 0 15px;
+        }
+
+        .admin-content-margined .content .field-validation-error {
+            display: block;
+            margin-left: 15px;
+            margin-top: 5px;
+        }
+
+        .admin-content-margined .content .property-name {
+            display: block;
+            margin: 10px 15px 10px 15px;
+        }
+
+        .admin-content-margined .content .btn {
+            margin: 0px 15px 10px 15px;
+        }
+
+    .admin-content-margined * {
+        margin-right: 15px;
+    }
+
+    .admin-content-margined h3 {
+        text-transform: uppercase;
+        color: dimgrey;
+        padding: 15px;
+        text-align: center;
+    }
+
+    .form-group label {
+        padding-left: 15px;
+    }
+
+    .admin-content-margined .input-group {
+        padding-left: 15px;
+    }
+
+        .admin-content-margined .input-group * {
+            margin-right: 0px;
+        }
+
+    .property-field {
+        display: flex;
+        flex-direction: row;
+        margin-right: 0px;
+    }
+
+    .option-field {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+
+    .cross {
+        cursor: pointer;
+        left: 100%;
+        bottom: 30px;
+        height: 10px;
+        position: relative;
+    }
+
+    .minus, .plus {
+        cursor: pointer;
+        margin: 0 !important;
+        margin-top: 0.6rem !important;
+        width: 32px;
+        height: 32px;
+    }
+
+    .icon-tab {
+        display: flex;
+    }
+
+    .property-field > * {
+        margin-right: 0px !important;
+    }
+
+    #category .a {
+        pointer-events: none;
+    }
