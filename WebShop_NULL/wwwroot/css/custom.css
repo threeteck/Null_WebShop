@@ -1,20 +1,25 @@
 /* your styles go here */
-html,body {
+html, body {
     height: 100%;
 }
-body{
+
+body {
     display: flex;
     flex-direction: column;
 }
-.cursor-pointer{
+
+.cursor-pointer {
     cursor: pointer;
 }
-.position-relative{
-    position: relative!important;
+
+.position-relative {
+    position: relative !important;
 }
-.border-bottom-none{
-    border-bottom:none!important;
+
+.border-bottom-none {
+    border-bottom: none !important;
 }
+
 #upload-container {
     display: flex;
     justify-content: center;
@@ -29,149 +34,152 @@ body{
     color: #1f3c44;
 }
 
-#upload-container img {
-     width: 40%;
-     margin-bottom: 20px;
-     user-select: none;
-}
-#upload-container label {
-     font-weight: bold;
-}
+    #upload-container img {
+        width: 40%;
+        margin-bottom: 20px;
+        user-select: none;
+    }
 
-#upload-container label:hover {
-     cursor: pointer;
-     text-decoration: underline;
-}
+    #upload-container label {
+        font-weight: bold;
+    }
 
-#upload-container div {
-     position: relative;
-     z-index: 10;
-}
+        #upload-container label:hover {
+            cursor: pointer;
+            text-decoration: underline;
+        }
 
-#upload-container input[type=file] {
-     width: 0.1px;
-     height: 0.1px;
-     opacity: 0;
-     position: absolute;
-     z-index: -10;
-}
+    #upload-container div {
+        position: relative;
+        z-index: 10;
+    }
+
+    #upload-container input[type=file] {
+        width: 0.1px;
+        height: 0.1px;
+        opacity: 0;
+        position: absolute;
+        z-index: -10;
+    }
 
 
-#upload-container input[type=file]:focus + label {	
-     outline: 1px solid #0078d7;
-     outline: -webkit-focus-ring-color auto 5px;
-}
+        #upload-container input[type=file]:focus + label {
+            outline: 1px solid #0078d7;
+            outline: -webkit-focus-ring-color auto 5px;
+        }
 
-#upload-container label.focus {
-     outline: 1px solid #0078d7;
-     outline: -webkit-focus-ring-color auto 5px;
-}
-#upload-container.dragover {
-     background-color: #fafafa;
-     outline-offset: -17px;
-}
+    #upload-container label.focus {
+        outline: 1px solid #0078d7;
+        outline: -webkit-focus-ring-color auto 5px;
+    }
 
-#image-label{
+    #upload-container.dragover {
+        background-color: #fafafa;
+        outline-offset: -17px;
+    }
+
+#image-label {
     height: calc(1.5em + .75rem);
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
     border-right: none;
 }
 
-#property-container{
+#property-container {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-#review-rating{
+#review-rating {
     grid-area: rating;
 }
 
-#review-text{
+#review-text {
     grid-area: text;
 }
 
-#review-submit{
+#review-submit {
     grid-area: button;
 }
 
-#reviews-tab, #properties-tab{
+#reviews-tab, #properties-tab {
     cursor: pointer;
 }
 
-.margin-bottom-40px{
+.margin-bottom-40px {
     margin-bottom: 48px;
 }
-content{
+
+content {
     flex: 1 0 auto;
 }
-footer{
+
+footer {
     flex-shrink: 0;
-    z-index:3;
+    z-index: 3;
 }
+
 .avatar {
     border-radius: 50%;
     border: 1px solid #ff3f3f;
     box-shadow: #963c3c 1px 1px;
 }
 
-.product-card-img{
+.product-card-img {
     width: 260px;
     height: 260px;
     object-fit: contain;
 }
 
-.product-img{
+.product-img {
     width: 540px;
     height: 540px;
     object-fit: contain;
 }
 
-.product-details-container{
+.product-details-container {
     grid-template-columns: repeat(10,minmax(0,1fr));
     display: grid;
     margin: 0 60px;
 }
 
-.review-container{
+.review-container {
     display: grid;
-    grid-template-areas:
-        "text rating"
-        "text button";
+    grid-template-areas: "text rating" "text button";
     grid-template-columns: 3fr 1fr;
     grid-gap: 1rem;
 }
 
-.review-rating-container{
+.review-rating-container {
     grid-area: star;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.review-rating-star{
+.review-rating-star {
     width: 128px;
     height: 128px;
 }
 
-.review-image-container{
+.review-image-container {
     grid-area: img;
 }
 
-.review-image{
+.review-image {
     border-radius: 50%;
     width: 128px;
     height: 128px;
     object-fit: contain;
 }
 
-.review-content{
+.review-content {
     grid-area: text;
     margin-top: 0.3rem;
 }
 
-.review-rating-star-text{
+.review-rating-star-text {
     color: white;
     position: absolute;
     height: 128px;
@@ -180,24 +188,22 @@ footer{
     font-size: 2em;
 }
 
-.review-name{
+.review-name {
     grid-area: name;
     text-align: center;
     font-weight: bold;
     font-size: 1.1rem;
 }
 
-.review{
+.review {
     display: grid;
     padding: 0.5rem 0;
-    grid-template-areas:
-        "name text star"
-        "img text star";
+    grid-template-areas: "name text star" "img text star";
     grid-template-columns: 1fr 3fr 1fr;
     grid-gap: 1rem;
 }
 
-.properties{
+.properties {
     font-size: 18px;
     line-height: 1.29;
     grid-column: auto/span 5;
@@ -205,46 +211,90 @@ footer{
     grid-column-start: 4;
 }
 
-.property-row{
+.property-row {
     display: grid;
     grid-template-columns: 2fr 2fr;
     margin-top: 0.5rem;
 }
 
-.property-name-column{
+.property-name-column {
     color: #5d5d64;
     padding-right: 20px;
 }
 
-.property-field.box{
+.property-field.box {
     margin: 1rem;
 }
 
-.border-red{
+.border-red {
     border: 1px solid rgba(255, 0, 0, 0.3);
 }
 
-.property-value-column{
+.property-value-column {
     padding-left: 30px;
 }
 
-.page-item.disabled{
+@media screen and (max-width: 500px) {
+    .product-details-container {
+        margin: 0px;
+    }
+
+    .properties {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .property-row {
+        display: flex;
+        justify-content: space-between;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .properties {
+        grid-column-start: 3 !important;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .properties {
+        grid-column-start: 2 !important;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .properties {
+        grid-column-start: 1 !important;
+    }
+}
+
+@media screen and (max-width: 342px) {
+    .property-row {
+        display:flex;
+        flex-direction:column;
+    }
+    .property-value-column{
+        padding: 10px 0px 10px 0px;
+    }
+}
+
+.page-item.disabled {
     cursor: auto;
 }
 
-.field-validation-valid{
+.field-validation-valid {
     display: none;
 }
 
-.field-validation-error{
+.field-validation-error {
     color: red;
 }
 
-.input-validation-error{
+.input-validation-error {
     border-color: red;
 }
 
-.property-name{
+.property-name {
     padding: .375rem .75rem;
     font-size: .9rem;
     line-height: 1.5;
@@ -260,124 +310,142 @@ footer{
     align-items: center;
     color: #555;
 }
-.admin-info > p{
-    font-size:26px;
-    margin-left: 10px;
-    font-weight:500;
-    margin-bottom: 0px;
-}
-.admin-menu{
-    background-color:white;
+
+    .admin-info > p {
+        font-size: 26px;
+        margin-left: 10px;
+        font-weight: 500;
+        margin-bottom: 0px;
+    }
+
+.admin-menu {
+    background-color: white;
     height: 100%;
 }
-.admin-menu h3{
-    text-align:center;
-    text-transform: uppercase;
-    color: dimgrey;
-    padding: 15px 0px 10px 0px;
-    border-bottom: 1px solid rgb(230, 230, 230);
-    min-width:100%;
-    box-sizing:border-box;
-    margin:0px;
-    min-height:60px;
-}
-.admin-menu ul{
-    list-style:none;
-    padding-left:0px;
-    margin-bottom:0px;
-}
-.admin-menu li{
-    text-transform:uppercase;
-    font-size: 16px;
-    font-weight: 500;
-    color: dimgray;
-    box-sizing: content-box;
-}
-.admin-menu a{
-    text-decoration:none;
-    color:inherit;
-    padding: 15px 10px 15px 40px;
-    display:block;
+
+    .admin-menu h3 {
+        text-align: center;
+        text-transform: uppercase;
+        color: dimgrey;
+        padding: 15px 0px 10px 0px;
+        border-bottom: 1px solid rgb(230, 230, 230);
+        min-width: 100%;
+        box-sizing: border-box;
+        margin: 0px;
+        min-height: 60px;
+    }
+
+    .admin-menu ul {
+        list-style: none;
+        padding-left: 0px;
+        margin-bottom: 0px;
+    }
+
+    .admin-menu li {
+        text-transform: uppercase;
+        font-size: 16px;
+        font-weight: 500;
+        color: dimgray;
+        box-sizing: content-box;
+    }
+
+    .admin-menu a {
+        text-decoration: none;
+        color: inherit;
+        padding: 15px 10px 15px 40px;
+        display: block;
+    }
+
+        .admin-menu a:hover, a:active, a:focus {
+            text-decoration: none;
+            background-color: rgb(255, 63, 63);
+        }
+
+.admin-content > .header {
+    background-color: white;
+    display: flex !important;
+    flex-direction: row-reverse !important;
+    justify-content: space-between;
+    min-height: 60px;
 }
 
-.admin-menu a:hover, a:active, a:focus{
-    text-decoration:none;
-    background-color:rgb(255, 63, 63);
-}
-.admin-content > .header{
-    background-color:white;
-    display:flex!important;
-    flex-direction:row-reverse!important;
-    justify-content: space-between;
-    min-height:60px;
-}
-@media screen and (max-width: 620px){
+@media screen and (max-width: 620px) {
     .admin-content > .header {
         flex-direction: column-reverse !important;
     }
 }
-.admin-content > .header *{
-    padding:5px;
-    margin:5px 5px 5px 5px;
-}
-.header .btns{
-    display:flex;
-    flex-direction:row;
-    align-items:center;
-    margin-left:15px;
-}
-.admin-content td, th{
-    text-align:center;
-}
-.admin-content .content, .admin-content-margined .content{
-    background-color:white;
-    display:block;
 
-}
-.admin-content-margined .content .form-control{
-    display:block;
-    margin: 10px 15px 0 15px;
+.admin-content > .header * {
+    padding: 5px;
+    margin: 5px 5px 5px 5px;
 }
 
-.admin-content-margined .content .field-validation-error{
-    display:block;
+.header .btns {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     margin-left: 15px;
-    margin-top: 5px;
 }
 
-.admin-content-margined .content .property-name{
-    display:block;
-    margin: 10px 15px 10px 15px;
+.admin-content td, th {
+    text-align: center;
 }
 
-.admin-content-margined .content .btn{
-    margin: 0px 15px 10px 15px;
+.admin-content .content, .admin-content-margined .content {
+    background-color: white;
+    display: block;
 }
-.admin-content-margined *{
-    margin-right:15px;
+
+    .admin-content-margined .content .form-control {
+        display: block;
+        margin: 10px 15px 0 15px;
+    }
+
+    .admin-content-margined .content .field-validation-error {
+        display: block;
+        margin-left: 15px;
+        margin-top: 5px;
+    }
+
+    .admin-content-margined .content .property-name {
+        display: block;
+        margin: 10px 15px 10px 15px;
+    }
+
+    .admin-content-margined .content .btn {
+        margin: 0px 15px 10px 15px;
+    }
+
+.admin-content-margined * {
+    margin-right: 15px;
 }
+
 .admin-content-margined h3 {
     text-transform: uppercase;
     color: dimgrey;
     padding: 15px;
     text-align: center;
 }
-.form-group label{
+
+.form-group label {
     padding-left: 15px;
 }
-.admin-content-margined .input-group{
-    padding-left:15px;
+
+.admin-content-margined .input-group {
+    padding-left: 15px;
 }
-.admin-content-margined .input-group *{
-    margin-right: 0px;
-}
-.property-field{
-    display:flex;
+
+    .admin-content-margined .input-group * {
+        margin-right: 0px;
+    }
+
+.property-field {
+    display: flex;
     flex-direction: row;
     margin-right: 0px;
 }
 
-.option-field{
+.option-field {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -385,7 +453,7 @@ footer{
     width: 100%;
 }
 
-.cross{
+.cross {
     cursor: pointer;
     left: 100%;
     bottom: 30px;
@@ -393,22 +461,25 @@ footer{
     position: relative;
 }
 
-.minus, .plus{
+.minus, .plus {
     cursor: pointer;
-    margin: 0!important;
-    margin-top: 0.6rem!important;
+    margin: 0 !important;
+    margin-top: 0.6rem !important;
     width: 32px;
     height: 32px;
 }
 
-.icon-tab{
+.icon-tab {
     display: flex;
 }
 
 .property-field > * {
-    margin-right: 0px!important;
+    margin-right: 0px !important;
 }
 
-#category .a{
+#category .a {
     pointer-events: none;
+}
+.custom-file-label::after{
+    content: "Найти"
 }
