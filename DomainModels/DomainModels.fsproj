@@ -6,12 +6,10 @@
 
     <ItemGroup>
       <Compile Include="ImageMetadata.fs" />
-      <Compile Include="PropertyType.fs" />
-      <Compile Include="Property.fs" />
-      <Compile Include="Category.fs" />
       <Compile Include="UserRole.fs" />
-      <Compile Include="ProductAndUser.fs" />
-      <Compile Include="City.fs" />
+      <Compile Include="Subscription.fs" />
+      <Compile Include="Genre.fs" />
+      <Compile Include="FilmUserReview.fs" />
       <Compile Include="ApplicationContext.fs" />
     </ItemGroup>
 

@@ -13,7 +13,7 @@ type ApplicationContext(options : DbContextOptions<ApplicationContext>) =
     val mutable reviews : DbSet<Review>
     
     [<DefaultValue>]
-    val mutable products : DbSet<Product>
+    val mutable products : DbSet<Film>
     
     [<DefaultValue>]
     val mutable properties : DbSet<Property>
