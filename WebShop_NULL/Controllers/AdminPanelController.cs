@@ -217,6 +217,8 @@ namespace WebShop_NULL.Controllers
 
             data.Categories = categories;
 
+            if(data.Image == null)
+                ModelState.AddModelError("", "Фото товара должно быть установлено");
             if (!ModelState.IsValid)
                 return View(data);
 

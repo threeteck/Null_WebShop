@@ -21,7 +21,8 @@ namespace WebShop_NULL.Infrastructure.AdminPanel
                 !int.TryParse(propertyIdResult.FirstValue, out var propertyId) ||
                 string.IsNullOrWhiteSpace(propertyValueResult.FirstValue))
             {
-                ModelBindingResult.Failed();
+                bindingContext.Result = ModelBindingResult.Failed();
+                bindingContext.ModelState.AddModelError("", "Значение свойства не задано.");
                 return Task.CompletedTask;
             }
 

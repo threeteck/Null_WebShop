@@ -1,9 +1,9 @@
-﻿$(() => {
-    $propertyContainer = $('#properties-container');
-    $categorySelect = $('#Category');
-    $imageInput = $('#inputGroupFile01');
-    $imageLabel = $('#image-label');
-    $submitButton = $('#submit-button')
+﻿$(async () => {
+    window.$propertyContainer = $('#properties-container');
+    window.$categorySelect = $('#Category');
+    window.$imageInput = $('#inputGroupFile01');
+    window.$imageLabel = $('#image-label');
+    window.$submitButton = $('#submit-button');
     
     $imageInput.change(()=>{
         let fileName = $imageInput[0].files[0].name;
@@ -11,20 +11,28 @@
     })
     
     $categorySelect.change(async (e) => {
-        let formData = new FormData();
-        $submitButton.attr('disabled', 'disabled');
-        const response = await fetch(window.location.origin + `/adminpanel/api/getproperties?categoryId=${$categorySelect.val()}`);
-        if(response.ok){
-            $propertyContainer.empty();
-            let data = await response.json();
-            data.forEach((p) => {
-                $propertyContainer.append(getElementFromProperty(p))
-            });
-            
-            $submitButton.removeAttr('disabled');
-        }
+        await setProperties();
     });
+    
+    if($categorySelect.val() !== -1){
+        await setProperties();
+    }
 });
+
+async function setProperties(){
+    let formData = new FormData();
+    $submitButton.attr('disabled', 'disabled');
+    const response = await fetch(window.location.origin + `/adminpanel/api/getproperties?categoryId=${$categorySelect.val()}`);
+    if(response.ok){
+        $propertyContainer.empty();
+        let data = await response.json();
+        data.forEach((p) => {
+            $propertyContainer.append(getElementFromProperty(p))
+        });
+
+        $submitButton.removeAttr('disabled');
+    }
+}
 
 function getElementFromProperty(property){
     let html = `
@@ -35,7 +43,7 @@ function getElementFromProperty(property){
 `;
     
     if(property.propertyType === "Integer" || property.propertyType === "Decimal")
-        html += `<input class="form-control" placeholder="Значение" type="number" name="PropertyInfos[${property.id}].Value" max="1000000000">`
+        html += `<input class="form-control" placeholder="Значение" type="number" name="PropertyInfos[${property.id}].Value" maxlength=10>`
     
     if(property.propertyType == "Nominal")
         html += `<input class="form-control" placeholder="Значение" type="text" name="PropertyInfos[${property.id}].Value" maxlength=64>`

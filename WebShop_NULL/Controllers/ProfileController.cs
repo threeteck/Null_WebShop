@@ -93,8 +93,8 @@ namespace WebShop_NULL.Controllers
             imageData.ImagePath = virtualImagePath;
 
             await _dbContext.SaveChangesAsync();
-            
-            return Ok();
+
+            return Redirect(Url.Content("~/profile"));
         }
 
         [HttpGet("~/profile/{userId}/image")]

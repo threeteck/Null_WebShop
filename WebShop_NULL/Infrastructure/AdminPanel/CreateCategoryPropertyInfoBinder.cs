@@ -23,7 +23,8 @@ namespace WebShop_NULL.Infrastructure.AdminPanel
                 string.IsNullOrWhiteSpace(propertyNameResult.FirstValue) ||
                 propertyType < 0 || propertyType > 2)
             {
-                ModelBindingResult.Failed();
+                bindingContext.Result = ModelBindingResult.Failed();
+                bindingContext.ModelState.AddModelError("propertyError", $"Название свойства не задано.");
                 return Task.CompletedTask;
             }
 
@@ -32,7 +33,8 @@ namespace WebShop_NULL.Infrastructure.AdminPanel
                 var propertyOptionsResult = bindingContext.ValueProvider.GetValue($"{modelName}.Options");
                 if (propertyOptionsResult == ValueProviderResult.None)
                 {
-                    ModelBindingResult.Failed();
+                    bindingContext.Result = ModelBindingResult.Failed();
+                    bindingContext.ModelState.AddModelError("optionError", "Свойство типа 'Опция' должно иметь хотя бы одну опцию");
                     return Task.CompletedTask;
                 }
                     
