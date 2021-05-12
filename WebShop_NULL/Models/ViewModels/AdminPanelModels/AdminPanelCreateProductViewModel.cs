@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WebShop_FSharp.ViewModels;
 using WebShop_NULL.Infrastructure.AdminPanel;
 
 namespace WebShop_NULL.Models.ViewModels.AdminPanelModels

@@ -1,5 +1,5 @@
 ﻿//artemgur
-window.onload = function initCityOnClick() {
+function initCityOnClick() {
     let cityLi = document.getElementsByClassName('set_city_manual')
     for (var i = 0; i < cityLi.length; i++){
         let a = i//just in case, not sure if necessary
@@ -75,3 +75,8 @@ function isCitySupported(city){
     }
     return false
 }
+
+window.addEventListener ?
+    window.addEventListener("load",initCityOnClick,false)
+    :
+    window.attachEvent && window.attachEvent("onload",initCityOnClick);

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using WebShop_FSharp;
-using WebShop_NULL.Models.ViewModels;
+using WebShop_FSharp.ViewModels.ProfileModels;
 
 namespace WebShop_NULL.Controllers
 {

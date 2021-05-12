@@ -3,16 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
-using System.Xml.XPath;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using DomainModels;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using WebShop_FSharp;
-using WebShop_NULL.Models.ViewModels;
-using WebShop_NULL.Models.ViewModels.СatalogModels;
+using WebShop_FSharp.ViewModels;
+using WebShop_FSharp.ViewModels.CatalogModels;
 
 namespace WebShop_NULL.Controllers
 {
