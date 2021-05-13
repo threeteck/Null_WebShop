@@ -29,7 +29,7 @@ type ProductViewModel() =
     val mutable Properties : IEnumerable<PropertyDTO>
 
     [<DefaultValue>]
-    val mutable Reviews : IEnumerable<ReviewDTO>
+    val mutable private reviewsTotalPages : int
     
     member public this.Category with get() = this.category
                                 and set p = this.category <- p
@@ -46,4 +46,6 @@ type ProductViewModel() =
                               
     member public this.Rating with get() = this.rating
                               and set p = this.rating <- p
-                              
+
+    member public this.ReviewsTotalPages with get() = this.reviewsTotalPages
+                                         and set p = this.reviewsTotalPages <- p

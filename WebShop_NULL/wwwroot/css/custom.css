@@ -177,6 +177,10 @@ footer {
 .review-content {
     grid-area: text;
     margin-top: 0.3rem;
+    word-break: break-all;
+    word-wrap: break-word;
+    white-space: normal;
+    height: auto;
 }
 
 .review-rating-star-text {

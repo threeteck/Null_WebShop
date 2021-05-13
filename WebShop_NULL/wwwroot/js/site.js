@@ -103,3 +103,85 @@ function sendFiles(files) {
         });
     }
 })($);
+
+function htmlToElement(html) {
+    var template = document.createElement('template');
+    html = html.trim();
+    template.innerHTML = html;
+    return template.content.firstChild;
+}
+
+function getPaginationBarElement(page, totalPages, onPageJumpHandler){
+    let html = ``;
+    if(totalPages > 1) {
+        html = `
+        <div class="pages">
+            <nav class="d-flex justify-content-center">
+                <ul class="pagination">
+                    <li class="page-item ${(page === 0 ? "disabled" : "")}">
+                        <button class="page-link page-link-previous" ${(page === 0 ? "disabled" : "")} type="button">
+                            <span aria-hidden="true">&laquo;</span>
+                            <span class="sr-only">Previous</span>
+                        </button>
+                    </li>
+        `
+
+        if (page >= 4) {
+            html += `
+        <li>
+            <button class="page-link" type="button" page-val="0">1</button>
+        </li>
+        <li class="page-item disabled"><span>...</span></li>
+        `
+        }
+
+        for (let i = Math.max(0, page - 3); i < Math.min(totalPages, page + 4); i++) {
+            html += `
+        <li class="page-item ${(page === i ? "active" : "")}">
+            <button class="page-link" type="button" page-val="${i}">${i + 1}</button>
+        </li>
+        `
+        }
+
+        if (page + 3 < totalPages - 1) {
+            html += `
+        <li class="page-item disabled"><span>...</span></li>
+        <li class="page-item">
+            <button class="page-link" type="button" page-val="${totalPages - 1}">${totalPages}</button>
+        </li>
+        `
+        }
+
+        html += `
+                <li class="page-item ${(page === totalPages - 1 ? "disabled" : "")}">
+                    <button class="page-link page-link-next" ${(page === totalPages - 1 ? "disabled" : "")} type="button">
+                        <span aria-hidden="true">&raquo;</span>
+                        <span class="sr-only">Next</span>
+                    </button>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    `
+    }
+    
+    let result = $(htmlToElement(html));
+    
+    result.find('.page-link[page-val]').each(function (){
+        $this = $(this);
+        let pageVal = Number($this.attr('page-val'));
+        $this.click(async () => {
+            await onPageJumpHandler(pageVal);
+        });
+    });
+    
+    result.find('.page-link-previous').click(async ()=>{
+        await onPageJumpHandler(page - 1);
+    });
+
+    result.find('.page-link-next').click(async ()=>{
+        await onPageJumpHandler(page + 1);
+    });
+    
+    return result;
+}

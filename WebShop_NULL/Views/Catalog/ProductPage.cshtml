@@ -72,7 +72,8 @@
                                 <div class="box p-3">
                                     <form action="@Url.Content($"~/product/{Model.Id}/sendReview")" method="post">
                                         <div class="review-container">
-                                            <textarea id="review-text" name="content" placeholder="Текст отзыва" data-val="true" data-val-required="Текст отзыва не может быть пустым"></textarea>
+                                            <textarea id="review-text" name="content" placeholder="Текст отзыва" data-val="true" data-val-required="Текст отзыва не может быть пустым"
+                                            data-val-length="Текст отзыва не может содержать более 1000 символов" data-val-length-max=1000></textarea>
                                             <span class="field-validation-valid" data-valmsg-for="content" data-valmsg-replace="true"></span>
                                             <select id="review-rating" class="form-control" name="rating">
                                                 @for (int i = 1; i <= 10; i++)
@@ -85,12 +86,16 @@
                                     </form>
                                 </div>
                             }
-
-                            @foreach (var review in Model.Reviews)
-                            {
-                                @Html.Partial("ReviewPartial", review)
-                            }
-
+                            <input type="hidden" id="review-total-pages" value="@Model.ReviewsTotalPages"/>
+                            <input type="hidden" id="product-id" value="@Model.Id"/>
+                            
+                            <div id="reviews-container">
+                                
+                            </div>
+                            
+                            <div id="reviews-pagination-bar">
+                                
+                            </div>
                         </div>
 
                         <div id="product-details-container" class="product-details-container">
@@ -115,4 +120,5 @@
 @section Scripts
 {
     <script src="~/js/product.js"></script>
+    <script src="~/js/reviews.js"></script>
 }
