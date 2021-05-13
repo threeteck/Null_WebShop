@@ -21,7 +21,6 @@ namespace WebShop_NULL
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             //services.AddControllersFromAssembly("WebShop_FSharp"); //Uncomment when/if we will actually have F# controllers

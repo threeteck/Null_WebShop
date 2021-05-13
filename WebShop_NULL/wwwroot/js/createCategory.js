@@ -27,7 +27,7 @@ function getPropertyElement(){
         </div>
         <div class="property-field">
             <input type="hidden" name="PropertyInfos.Index" value="${index_closure}">
-            <input class="form-control mt-0 ml-0" placeholder="Название" name="PropertyInfos[${index_closure}].Name"/>
+            <input class="form-control mt-0 ml-0" placeholder="Название" name="PropertyInfos[${index_closure}].Name" maxlength=64/>
             <select class="form-control mt-0" name="PropertyInfos[${index_closure}].Type">
                 <option value="0">Строка</option>
                 <option value="1">Число</option>
@@ -68,7 +68,7 @@ function getPropertyElement(){
 function getOptionFieldElement(index, $additionalInfo){
     let html = `
     <div class="option-field">
-        <input type="text" class="form-control" placeholder="Текст опции" name="PropertyInfos[${index}].Options"/>
+        <input type="text" class="form-control" placeholder="Текст опции" name="PropertyInfos[${index}].Options" maxlength=64/>
         <div class="icon-tab">
             <div class="plus">
                 <div class="m-0">

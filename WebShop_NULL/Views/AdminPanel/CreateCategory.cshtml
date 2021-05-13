@@ -8,13 +8,13 @@
         <div class="content">
             <form action="" method="post">
                 <div class="section">
+                    <h3>Категория</h3>
                     @if (!ViewData.ModelState.IsValid)
                     {
                         <div class="alert alert-danger w-100">
                             Некоторые поля не заполнены
                         </div>
                     }
-                    <h3>Категория</h3>
                     <div class="form-group">
                         <input class="form-control" placeholder="Название категории" type="text" asp-for="CategoryName"/>
                         <span asp-validation-for="CategoryName"></span>

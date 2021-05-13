@@ -18,9 +18,10 @@ namespace WebShop_NULL.Infrastructure.AdminPanel
             if (propertyIdResult == ValueProviderResult.None ||
                 propertyValueResult == ValueProviderResult.None ||
                 !int.TryParse(propertyIdResult.FirstValue, out var propertyId) ||
-                propertyValueResult.FirstValue == null)
+                string.IsNullOrWhiteSpace(propertyValueResult.FirstValue))
             {
-                ModelBindingResult.Failed();
+                bindingContext.Result = ModelBindingResult.Failed();
+                bindingContext.ModelState.AddModelError("", "Значение свойства не задано.");
                 return Task.CompletedTask;
             }
 

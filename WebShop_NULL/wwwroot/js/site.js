@@ -1,6 +1,16 @@
 ﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 // for details on configuring this project to bundle and minify static web assets.
 // Write your JavaScript code.
+
+$(()=>{
+    window.reader = new FileReader();
+    window.imageEl = $('#upload-image')[0]
+
+    reader.onload = e => {
+        imageEl.setAttribute('src', e.target.result);
+    };
+})
+
 var dropZone = $('#upload-container');
 dropZone.on('drag dragstart dragend dragover dragenter dragleave drop', function () {
     return false;
@@ -49,6 +59,11 @@ function sendFiles(files) {
         processData: false,
         success: function (data) {
             $('#upload-alert').removeAttr('hidden');
+            imageEl.setAttribute('style', 'display: block;\n' +
+                '    width: 300px;\n' +
+                '    height: 300px;\n' +
+                '    object-fit: contain;');
+            reader.readAsDataURL(files[0]);
         }
     });
 };

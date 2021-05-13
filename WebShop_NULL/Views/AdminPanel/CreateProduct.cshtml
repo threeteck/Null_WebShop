@@ -9,6 +9,12 @@
             <form action="" method="post" enctype="multipart/form-data">
                 <div class="section">
                     <h3>Товар</h3>
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div class="alert alert-danger">
+                            @Html.ValidationSummary()
+                        </div>
+                    }
                     <div class="form-group">
                         <input class="form-control" placeholder="Название товара" type="text" asp-for="ProductName"/>
                         <span asp-validation-for="ProductName"></span>
