@@ -1,18 +1,20 @@
 ﻿@model WebShop_FSharp.ViewModels.CatalogModels.ProductCardDTO
 
+@using WebShop_FSharp
+
 <div class="col-lg-4 col-md-6">
     <div class="product">
         <div class="flip-container">
             <div class="flipper">
                 <div class="front">
                     <a href="@Url.Content($"~/product/{Model.Id}")">
-                        <img src="@Url.Content($"~/{Model.ImagePath}")" alt="" class="img-fluid product-card-img">
+                        <img src="@Url.ProductImage($"~/{Model.ImagePath}")" alt="@Model.Name" class="img-fluid product-card-img">
                     </a>
                 </div>
                                             
                 <div class="back">
                     <a href="@Url.Content($"~/product/{Model.Id}")">
-                        <img src="@Url.Content($"~/{Model.ImagePath}")" alt="" class="img-fluid product-card-img">
+                        <img src="@Url.ProductImage($"~/{Model.ImagePath}")" alt="@Model.Name" class="img-fluid product-card-img">
                     </a>
                 </div>
             </div>
