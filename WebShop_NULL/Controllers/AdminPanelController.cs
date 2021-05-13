@@ -225,7 +225,7 @@ namespace WebShop_NULL.Controllers
                 Name = data.ProductName,
                 Description = data.ProductDescription,
                 Price = (decimal) data.ProductPrice.Value,
-                Rating = 5
+                Rating = -1
             };
 
             var imageData = await CreateProductImageMetadata(data.Image);

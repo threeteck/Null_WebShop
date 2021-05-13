@@ -138,6 +138,17 @@ namespace WebShop_NULL.Controllers
             _dbContext.Reviews.Add(review);
             await _dbContext.SaveChangesAsync();
 
+            var reviewCount = _dbContext.Reviews
+                .Count(r => r.ProductId == productId);
+            
+            var product = _dbContext.Products.ById(productId).FirstOrDefault();
+            if (product == null)
+                return BadRequest();
+            
+            var oldRating = product.Rating == -1 ? 0 : product.Rating;
+            product.Rating = (oldRating * (reviewCount - 1) + rating) / reviewCount;
+
+            await _dbContext.SaveChangesAsync();
             return Redirect(Url.Content($"~/product/{productId}"));
         }
         
