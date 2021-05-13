@@ -11,8 +11,6 @@ type CustomTagHelpers =
     [<Extension>]
      static member inline public ImageOrPlaceholder(url: IUrlHelper, imagePath: string, placeholderPath: string) =
         let filePath = Path.Combine(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot"), Utilities.removeNonLettersFromBeginning(imagePath))
-        Console.WriteLine(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot"))
-        Console.WriteLine(filePath)
         if File.Exists(filePath)
         then url.Content(imagePath)
         else url.Content(placeholderPath)
