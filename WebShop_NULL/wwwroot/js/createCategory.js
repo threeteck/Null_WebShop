@@ -4,6 +4,8 @@
     $createPropertyButton = $('#createProperty');
     window.$submitButton = $('#submit-button');
     window.propertyCount = 0;
+    window.$form = $('#create-category-form');
+    window.optionEntries = {}
     
     $createPropertyButton.click(function (e){
         e.stopPropagation();
@@ -11,6 +13,7 @@
         window.index_iter += 1;
         window.$submitButton.removeAttr('disabled');
         window.propertyCount += 1;
+        revalidateForm();
     });
 });
 
@@ -27,7 +30,11 @@ function getPropertyElement(){
         </div>
         <div class="property-field">
             <input type="hidden" name="PropertyInfos.Index" value="${index_closure}">
-            <input class="form-control mt-0 ml-0" placeholder="Название" name="PropertyInfos[${index_closure}].Name" maxlength=64/>
+            <div class="w-100">
+                <input class="form-control mt-0 ml-0" placeholder="Название" name="PropertyInfos[${index_closure}].Name" maxlength=64 data-val="true" data-val-required="Название свойства должно быть задано"/>
+                <span class="field-validation-valid ml-0" data-valmsg-for="PropertyInfos[${index_closure}].Name" data-valmsg-replace="true"></span>
+                <span class="field-validation-valid ml-0" data-valmsg-for="PropertyInfos[${index_closure}].Options" data-valmsg-replace="true"></span>
+            </div>
             <select class="form-control mt-0" name="PropertyInfos[${index_closure}].Type">
                 <option value="0">Строка</option>
                 <option value="1">Число</option>
@@ -46,6 +53,7 @@ function getPropertyElement(){
         if(window.propertyCount <= 0)
             window.$submitButton.attr('disabled', 'disabled');
         result.remove();
+        revalidateForm();
     });
     result.find('select').change(function (){
         $this = $(this);
@@ -55,9 +63,11 @@ function getPropertyElement(){
         {
             $additionalInfo.removeAttr('hidden');
             if($additionalInfo[0].childElementCount === 0) {
+                optionEntries[index_closure] = 0;
                 $optionField = getOptionFieldElement(index_closure, $additionalInfo);
                 $optionField.find('.minus').remove();
                 $additionalInfo.append($optionField);
+                revalidateForm();
             }
         }
     });
@@ -68,7 +78,9 @@ function getPropertyElement(){
 function getOptionFieldElement(index, $additionalInfo){
     let html = `
     <div class="option-field">
-        <input type="text" class="form-control" placeholder="Текст опции" name="PropertyInfos[${index}].Options" maxlength=64/>
+        <div class="w-100">
+            <input type="text" class="form-control" placeholder="Текст опции" name="PropertyInfos[${index}].Options" maxlength=64 data-val="true" data-val-required="Текст опции не может быть пустым"/>
+        </div>
         <div class="icon-tab">
             <div class="plus">
                 <div class="m-0">
@@ -90,19 +102,23 @@ function getOptionFieldElement(index, $additionalInfo){
     
     let result = $(htmlToElement(html));
     result.find('.plus').click(function (){
+        optionEntries[index]++;
         $additionalInfo.append(getOptionFieldElement(index, $additionalInfo))
+        revalidateForm();
     });
     
     result.find('.minus').click(function (){
         result.remove();
+        revalidateForm();
     });
     
     return result;
 }
 
-function htmlToElement(html) {
-    var template = document.createElement('template');
-    html = html.trim();
-    template.innerHTML = html;
-    return template.content.firstChild;
+function revalidateForm(){
+    var form = $form
+        .removeData("validator") /* added by the raw jquery.validate plugin */
+        .removeData("unobtrusiveValidation");  /* added by the jquery unobtrusive plugin*/
+
+    $.validator.unobtrusive.parse(form);
 }

@@ -18,6 +18,7 @@ namespace WebShop_NULL.Controllers
         private readonly ApplicationContext _dbContext;
         private readonly ILogger<CatalogController> _logger;
         private readonly int _productsPerPage = 6;
+        private readonly int _reviewsPerPage = 6;
         
         public CatalogController(ILogger<CatalogController> logger, ApplicationContext dbContext)
         {
@@ -82,15 +83,7 @@ namespace WebShop_NULL.Controllers
                     Category = p.Category,
                     Properties = p.Category.Properties,
                     ImagePath = p.Image.ImagePath,
-                    Reviews = p.Reviews.OrderByDescending(review => review.Date)
-                        .Select(review => new ReviewDTO()
-                    {
-                        Content = review.Content,
-                        Rating = review.Rating,
-                        UserId = review.UserId,
-                        UserImagePath = review.User.Image.ImagePath,
-                        UserName = $"{review.User.Name} {review.User.Surname}"
-                    })
+                    ReviewsCount = p.Reviews.Count,
                 }).FirstOrDefault();
             
             if (result == null)
@@ -115,10 +108,32 @@ namespace WebShop_NULL.Controllers
                             Name = prop.Name,
                             Value = dict.Value
                         }),
-                Reviews = result.Reviews
+                ReviewsTotalPages = ((result.ReviewsCount - 1) / _reviewsPerPage) + 1
             };
 
             return View(productModel);
+        }
+
+        [Authorize]
+        [HttpGet("~/product/{productId}/reviews")]
+        public IActionResult GetReviews(int productId, int page = 0)
+        {
+            var reviews = _dbContext.Reviews
+                .Where(review => review.ProductId == productId)
+                .OrderByDescending(review => review.Date)
+                .Skip(_reviewsPerPage * page)
+                .Take(6)
+                .Select(review => new ReviewDTO()
+                {
+                    Content = review.Content,
+                    Rating = review.Rating,
+                    UserId = review.UserId,
+                    UserImagePath = review.User.Image.ImagePath,
+                    UserName = $"{review.User.Name} {review.User.Surname}"
+                })
+                .ToList();
+
+            return Json(reviews);
         }
 
         [Authorize]
@@ -138,6 +153,17 @@ namespace WebShop_NULL.Controllers
             _dbContext.Reviews.Add(review);
             await _dbContext.SaveChangesAsync();
 
+            var reviewCount = _dbContext.Reviews
+                .Count(r => r.ProductId == productId);
+            
+            var product = _dbContext.Products.ById(productId).FirstOrDefault();
+            if (product == null)
+                return BadRequest();
+            
+            var oldRating = product.Rating == -1 ? 0 : product.Rating;
+            product.Rating = (oldRating * (reviewCount - 1) + rating) / reviewCount;
+
+            await _dbContext.SaveChangesAsync();
             return Redirect(Url.Content($"~/product/{productId}"));
         }
         

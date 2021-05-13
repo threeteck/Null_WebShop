@@ -37,7 +37,7 @@ namespace WebShop_NULL.Infrastructure.AdminPanel
                     return Task.CompletedTask;
                 }
                     
-                var options = propertyOptionsResult.Values.ToList();
+                var options = propertyOptionsResult.Values.Where(str => !string.IsNullOrWhiteSpace(str)).ToList();
                 bindingContext.Result = ModelBindingResult.Success(new CreateCategoryOptionPropertyInfo()
                 {
                     Name = propertyNameResult.FirstValue,

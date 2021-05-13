@@ -67,3 +67,121 @@ function sendFiles(files) {
         }
     });
 };
+
+
+(function ($) {
+    $.validator.unobtrusive.parseDynamicContent = function (selector) {
+        //use the normal unobstrusive.parse method
+        $.validator.unobtrusive.parse(selector);
+
+        //get the relevant form
+        var form = $(selector).first().closest('form');
+
+        //get the collections of unobstrusive validators, and jquery validators
+        //and compare the two
+        var unobtrusiveValidation = form.data('unobtrusiveValidation');
+        var validator = form.validate();
+
+        $.each(unobtrusiveValidation.options.rules, function (elname, elrules) {
+            if (validator.settings.rules[elname] == undefined) {
+                var args = {};
+                $.extend(args, elrules);
+                args.messages = unobtrusiveValidation.options.messages[elname];
+                //edit:use quoted strings for the name selector
+                $("[name='" + elname + "']").rules("add", args);
+            } else {
+                $.each(elrules, function (rulename, data) {
+                    if (validator.settings.rules[elname][rulename] == undefined) {
+                        var args = {};
+                        args[rulename] = data;
+                        args.messages = unobtrusiveValidation.options.messages[elname][rulename];
+                        //edit:use quoted strings for the name selector
+                        $("[name='" + elname + "']").rules("add", args);
+                    }
+                });
+            }
+        });
+    }
+})($);
+
+function htmlToElement(html) {
+    var template = document.createElement('template');
+    html = html.trim();
+    template.innerHTML = html;
+    return template.content.firstChild;
+}
+
+function getPaginationBarElement(page, totalPages, onPageJumpHandler){
+    let html = ``;
+    if(totalPages > 1) {
+        html = `
+        <div class="pages">
+            <nav class="d-flex justify-content-center">
+                <ul class="pagination">
+                    <li class="page-item ${(page === 0 ? "disabled" : "")}">
+                        <button class="page-link page-link-previous" ${(page === 0 ? "disabled" : "")} type="button">
+                            <span aria-hidden="true">&laquo;</span>
+                            <span class="sr-only">Previous</span>
+                        </button>
+                    </li>
+        `
+
+        if (page >= 4) {
+            html += `
+        <li>
+            <button class="page-link" type="button" page-val="0">1</button>
+        </li>
+        <li class="page-item disabled"><span>...</span></li>
+        `
+        }
+
+        for (let i = Math.max(0, page - 3); i < Math.min(totalPages, page + 4); i++) {
+            html += `
+        <li class="page-item ${(page === i ? "active" : "")}">
+            <button class="page-link" type="button" page-val="${i}">${i + 1}</button>
+        </li>
+        `
+        }
+
+        if (page + 3 < totalPages - 1) {
+            html += `
+        <li class="page-item disabled"><span>...</span></li>
+        <li class="page-item">
+            <button class="page-link" type="button" page-val="${totalPages - 1}">${totalPages}</button>
+        </li>
+        `
+        }
+
+        html += `
+                <li class="page-item ${(page === totalPages - 1 ? "disabled" : "")}">
+                    <button class="page-link page-link-next" ${(page === totalPages - 1 ? "disabled" : "")} type="button">
+                        <span aria-hidden="true">&raquo;</span>
+                        <span class="sr-only">Next</span>
+                    </button>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    `
+    }
+    
+    let result = $(htmlToElement(html));
+    
+    result.find('.page-link[page-val]').each(function (){
+        $this = $(this);
+        let pageVal = Number($this.attr('page-val'));
+        $this.click(async () => {
+            await onPageJumpHandler(pageVal);
+        });
+    });
+    
+    result.find('.page-link-previous').click(async ()=>{
+        await onPageJumpHandler(page - 1);
+    });
+
+    result.find('.page-link-next').click(async ()=>{
+        await onPageJumpHandler(page + 1);
+    });
+    
+    return result;
+}

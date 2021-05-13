@@ -51,7 +51,7 @@
                     {
                         <tr class="product-item" id="@product.Id">
                             <td>@product.Name</td>
-                            <td>@product.Rating</td>
+                            <td>@(product.Rating == -1 ? "Без рейтинга" : $"{product.Rating:#.#}")</td>
                             <td>@product.Price</td>
                             <td>
                                 <a href="@Url.Content($"~/product/{product.Id}")"><i class="fa fa-eye"></i></a>

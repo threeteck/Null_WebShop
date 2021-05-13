@@ -6,7 +6,7 @@
     @await Html.PartialAsync("_GetAdminMenu")
     <div class="col-lg-10 col-md-12 admin-content-margined">
         <div class="content">
-            <form action="" method="post">
+            <form id="create-category-form" action="" method="post">
                 <div class="section">
                     <h3>Категория</h3>
                     @if (!ViewData.ModelState.IsValid)
