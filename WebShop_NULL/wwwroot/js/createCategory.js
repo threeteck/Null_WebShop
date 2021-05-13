@@ -4,6 +4,7 @@
     $createPropertyButton = $('#createProperty');
     window.$submitButton = $('#submit-button');
     window.propertyCount = 0;
+    window.$form = $('#create-category-form');
     
     $createPropertyButton.click(function (e){
         e.stopPropagation();
@@ -11,6 +12,7 @@
         window.index_iter += 1;
         window.$submitButton.removeAttr('disabled');
         window.propertyCount += 1;
+        revalidateForm();
     });
 });
 
@@ -27,7 +29,10 @@ function getPropertyElement(){
         </div>
         <div class="property-field">
             <input type="hidden" name="PropertyInfos.Index" value="${index_closure}">
-            <input class="form-control mt-0 ml-0" placeholder="Название" name="PropertyInfos[${index_closure}].Name" maxlength=64/>
+            <div class="w-100">
+                <input class="form-control mt-0 ml-0" placeholder="Название" name="PropertyInfos[${index_closure}].Name" maxlength=64 data-val="true" data-val-required="Название свойства должно быть задано"/>
+                <span class="field-validation-valid" data-valmsg-for="PropertyInfos[${index_closure}].Name" data-valmsg-replace="true"></span>
+            </div>
             <select class="form-control mt-0" name="PropertyInfos[${index_closure}].Type">
                 <option value="0">Строка</option>
                 <option value="1">Число</option>
@@ -105,4 +110,12 @@ function htmlToElement(html) {
     html = html.trim();
     template.innerHTML = html;
     return template.content.firstChild;
+}
+
+function revalidateForm(){
+    var form = $form
+        .removeData("validator") /* added by the raw jquery.validate plugin */
+        .removeData("unobtrusiveValidation");  /* added by the jquery unobtrusive plugin*/
+
+    $.validator.unobtrusive.parse(form);
 }

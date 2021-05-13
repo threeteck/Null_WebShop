@@ -4,6 +4,7 @@
     window.$imageInput = $('#inputGroupFile01');
     window.$imageLabel = $('#image-label');
     window.$submitButton = $('#submit-button');
+    window.$form = $('#product-create-form');
     
     $imageInput.change(()=>{
         let fileName = $imageInput[0].files[0].name;
@@ -14,7 +15,7 @@
         await setProperties();
     });
     
-    if($categorySelect.val() !== -1){
+    if($categorySelect.val() !== null){
         await setProperties();
     }
 });
@@ -27,11 +28,20 @@ async function setProperties(){
         $propertyContainer.empty();
         let data = await response.json();
         data.forEach((p) => {
-            $propertyContainer.append(getElementFromProperty(p))
+            $propertyContainer.append(getElementFromProperty(p));
         });
+        revalidateForm();
 
         $submitButton.removeAttr('disabled');
     }
+}
+
+function revalidateForm(){
+    var form = $form
+        .removeData("validator") /* added by the raw jquery.validate plugin */
+        .removeData("unobtrusiveValidation");  /* added by the jquery unobtrusive plugin*/
+
+    $.validator.unobtrusive.parse(form);
 }
 
 function getElementFromProperty(property){
@@ -42,11 +52,12 @@ function getElementFromProperty(property){
         <span class="property-name">${property.name}</span>
 `;
     
+    html += '<div class="w-100">'
     if(property.propertyType === "Integer" || property.propertyType === "Decimal")
-        html += `<input class="form-control" placeholder="Значение" type="number" name="PropertyInfos[${property.id}].Value" maxlength=10>`
+        html += `<input class="form-control" placeholder="Значение" type="number" name="PropertyInfos[${property.id}].Value" maxlength=10 data-val="true" data-val-required="Значение не задано">`
     
     if(property.propertyType == "Nominal")
-        html += `<input class="form-control" placeholder="Значение" type="text" name="PropertyInfos[${property.id}].Value" maxlength=64>`
+        html += `<input class="form-control" placeholder="Значение" type="text" name="PropertyInfos[${property.id}].Value" maxlength=64 data-val="true" data-val-required="Значение не задано">`
 
     if(property.propertyType == "Option") {
         html += `<select class="form-control" name="PropertyInfos[${property.id}].Value">`
@@ -57,7 +68,8 @@ function getElementFromProperty(property){
         html += '</select>'
     }
     
-    html += '</div>'
+    html += `<span class="field-validation-valid" data-valmsg-for="PropertyInfos[${property.id}].Value" data-valmsg-replace="true"></span>`
+    html += '</div></div>'
 
     return htmlToElement(html);
 }
