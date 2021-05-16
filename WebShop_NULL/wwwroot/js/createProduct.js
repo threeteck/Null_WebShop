@@ -45,6 +45,9 @@ function revalidateForm(){
 }
 
 function getElementFromProperty(property){
+    let filterInfo = JSON.parse(property.filterInfo)
+    let constraints = JSON.parse(property.constraints)
+    
     let html = `
     <div class="property-field">
         <input type="hidden" name="PropertyInfos.Index" value="${property.id}">
@@ -54,14 +57,13 @@ function getElementFromProperty(property){
     
     html += '<div class="w-100">'
     if(property.propertyType === "Integer" || property.propertyType === "Decimal")
-        html += `<input class="form-control" placeholder="Значение" type="number" name="PropertyInfos[${property.id}].Value" maxlength=10 data-val="true" data-val-required="Значение не задано">`
+        html += `<input class="form-control" placeholder="Значение" type="number" name="PropertyInfos[${property.id}].Value" data-val="true" data-val-required="Значение не задано" data-val-range="Значение должно быть в пределах от ${constraints.minValue} до ${constraints.maxValue}" data-val-range-max="${constraints.maxValue}" data-val-range-min="${constraints.minValue}">`
     
     if(property.propertyType == "Nominal")
         html += `<input class="form-control" placeholder="Значение" type="text" name="PropertyInfos[${property.id}].Value" maxlength=64 data-val="true" data-val-required="Значение не задано">`
 
     if(property.propertyType == "Option") {
         html += `<select class="form-control" name="PropertyInfos[${property.id}].Value">`
-        let filterInfo = JSON.parse(property.filterInfo)
         filterInfo.options.forEach((option) => {
             html += `<option value="${option}">${option}</option>`
         });
