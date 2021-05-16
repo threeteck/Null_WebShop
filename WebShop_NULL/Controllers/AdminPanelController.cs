@@ -67,29 +67,7 @@ namespace WebShop_NULL.Controllers
             var properties = new List<Property>();
             foreach (var propertyInfo in data.PropertyInfos)
             {
-                var property = new Property()
-                {
-                    Name = propertyInfo.Name,
-                    Type = propertyTypes[GetTypeName(propertyInfo.Type)],
-                };
-
-                if (propertyInfo is CreateCategoryOptionPropertyInfo optionInfo)
-                {
-                    var obj = new
-                    {
-                        options = optionInfo.Options
-                    };
-
-                    var json = JsonSerializer.SerializeToUtf8Bytes(obj);
-                    var jDoc = JsonDocument.Parse(json);
-
-                    property.FilterInfo = jDoc;
-                }
-                else
-                {
-                    property.FilterInfo = JsonDocument.Parse("{}");
-                }
-                
+                var property = propertyInfo.BuildProperty(propertyTypes[GetTypeName(propertyInfo.Type)]);
                 properties.Add(property);
             }
 
@@ -282,7 +260,8 @@ namespace WebShop_NULL.Controllers
                     Id = p.Id,
                     Name = p.Name,
                     PropertyType = p.Type.Name,
-                    FilterInfo = p.FilterInfo.ToJsonString()
+                    FilterInfo = p.FilterInfo.ToJsonString(),
+                    Constraints = p.Constraints.ToJsonString()
                 }).ToList();
 
             return Json(properties);
