@@ -37,6 +37,7 @@ namespace WebShop_NULL
 
             services.AddSingleton<CommandService>();
             services.AddAuthorization();
+            services.AddScoped<AuthenticationService>();
             services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
             services.AddSingleton<IEmailSender, EmailService>();
             var settings = Configuration.GetSection("EmailSettings").Get<EmailSettings>();
