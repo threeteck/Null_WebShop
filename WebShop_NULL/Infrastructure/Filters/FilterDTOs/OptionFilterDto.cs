@@ -12,7 +12,7 @@ namespace WebShop_NULL.Infrastructure.Filters.FilterDTOs
         public List<string> Options { get; set; } = new List<string>();
         protected override Expression<Func<Product, bool>> GenerateExpression()
         {
-            Expression<Func<Product, bool>> expr = null;
+            Expression<Func<Product, bool>> expr = p => true;
             if (Options.Count > 0)
             {
                 var option = Options[0];

@@ -8,20 +8,20 @@ using WebShop_NULL.Models.ViewModels.FilterViewModels;
 
 namespace WebShop_NULL.Infrastructure.Filters.FilterRenderers
 {
-    [ForPropertyType(PropertyTypeEnum.Option)]
-    public class OptionFilterRenderer : IFilterRenderer<OptionFilterViewModel>
+    [ForPropertyType(PropertyTypeEnum.Nominal)]
+    public class StringFilterRenderer : IFilterRenderer<StringFilterViewModel>
     {
-        public IViewComponentResult Render(OptionFilterViewModel model)
+        public IViewComponentResult Render(StringFilterViewModel model)
         {
             return new ViewViewComponentResult()
             {
-                ViewName = "OptionFilterPartial"
-            };        
+                ViewName = "StringFilterPartial"
+            };
         }
 
         public IViewComponentResult Render(FilterViewModel model)
         {
-            return Render((OptionFilterViewModel) model);
+            return Render((StringFilterViewModel) model);
         }
     }
 }

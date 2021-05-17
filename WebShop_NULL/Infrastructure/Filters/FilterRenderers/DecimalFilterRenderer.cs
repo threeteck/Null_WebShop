@@ -8,20 +8,20 @@ using WebShop_NULL.Models.ViewModels.FilterViewModels;
 
 namespace WebShop_NULL.Infrastructure.Filters.FilterRenderers
 {
-    [ForPropertyType(PropertyTypeEnum.Option)]
-    public class OptionFilterRenderer : IFilterRenderer<OptionFilterViewModel>
+    [ForPropertyType(PropertyTypeEnum.Decimal)]
+    public class DecimalFilterRenderer : IFilterRenderer<DecimalFilterViewModel>
     {
-        public IViewComponentResult Render(OptionFilterViewModel model)
+        public IViewComponentResult Render(DecimalFilterViewModel model)
         {
             return new ViewViewComponentResult()
             {
-                ViewName = "OptionFilterPartial"
-            };        
+                ViewName = "DecimalFilterPartial"
+            };
         }
 
         public IViewComponentResult Render(FilterViewModel model)
         {
-            return Render((OptionFilterViewModel) model);
+            return Render((DecimalFilterViewModel) model);
         }
     }
 }

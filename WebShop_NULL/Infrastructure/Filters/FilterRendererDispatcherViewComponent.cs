@@ -2,6 +2,7 @@
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewComponents;
+using WebShop_FSharp.ViewModels.CatalogModels;
 using WebShop_NULL.Models.ViewModels;
 
 namespace WebShop_NULL.Infrastructure.Filters

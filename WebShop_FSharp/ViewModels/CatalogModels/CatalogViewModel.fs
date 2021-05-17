@@ -11,6 +11,15 @@ type CatalogViewModel() =
     val mutable private page: int
     
     [<DefaultValue>]
+    val mutable private query: string
+    
+    [<DefaultValue>]
+    val mutable private priceMin: decimal
+    
+    [<DefaultValue>]
+    val mutable private priceMax: decimal
+    
+    [<DefaultValue>]
     val mutable private numberOfPages: int
     
     [<DefaultValue>]
@@ -22,8 +31,17 @@ type CatalogViewModel() =
     [<DefaultValue>]
     val mutable private productList: List<ProductCardDTO>
     
+    [<DefaultValue>]
+    val mutable private filters: List<FilterViewModel>
+    
     member public this.Category with get() = this.category
                                 and set p = this.category <- p
+    member public this.Query with get() = this.query
+                                and set p = this.query <- p
+    member public this.PriceMin with get() = this.priceMin
+                                and set p = this.priceMin <- p
+    member public this.PriceMax with get() = this.priceMax
+                                and set p = this.priceMax <- p
     member public this.Page with get() = this.page
                                 and set p = this.page <- p
     member public this.NumberOfPages with get() = this.numberOfPages
@@ -38,3 +56,5 @@ type CatalogViewModel() =
     member public this.ProductList with get() = this.productList
                                    and set p = this.productList <- p
                               
+    member public this.Filters with get() = this.filters
+                                   and set p = this.filters <- p

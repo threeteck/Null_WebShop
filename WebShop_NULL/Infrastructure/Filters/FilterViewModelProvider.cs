@@ -2,7 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text.Json;
+using DomainModels;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Newtonsoft.Json;
+using WebShop_FSharp.ViewModels.CatalogModels;
 using WebShop_NULL.Models.ViewModels;
 
 namespace WebShop_NULL.Infrastructure.Filters
@@ -42,7 +46,14 @@ namespace WebShop_NULL.Infrastructure.Filters
             }
         }
 
-        public FilterViewModel GetFilterViewModel(string propertyName, int propertyType, int propertyId, dynamic filterInfo)
+        public FilterViewModel GetFilterViewModel(Property property, FilterDTO filterDto = null)
+        {
+            var propertyType = (PropertyTypeEnum)Enum.Parse(typeof(PropertyTypeEnum),property.Type.Name, true);
+            return GetFilterViewModel(property.Name, propertyType, property.Id, property.FilterInfo,
+                property.Constraints, filterDto);
+        }
+
+        public FilterViewModel GetFilterViewModel(string propertyName, PropertyTypeEnum propertyType, int propertyId, JsonDocument filterInfo, JsonDocument constraints, FilterDTO filterDto = null)
         {
             Type filterViewType = null;
             if (_mapper.ContainsId(propertyId))
@@ -55,10 +66,13 @@ namespace WebShop_NULL.Infrastructure.Filters
             filterViewModel.PropertyId = propertyId;
             filterViewModel.PropertyType = propertyType;
             filterViewModel.PropertyName = propertyName;
-            
+
+            dynamic filterInfoJObject = JsonConvert.DeserializeObject(filterInfo.ToJsonString());
+            dynamic constraintsJObject = JsonConvert.DeserializeObject(constraints.ToJsonString());
+
             if (_buildersMap.ContainsKey(filterViewType))
                 filterViewModel = _buildersMap[filterViewType]
-                    .BuildFilterViewModel(filterViewModel, filterInfo);
+                    .BuildFilterViewModel(filterViewModel, filterInfoJObject, constraintsJObject, filterDto);
             /*else
             {
                 var metadata = _mapper.GetFilterPropertiesMetadata(filterViewType);

@@ -26,7 +26,10 @@ namespace WebShop_NULL.Infrastructure.Filters
                 propertyTypeValue == ValueProviderResult.None ||
                 !int.TryParse(propertyIdValue.FirstValue, out var propertyId) ||
                 !int.TryParse(propertyTypeValue.FirstValue, out var propertyType))
+            {
+                bindingContext.Result = ModelBindingResult.Failed();
                 return Task.CompletedTask;
+            }
 
             Type filterType = null;
             if (_filterMapper.ContainsId(propertyId))
@@ -45,7 +48,9 @@ namespace WebShop_NULL.Infrastructure.Filters
                 var resolvedType = property.UnderlyingOrModelType;
                 var value = bindingContext.ValueProvider.GetValue($"{modelName}.{propertyName}");
                 var firstValue = value.FirstValue;
-                if (firstValue != null && !string.IsNullOrWhiteSpace(firstValue))
+                if (value != ValueProviderResult.None &&
+                    firstValue != null &&
+                    !string.IsNullOrWhiteSpace(firstValue))
                 {
                     if (!property.IsCollectionType)
                         property.PropertySetter(obj, Convert.ChangeType(firstValue, resolvedType));

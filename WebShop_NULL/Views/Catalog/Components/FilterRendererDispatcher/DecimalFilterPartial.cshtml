@@ -1,0 +1,33 @@
+﻿@model WebShop_NULL.Models.ViewModels.FilterViewModels.DecimalFilterViewModel
+
+@*<div>
+    <p>
+        @Model.PropertyName:
+    </p>
+    
+    <input type="hidden" name="filters[@Model.PropertyId].propertyName" value="@Model.PropertyName"/>
+    
+</div>*@
+
+<div class="card sidebar-menu mb-4">
+    <input type="hidden" name="filters.Index" value="@Model.PropertyId">
+    <input type="hidden" name="filters[@Model.PropertyId].propertyId" value="@Model.PropertyId"/>
+    <input type="hidden" name="filters[@Model.PropertyId].propertyType" value="@((int)Model.PropertyType)"/>
+    
+    <div class="card-header">
+        <h3 class="h4 card-title">@Model.PropertyName</h3>
+    </div>
+    <div class="card-body">
+        <div class="form-group">
+            <label for="filters[@Model.PropertyId].Min">От</label>
+            <input class="form-control" id="filters[@Model.PropertyId].Min" type="number" name="filters[@Model.PropertyId].Min" value="@(Model.Min < -10000000000 ? "" : Model.Min.ToString())" data-val="true" data-val-range="Значение не должно превышать 10000000000 по модулю" data-val-range-min="-10000000000" data-val-range-max="10000000000"/>
+            <span class="field-validation-valid ml-0" data-valmsg-for="filters[@Model.PropertyId].Min" data-valmsg-replace="true"></span>
+        </div>
+        <div class="form-group">
+            <label for="filters[@Model.PropertyId].Max">До</label>
+            <input class="form-control" id="filters[@Model.PropertyId].Max" type="number" name="filters[@Model.PropertyId].Max" value="@(Model.Max > 10000000000 ? "" : Model.Max.ToString())" data-val="true" data-val-range="Значение не должно превышать 10000000000 по модулю" data-val-range-min="-10000000000" data-val-range-max="10000000000"/>
+            <span class="field-validation-valid ml-0" data-valmsg-for="filters[@Model.PropertyId].Max" data-valmsg-replace="true"></span>
+        </div>
+        <button class="btn btn-default btn-sm btn-primary" type="submit" ><i class="fa fa-pencil"></i>Прменить</button>
+    </div>
+</div>

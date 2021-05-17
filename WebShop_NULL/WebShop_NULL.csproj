@@ -26,4 +26,10 @@
       <Folder Include="Migrations" />
     </ItemGroup>
 
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Views\Components\FilterRendererDispatcher\IntegerFilterPartial.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Components\FilterRendererDispatcher\OptionFilterPartial.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Components\FilterRendererDispatcher\StringFilterPartial.cshtml" />
+    </ItemGroup>
+
 </Project>

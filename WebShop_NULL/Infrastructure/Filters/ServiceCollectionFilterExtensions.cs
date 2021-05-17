@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using WebShop_FSharp.ViewModels.CatalogModels;
 using WebShop_NULL.Models.ViewModels;
 
 namespace WebShop_NULL.Infrastructure.Filters
