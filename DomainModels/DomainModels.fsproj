@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Compile Include="ImageMetadata.fs" />
+      <Compile Include="PropertyType.fs" />
+      <Compile Include="Property.fs" />
+      <Compile Include="Category.fs" />
+      <Compile Include="UserRole.fs" />
+      <Compile Include="ProductAndUser.fs" />
+      <Compile Include="City.fs" />
+      <Compile Include="ApplicationContext.fs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.3" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.3" />
+      <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.2" />
+      <PackageReference Include="Portable.BouncyCastle" Version="1.8.10" />
+    </ItemGroup>
+
+</Project>

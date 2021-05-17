@@ -1,0 +1,84 @@
+﻿@using WebShop_FSharp.ViewModels.ProfileModels
+@model WebShop_FSharp.ViewModels.ProfileModels.UserViewModel
+@{
+    ViewData["Title"] = "Personal Area";
+    var passwordChangeError = TempData["PasswordNotMatch"];
+    var passwordChangeSuccess = TempData["PasswordChangeSuccess"];
+}
+<div id="all">
+    <div id="content">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <!-- breadcrumb-->
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a asp-are="" asp-controller="Home" asp-action="Index">Главная</a></li>
+                            <li aria-current="page" class="breadcrumb-item active">Мой аккаунт</li>
+                        </ol>
+                    </nav>
+                </div>
+                @Html.Partial("ProfileMenuPartial", 1)
+                <div class="col-lg-9">
+                    <div class="box">
+                        @if (!ViewData.ModelState.IsValid || passwordChangeError != null)
+                        {
+                            <div class="alert alert-danger">
+                                @if (passwordChangeError != null)
+                                {
+                                    <p>@passwordChangeError</p>
+                                }
+                                
+                                @Html.ValidationSummary()
+                            </div>
+                        }
+                        <div class="d-flex flex-column align-items-lg-center">
+                            <h3 class="mt-5">Фото профиля</h3>
+                            <p class="lead">Зарузить фото профиля</p>
+                            <div id="upload-alert" class="alert alert-success w-100 text-center" hidden>Фото успешно изменено.</div>
+                            <form id="upload-container" class="form-group" method="POST" action="uploadImage">
+                                <img id="upload-image" src="~/images/upload.svg">
+                                <div>
+                                    <input id="file-input" type="file" name="file" multiple>
+                                    <label for="file-input">Выберите фото</label>
+                                    <span>или перетащите его сюда</span>
+                                </div>
+                            </form>
+                        </div>
+                        <h3>Поменять пароль</h3>
+                        @if (passwordChangeSuccess != null)
+                        {
+                            <div class="alert alert-success">Пароль успешно изменен.</div>
+                        }
+                        @Html.Partial("EditPasswordPartial", new PasswordChangeModel())
+                        <h3 class="mt-5">Данные</h3>
+                        <form action="" method="post">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.LabelFor(m => m.Name, "Имя")
+                                        @Html.EditorFor(m => m.Name, new {htmlAttributes = new {@class = "form-control"}})
+                                        @Html.ValidationMessageFor(m => m.Name)
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.LabelFor(m => m.Surname, "Фамилия")
+                                        @Html.EditorFor(m => m.Surname, new {htmlAttributes = new {@class = "form-control"}})
+                                        @Html.ValidationMessageFor(m => m.Surname)
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.row-->
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Сохранить изменения</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

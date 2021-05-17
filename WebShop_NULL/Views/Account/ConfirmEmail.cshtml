@@ -1,0 +1,12 @@
+﻿@model string
+
+<div class="alert alert-info container d-flex justify-content-center align-items-center margin-bottom-40px">
+    <p class="lead text-center">Для завершения регистрации вам было отправлено сообщение с дальнейшими инструкциями на электронную почту @Model.</p>
+</div>
+
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="mt-2 alert alert-danger container d-flex justify-content-center align-items-center margin-bottom-40px">
+        @Html.ValidationSummary()
+    </div>
+}

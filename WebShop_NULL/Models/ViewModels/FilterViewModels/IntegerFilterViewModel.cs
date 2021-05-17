@@ -1,9 +1,9 @@
-﻿using WebShop_NULL.Infrastructure.Filters;
-using WebShop_NULL.Models.DomainModels;
+﻿using DomainModels;
+using WebShop_NULL.Infrastructure.Filters;
 
 namespace WebShop_NULL.Models.ViewModels.FilterViewModels
 {
-    [ForPropertyType((int)PropertyTypeEnum.Integer)]
+    [ForPropertyType(PropertyTypeEnum.Integer)]
     public class IntegerFilterViewModel : FilterViewModel
     {
         public int Min { get; set; } = 0;

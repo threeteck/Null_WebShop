@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
+using DomainModels;
 using Microsoft.AspNetCore.Mvc;
-using WebShop_NULL.Models.DomainModels;
 
 namespace WebShop_NULL.Infrastructure.Filters
 {

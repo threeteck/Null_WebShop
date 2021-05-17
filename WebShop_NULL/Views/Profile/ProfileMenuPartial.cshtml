@@ -1,0 +1,17 @@
+﻿@model int
+<div class="col-lg-3">
+    <div class="card sidebar-menu">
+        <div class="card-header">
+            <h3 class="h4 card-title">Меню личного кабинета</h3>
+        </div>
+        <div class="card-body">
+            <ul class="nav nav-pills flex-column">
+                <li><a asp-controller="Profile" asp-action="Orders" class="nav-link @(Model == 0 ? "active": "")"><i class="fa fa-list"></i> Мои заказы</a></li>
+                <li><a href="@Url.Content("~/profile")" class="nav-link @(Model == 1 ? "active": "")"><i class="fa fa-user"></i> Мой аккаунт</a></li>
+                <li><a asp-controller="Account" asp-action="Logout" class="nav-link @(Model == 2 ? "active": "")"><i class="fa fa-sign-out"></i> Выйти</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+

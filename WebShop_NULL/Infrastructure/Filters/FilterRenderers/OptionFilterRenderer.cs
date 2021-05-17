@@ -1,12 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DomainModels;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewComponents;
-using WebShop_NULL.Models.DomainModels;
 using WebShop_NULL.Models.ViewModels;
 using WebShop_NULL.Models.ViewModels.FilterViewModels;
 
 namespace WebShop_NULL.Infrastructure.Filters.FilterRenderers
 {
-    [ForPropertyType((int)PropertyTypeEnum.Option)]
+    [ForPropertyType(PropertyTypeEnum.Option)]
     public class OptionFilterRenderer : IFilterRenderer<OptionFilterViewModel>
     {
         public IViewComponentResult Render(OptionFilterViewModel model)

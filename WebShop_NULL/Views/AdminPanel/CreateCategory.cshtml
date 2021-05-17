@@ -1,0 +1,44 @@
+﻿@model WebShop_NULL.Models.ViewModels.AdminPanelModels.AdminPanelCreateCategoryViewModel
+@{
+    Layout = "_AdminPanelLayout";
+}
+<div class="row">
+    @await Html.PartialAsync("_GetAdminMenu")
+    <div class="col-lg-10 col-md-12 admin-content-margined">
+        <div class="content">
+            <form id="create-category-form" action="" method="post">
+                <div class="section">
+                    <h3>Категория</h3>
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div class="alert alert-danger w-100">
+                            Некоторые поля не заполнены
+                        </div>
+                    }
+                    <div class="form-group">
+                        <input class="form-control" placeholder="Название категории" type="text" asp-for="CategoryName"/>
+                        <span asp-validation-for="CategoryName"></span>
+                    </div>
+                </div>
+                <div class="section">
+                    <div id="property-container">
+                        
+                    </div>
+                    <div class="form-group mt-2 d-flex justify-content-center w-100">
+                        <button id="createProperty" class="btn btn-primary" type="button">
+                            Добавить характеристику
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="form-group d-flex justify-content-center align-items-center mt-2">
+                    <input class="btn btn-primary" type="submit" id="submit-button" value="Создать" disabled/>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/js/createCategory.js"></script>
+}

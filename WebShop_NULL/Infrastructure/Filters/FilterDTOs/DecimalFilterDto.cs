@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq.Expressions;
-using WebShop_NULL.Models.DomainModels;
+using DomainModels;
 
 namespace WebShop_NULL.Infrastructure.Filters.FilterDTOs
 {
-    [ForPropertyType((int)PropertyTypeEnum.Decimal)]
+    [ForPropertyType(PropertyTypeEnum.Decimal)]
     public class DecimalFilterDto : FilterDTO
     {
         public decimal Min { get; set; } = Decimal.MinValue;

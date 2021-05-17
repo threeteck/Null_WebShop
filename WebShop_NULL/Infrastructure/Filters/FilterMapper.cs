@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using DomainModels;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using WebShop_NULL.Models.DomainModels;
 
 namespace WebShop_NULL.Infrastructure.Filters
 {
@@ -44,7 +44,7 @@ namespace WebShop_NULL.Infrastructure.Filters
             {
                 if (type.GetCustomAttribute<ForPropertyTypeAttribute>() is var forTypeAttribute &&
                     forTypeAttribute != null)
-                    _filterTypeMap[forTypeAttribute.Type] = type;
+                    _filterTypeMap[(int)forTypeAttribute.Type] = type;
                 
                 if (type.GetCustomAttribute<ForPropertyAttribute>() is var forIdAttribute &&
                     forIdAttribute != null)

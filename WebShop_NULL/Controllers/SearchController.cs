@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
+using DomainModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using WebShop_NULL.Infrastructure;
- using WebShop_NULL.Infrastructure.Filters;
- using WebShop_NULL.Models;
-using WebShop_NULL.Models.DomainModels;
- using WebShop_NULL.Models.ViewModels;
+using WebShop_NULL.Infrastructure.Filters;
+using WebShop_NULL.Models;
+using WebShop_NULL.Models.ViewModels;
 
  namespace WebShop_NULL.Controllers
 {

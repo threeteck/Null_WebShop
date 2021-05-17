@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using WebShop_NULL.Models.DomainModels;
+using DomainModels;
 
 namespace WebShop_NULL.Infrastructure.Filters.FilterDTOs
 {
-    [ForPropertyType((int)PropertyTypeEnum.Option)]
+    [ForPropertyType(PropertyTypeEnum.Option)]
     public class OptionFilterDto : FilterDTO
     {
         public List<string> Options { get; set; } = new List<string>();

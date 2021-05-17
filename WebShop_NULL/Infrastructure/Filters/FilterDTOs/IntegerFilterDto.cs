@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq.Expressions;
-using WebShop_NULL.Models.DomainModels;
+using DomainModels;
 
 namespace WebShop_NULL.Infrastructure.Filters.FilterDTOs
 {
-    [ForPropertyType((int)PropertyTypeEnum.Integer)]
+    [ForPropertyType(PropertyTypeEnum.Integer)]
     public class IntegerFilterDto : FilterDTO
     {
         public int Min { get; set; } = Int32.MinValue;

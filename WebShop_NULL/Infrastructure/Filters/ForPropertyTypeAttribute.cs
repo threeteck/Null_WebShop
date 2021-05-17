@@ -1,12 +1,13 @@
 ﻿using System;
+using DomainModels;
 
 namespace WebShop_NULL.Infrastructure.Filters
 {
     public class ForPropertyTypeAttribute : Attribute
     {
-        public int Type;
+        public PropertyTypeEnum Type;
 
-        public ForPropertyTypeAttribute(int type)
+        public ForPropertyTypeAttribute(PropertyTypeEnum type)
         {
             Type = type;
         }
