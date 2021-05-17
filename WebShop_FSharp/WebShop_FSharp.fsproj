@@ -29,6 +29,8 @@
       <Compile Include="ViewModels\AdminPanelModels\AdminPanelCreateProductViewModel.fs" />
       <Compile Include="ViewModels\AdminPanelModels\AdminPanelCreateCategoryViewModel.fs" />
       <Compile Include="Controllers\HomeController.fs" />
+      <Compile Include="Utilities.fs" />
+      <Compile Include="CustomTagHelpers.fs" />
     </ItemGroup>
 
     <ItemGroup>
