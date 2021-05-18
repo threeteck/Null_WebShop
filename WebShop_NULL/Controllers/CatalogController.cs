@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using WebShop_FSharp;
 using WebShop_FSharp.ViewModels;
 using WebShop_FSharp.ViewModels.CatalogModels;
+using Microsoft.EntityFrameworkCore;
 using WebShop_NULL.Infrastructure.Filters;
 using WebShop_NULL.Models;
 using WebShop_NULL.Models.ViewModels;
@@ -214,6 +215,32 @@ namespace WebShop_NULL.Controllers
                 .ToDictionary(pair => pair.Key, pair => pair.Value.ToString());
         }
         
+        [Authorize]
+        public async Task<IActionResult> AddProductToBasket(int userId, int  productId)
+        {
+            var user = _dbContext.Users.Include(u => u.Basket).FirstOrDefault(u => u.Id == userId);
+            var product = _dbContext.Products.FirstOrDefault(p => p.Id == productId);
+            if(user!= null && product != null)
+            {
+                user.Basket.Add(product);
+                await _dbContext.SaveChangesAsync();
+                return RedirectToAction("ProductPage", "Catalog",new { productId = productId });
+            }
+            else return RedirectToAction("Index", "Catalog");
+        }
+        [Authorize]
+        public async Task<IActionResult> RemoveProductFromBasket(int userId, int productId)
+        {
+            var user = _dbContext.Users.Include(u => u.Basket).FirstOrDefault(u => u.Id == userId);
+            var product = _dbContext.Products.FirstOrDefault(p => p.Id == productId);
+            if (user != null && product != null)
+            {
+                user.Basket.Remove(product);
+                await _dbContext.SaveChangesAsync();
+                return RedirectToAction("ProductPage", "Catalog", new { productId = productId });
+            }
+            else return RedirectToAction("Index", "Catalog");
+        }
         [HttpGet("~/{categoryId:int}/search")]
         public IActionResult Search(int categoryId)
         {

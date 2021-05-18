@@ -48,7 +48,7 @@
                         <span class="sr-only">Toggle search</span>
                         <i class="fa fa-search"></i>
                     </button>
-                    <a asp-area="" asp-controller="Profile" asp-action="ShoppingCart" class="btn btn-outline-secondary navbar-toggler">
+                    <a asp-area="" asp-controller="Basket" asp-action="Index" class="btn btn-outline-secondary navbar-toggler">
                         <i class="fa fa-shopping-cart"></i>
                     </a>
                     @if (User.Identity.IsAuthenticated)
@@ -100,7 +100,7 @@
                     <div class="navbar-buttons d-flex justify-content-end">
                         <!-- /.nav-collapse-->
                         <div id="search-not-mobile" class="navbar-collapse collapse"></div><a data-toggle="collapse" href="#search" class="btn navbar-btn btn-primary d-none d-lg-inline-flex align-items-center"><span class="sr-only">Toggle search</span><i class="fa fa-search"></i></a>
-                        <div id="basket-overview" class="navbar-collapse collapse d-none d-lg-block"><a class="btn btn-primary navbar-btn" asp-area="" asp-controller="Profile" asp-action="ShoppingCart"><i class="fa fa-shopping-cart"></i><span>Корзина</span></a></div>
+                        <div id="basket-overview" class="navbar-collapse collapse d-none d-lg-block"><a class="btn btn-primary navbar-btn" asp-area="" asp-controller="Basket" asp-action="Index"><i class="fa fa-shopping-cart"></i><span>Корзина</span></a></div>
                         @if (User.Identity.IsAuthenticated)
                         {
                             <div id="personal-page-link" class="navbar-collapse collapse text-center d-none d-lg-block">
@@ -190,6 +190,8 @@
     <script src="~/js/owl.carousel2.thumbs.js"></script>
     <script src="~/js/front.js"></script>
     <script src="~/js/city.js"></script>
+    <script src="~/js/catalog.js"></script>
+    <script src="~/js/basket.js"></script>
     @RenderSection("Scripts", false)
 
     <div class="modal" id="city_modal" tabindex="-1" role="dialog">

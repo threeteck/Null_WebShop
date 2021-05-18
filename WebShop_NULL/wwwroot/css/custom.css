@@ -487,3 +487,21 @@ footer {
 .custom-file-label::after{
     content: "Найти"
 }
+.td-centered>*{
+    margin:auto;
+}
+.td-text-centered{
+    text-align:center;
+}
+.box-footer > *{
+    margin: 5px 0px;
+}
+.box-footer .right > * {
+    margin:0px 5px;
+}
+.box-footer .left > * {
+    margin: 0px 5px;
+}
+.mb-0{
+    text-align:center;
+}

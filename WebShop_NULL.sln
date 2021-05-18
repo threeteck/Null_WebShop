@@ -5,9 +5,9 @@ VisualStudioVersion = 16.0.31005.135
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebShop_NULL", "WebShop_NULL\WebShop_NULL.csproj", "{8C576FF1-EA47-4442-ADF6-50C8F718B368}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "DomainModels", "DomainModels\DomainModels.fsproj", "{012C4E8A-1EA2-4D66-9ED9-0115EE29CCB2}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "DomainModels", "DomainModels\DomainModels.fsproj", "{012C4E8A-1EA2-4D66-9ED9-0115EE29CCB2}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "WebShop_FSharp", "WebShop_FSharp\WebShop_FSharp.fsproj", "{9DF79D42-D627-4C1F-9479-5E84E987407B}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "WebShop_FSharp", "WebShop_FSharp\WebShop_FSharp.fsproj", "{9DF79D42-D627-4C1F-9479-5E84E987407B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
