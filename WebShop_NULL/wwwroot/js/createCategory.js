@@ -1,7 +1,7 @@
 ﻿$(function(){
     window.index_iter = 0;
-    $propertyContainer = $('#property-container');
-    $createPropertyButton = $('#createProperty');
+    let $propertyContainer = $('#property-container');
+    let $createPropertyButton = $('#createProperty');
     window.$submitButton = $('#submit-button');
     window.propertyCount = 0;
     window.$form = $('#create-category-form');
@@ -31,7 +31,7 @@ function getPropertyElement(){
         <div class="property-field">
             <input type="hidden" name="PropertyInfos.Index" value="${index_closure}">
             <div class="w-100">
-                <input class="form-control mt-0 ml-0" placeholder="Название" name="PropertyInfos[${index_closure}].Name" maxlength=64 data-val="true" data-val-required="Название свойства должно быть задано"/>
+                <input class="form-control mt-0 ml-0" type="text" placeholder="Название" name="PropertyInfos[${index_closure}].Name" maxlength=64 data-val="true" data-val-required="Название свойства должно быть задано"/>
                 <span class="field-validation-valid ml-0" data-valmsg-for="PropertyInfos[${index_closure}].Name" data-valmsg-replace="true"></span>
                 <span class="field-validation-valid ml-0" data-valmsg-for="PropertyInfos[${index_closure}].Options" data-valmsg-replace="true"></span>
             </div>
@@ -41,13 +41,30 @@ function getPropertyElement(){
                 <option value="2">Опция</option>
             </select>
         </div>
-        <div class="additional-info">
+        <div class="additional-info-option" hidden>
             
+        </div>
+        
+        <div class="additional-info-number" hidden>
+            <div class="w-100 mt-2">
+                <label class="w-100 mb-0">
+                    Минимальное значение:
+                    <input class="form-control mt-0 ml-0" type="number" placeholder="Без ограничения" name="PropertyInfos[${index_closure}].MinValue" value="-1000000" data-val="true" data-val-range="Значение не должно превышать 10000000000 по модулю" data-val-range-min="-10000000000" data-val-range-max="10000000000"/>
+                </label>
+                <span class="field-validation-valid ml-0" data-valmsg-for="PropertyInfos[${index_closure}].MinValue" data-valmsg-replace="true"></span>
+            </div>
+            
+            <div class="w-100 mt-2">
+                <label class="w-100 mb-0">
+                    Максимальное значение:
+                    <input class="form-control mt-0 ml-0" type="number" placeholder="Без ограничения" name="PropertyInfos[${index_closure}].MaxValue" value="1000000" data-val="true" data-val-range="Значение не должно превышать 10000000000 по модулю" data-val-range-min="-10000000000" data-val-range-max="10000000000"/>
+                </label>
+                <span class="field-validation-valid ml-0" data-valmsg-for="PropertyInfos[${index_closure}].MaxValue" data-valmsg-replace="true"></span>
+            </div>
         </div>
     </div>
 `;
     let result = $(htmlToElement(html));
-    let $additionalInfo = result.find('.additional-info');
     result.find('.cross').click(function (){
         window.propertyCount -= 1;
         if(window.propertyCount <= 0)
@@ -55,20 +72,34 @@ function getPropertyElement(){
         result.remove();
         revalidateForm();
     });
+    
+    let $additionalInfoOption = result.find('.additional-info-option');
+    let $additionalInfoNumber = result.find('.additional-info-number');
+    
     result.find('select').change(function (){
         $this = $(this);
         if($this.val() === '0' || $this.val() === '1')
-            $additionalInfo.attr('hidden', 'hidden');
+            $additionalInfoOption.attr('hidden', 'hidden');
         else
         {
-            $additionalInfo.removeAttr('hidden');
-            if($additionalInfo[0].childElementCount === 0) {
+            $additionalInfoOption.removeAttr('hidden');
+            if($additionalInfoOption[0].childElementCount === 0) {
                 optionEntries[index_closure] = 0;
-                $optionField = getOptionFieldElement(index_closure, $additionalInfo);
+                $optionField = getOptionFieldElement(index_closure, $additionalInfoOption);
                 $optionField.find('.minus').remove();
-                $additionalInfo.append($optionField);
+                $additionalInfoOption.append($optionField);
                 revalidateForm();
             }
+        }
+    });
+    
+    result.find('select').change(function (){
+        $this = $(this);
+        if($this.val() === '0' || $this.val() === '2')
+            $additionalInfoNumber.attr('hidden', 'hidden');
+        else
+        {
+            $additionalInfoNumber.removeAttr('hidden');
         }
     });
     

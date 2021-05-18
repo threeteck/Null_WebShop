@@ -27,6 +27,29 @@ namespace WebShop_NULL.Infrastructure.AdminPanel
                 return Task.CompletedTask;
             }
 
+            if (propertyType == 1)
+            {
+                var propertyMinValueResult = bindingContext.ValueProvider.GetValue($"{modelName}.MinValue");
+                if (propertyMinValueResult == ValueProviderResult.None ||
+                    !double.TryParse(propertyMinValueResult.FirstValue, out var propertyMinValue))
+                    propertyMinValue = long.MinValue;
+               
+                var propertyMaxValueResult = bindingContext.ValueProvider.GetValue($"{modelName}.MaxValue");
+                if (propertyMaxValueResult == ValueProviderResult.None ||
+                    !double.TryParse(propertyMaxValueResult.FirstValue, out var propertyMaxValue))
+                    propertyMaxValue = long.MaxValue;
+                    
+                bindingContext.Result = ModelBindingResult.Success(new CreateCategoryNumberPropertyInfo()
+                {
+                    Name = propertyNameResult.FirstValue,
+                    Type = propertyType,
+                    MinValue = propertyMinValue,
+                    MaxValue = propertyMaxValue
+                });
+            
+                return Task.CompletedTask;
+            }
+
             if (propertyType == 2)
             {
                 var propertyOptionsResult = bindingContext.ValueProvider.GetValue($"{modelName}.Options");

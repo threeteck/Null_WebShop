@@ -8,13 +8,13 @@
             <div class="flipper">
                 <div class="front">
                     <a href="@Url.Content($"~/product/{Model.Id}")">
-                        <img src="@Url.Content($"~/{Model.ImagePath}")" alt="" class="img-fluid product-card-img">
+                        <img src="@Url.ProductImage($"~/{Model.ImagePath}")" alt="@Model.Name" class="img-fluid product-card-img">
                     </a>
                 </div>
 
                 <div class="back">
                     <a href="@Url.Content($"~/product/{Model.Id}")">
-                        <img src="@Url.Content($"~/{Model.ImagePath}")" alt="" class="img-fluid product-card-img">
+                        <img src="@Url.ProductImage($"~/{Model.ImagePath}")" alt="@Model.Name" class="img-fluid product-card-img">
                     </a>
                 </div>
             </div>

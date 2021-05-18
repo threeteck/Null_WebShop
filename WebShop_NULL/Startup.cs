@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WebShop_NULL.Infrastructure.Filters;
 using WebShop_FSharp;
 using WebShop_FSharp.Middleware;
 
@@ -23,8 +24,8 @@ namespace WebShop_NULL
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddFilters();
             //services.AddControllersFromAssembly("WebShop_FSharp"); //Uncomment when/if we will actually have F# controllers
-            
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<ApplicationContext>(option =>
                 option.UseNpgsql(connectionString, b => b.MigrationsAssembly("WebShop_NULL")));
@@ -37,16 +38,18 @@ namespace WebShop_NULL
 
             services.AddSingleton<CommandService>();
             services.AddAuthorization();
+            services.AddScoped<AuthenticationService>();
             services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
             services.AddSingleton<IEmailSender, EmailService>();
             var settings = Configuration.GetSection("EmailSettings").Get<EmailSettings>();
             services.AddSingleton(settings);
-            services.AddSingleton(serviceProvider => 
+            services.AddSingleton(serviceProvider =>
                 new EmailConfirmationService(TimeSpan.FromMinutes(5), serviceProvider.GetService<CommandService>())
             );
             services.AddControllersWithViews();
             services.AddHttpContextAccessor();
         }
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -61,7 +64,7 @@ namespace WebShop_NULL
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();

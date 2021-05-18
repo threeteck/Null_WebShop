@@ -122,8 +122,8 @@ footer {
 
 .avatar {
     border-radius: 50%;
-    border: 1px solid #ff3f3f;
-    box-shadow: #963c3c 1px 1px;
+    /*border: 1px solid #ff3f3f;*/
+    /*box-shadow: #963c3c 1px 1px;*/
 }
 
 .product-card-img {

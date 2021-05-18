@@ -1,0 +1,42 @@
+﻿@model WebShop_NULL.Models.ViewModels.FilterViewModels.OptionFilterViewModel
+@*<div>
+    <p>
+        @Model.PropertyName:
+    </p>
+    <input type="hidden" name="filters.Index" value="@Model.PropertyId">
+    <input type="hidden" name="filters[@Model.PropertyId].propertyId" value="@Model.PropertyId"/>
+    <input type="hidden" name="filters[@Model.PropertyId].propertyType" value="@((int)Model.PropertyType)"/>
+    <input type="hidden" name="filters[@Model.PropertyId].propertyName" value="@Model.PropertyName"/>
+    @foreach (var option in Model.Options)
+    {
+        <div>
+            <label>
+                <input type="checkbox" name="filters[@Model.PropertyId].options" value="@option" @(Model.ChosenOptions.Contains(@option) ? "checked" : "")/>
+                @option
+            </label>
+        </div>
+    }
+</div>*@
+
+<div class="card sidebar-menu mb-4">
+    <div class="card-header">
+        <input type="hidden" name="filters.Index" value="@Model.PropertyId">
+        <input type="hidden" name="filters[@Model.PropertyId].propertyId" value="@Model.PropertyId"/>
+        <input type="hidden" name="filters[@Model.PropertyId].propertyType" value="@((int)Model.PropertyType)"/>
+        <h3 class="h4 card-title">@Model.PropertyName</h3>
+    </div>
+    <div class="card-body">
+        <div class="form-group">
+            @foreach (var option in Model.Options)
+            {
+                <div class="checkbox d-flex flex-md-row justify-content-between">
+                    <label>
+                        @option
+                    </label>
+                    <input type="checkbox" value="@option" name="filters[@Model.PropertyId].options" @(Model.ChosenOptions.Contains(option) ? "checked" : "")>
+                </div>
+            }
+        </div>
+            <button class="btn btn-default btn-sm btn-primary" type="submit" ><i class="fa fa-pencil"></i>Прменить</button>
+    </div>
+</div>

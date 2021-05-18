@@ -1,0 +1,25 @@
+﻿@model SearchViewModel
+
+<div>
+    <form method="post" action="">
+        
+        @* <br/> *@
+        @* <div> *@
+        @*     <input type="hidden" name="filters[1].propertyId" value="1"/> *@
+        @*     <input type="hidden" name="filters[1].propertyType" value="0"/> *@
+        @*     <label for="filters[1].Min">Min</label> *@
+        @*     <input id="filters[1].Min" type="number" name="filters[1].Min"/> *@
+        @*     <label for="filters[1].Max">Max</label> *@
+        @*     <input id="filters[1].Max" type="number" name="filters[1].Max"/> *@
+        @* </div> *@
+        
+        @foreach (var filter in Model.Filters)
+        {
+            <p>
+                @await Component.InvokeAsync("FilterRendererDispatcher", new {model = filter})
+            </p>
+        }
+
+        <input type="submit" value="test">
+    </form>
+</div>
