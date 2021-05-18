@@ -172,8 +172,13 @@ namespace WebShop_NULL.Controllers
 
             var product = _dbContext.Products.ById(productId).FirstOrDefault();
             if (product != null)
+            {
                 _dbContext.Products.Remove(product);
-            
+                _dbContext.RemoveRange(_dbContext.Reviews
+                    .Where(review => review.ProductId == product.Id)
+                    .ToList());
+            }
+
             if(imageData != null)
                 _dbContext.ImageMetadata.Remove(imageData);
             
