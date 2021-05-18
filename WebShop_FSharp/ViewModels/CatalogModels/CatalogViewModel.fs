@@ -23,6 +23,9 @@ type CatalogViewModel() =
     val mutable private numberOfPages: int
     
     [<DefaultValue>]
+    val mutable private productsCount: int
+    
+    [<DefaultValue>]
     val mutable private sortingOption: int
     
     [<DefaultValue>]
@@ -44,6 +47,10 @@ type CatalogViewModel() =
                                 and set p = this.priceMax <- p
     member public this.Page with get() = this.page
                                 and set p = this.page <- p
+                                
+    member public this.ProductsCount with get() = this.productsCount
+                                     and set p = this.productsCount <- p
+                                     
     member public this.NumberOfPages with get() = this.numberOfPages
                                      and set p = this.numberOfPages <- p
                                

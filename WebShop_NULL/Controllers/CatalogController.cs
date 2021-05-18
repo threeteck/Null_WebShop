@@ -81,7 +81,8 @@ namespace WebShop_NULL.Controllers
                 NumberOfPages = ((count - 1) / _productsPerPage) + 1,
                 Query = catalogDto.Query,
                 PriceMin = catalogDto.PriceMin,
-                PriceMax = catalogDto.PriceMax
+                PriceMax = catalogDto.PriceMax,
+                ProductsCount = count
             };
             
             if (catalogDto.CategoryId != null)

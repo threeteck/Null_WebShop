@@ -4,7 +4,7 @@
 @model WebShop_FSharp.ViewModels.CatalogModels.CatalogViewModel
 
 <div id="all">
-    <form action="" id="search-form">
+    <form action="#products-container" id="search-form">
         <div id="content">
             <div class="container">
                 <div class="row">
@@ -79,8 +79,16 @@
                         <!-- *** MENUS AND FILTERS END ***-->
                     </div>
                     <div class="col-lg-9">
-                        <div class="box">
+                        <div class="box d-flex justify-content-between align-items-center">
                             <h1>@(Model.Category != null ? Model.Category.Name : "Популярное")</h1>
+                            @if (Model.ProductsCount > 0)
+                            {
+                                <h4 class="m-0">Найдено @Model.ProductsCount @(Model.ProductsCount >= 5 ? "товаров" : Model.ProductsCount >= 2 ? "товара" : "товар")</h4>
+                            }
+                            else
+                            {
+                                <h4 class="m-0">Товаров не найдено</h4>
+                            }
                         </div>
                         <div class="box info-bar">
                             <div class="row w-100">
@@ -105,7 +113,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row products">
+                        <div id="products-container" class="row products">
                             @foreach (var p in Model.ProductList)
                             {
                                 @Html.Partial("ProductCardPartial", p)
