@@ -38,6 +38,7 @@ namespace WebShop_NULL
 
             services.AddSingleton<CommandService>();
             services.AddAuthorization();
+            services.AddScoped<AuthenticationService>();
             services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
             services.AddSingleton<IEmailSender, EmailService>();
             var settings = Configuration.GetSection("EmailSettings").Get<EmailSettings>();
@@ -62,8 +63,9 @@ namespace WebShop_NULL
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
+            
             app.UseHttpsRedirection();
+
             app.UseStaticFiles();
 
             app.UseRouting();

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using WebShop_FSharp;
+using WebShop_FSharp.ViewModels.AuthtorizationModels;
 using WebShop_FSharp.ViewModels.ProfileModels;
 
 namespace WebShop_NULL.Controllers
@@ -17,12 +18,14 @@ namespace WebShop_NULL.Controllers
         private readonly ApplicationContext _dbContext;
         private readonly ILogger<ProfileController> _logger;
         private readonly IWebHostEnvironment _appEnvironment;
+        private readonly AuthenticationService _authenticationService;
 
-        public ProfileController(ILogger<ProfileController> logger, ApplicationContext dbContext, IWebHostEnvironment appEnvironment)
+        public ProfileController(ILogger<ProfileController> logger, ApplicationContext dbContext, IWebHostEnvironment appEnvironment, AuthenticationService authenticationService)
         {
             _logger = logger;
             _dbContext = dbContext;
             _appEnvironment = appEnvironment;
+            _authenticationService = authenticationService;
         }
 
         [Route("~/profile/{userId:int?}")]
@@ -108,7 +111,7 @@ namespace WebShop_NULL.Controllers
         }
 
         [HttpPost]
-        public IActionResult ProfileEdit(UserViewModel data)
+        public async Task<IActionResult> ProfileEdit(UserViewModel data)
         {
             if (ModelState.IsValid)
             {
@@ -120,7 +123,9 @@ namespace WebShop_NULL.Controllers
                 user.Surname = data.Surname;
 
                 _dbContext.SaveChanges();
-                
+
+                await _authenticationService.ReAuthenticate(user.Name,false);
+
                 return Redirect("~/profile");
             }
 
