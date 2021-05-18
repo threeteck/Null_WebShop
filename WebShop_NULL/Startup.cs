@@ -65,6 +65,7 @@ namespace WebShop_NULL
             }
 
             //app.UseHttpsRedirection();
+            
             app.UseStaticFiles();
 
             app.UseRouting();
