@@ -45,6 +45,7 @@ namespace WebShop_NULL.Controllers
                 query = query.Where(p => p.Name.ToLower().Contains(catalogDto.Query.ToLower()));
             
             query = query.Where(p => p.Price >= catalogDto.PriceMin && p.Price <= catalogDto.PriceMax);
+            query = query.Where(p => p.Rating >= catalogDto.RatingMin && p.Rating <= catalogDto.RatingMax);
 
             if(catalogDto.Filters != null)
                 foreach (var filter in catalogDto.Filters)
@@ -82,6 +83,8 @@ namespace WebShop_NULL.Controllers
                 Query = catalogDto.Query,
                 PriceMin = catalogDto.PriceMin,
                 PriceMax = catalogDto.PriceMax,
+                RatingMin = catalogDto.RatingMin,
+                RatingMax = catalogDto.RatingMax,
                 ProductsCount = count
             };
             
@@ -201,7 +204,7 @@ namespace WebShop_NULL.Controllers
             if (product == null)
                 return BadRequest();
             
-            var oldRating = product.Rating == -1 ? 0 : product.Rating;
+            var oldRating = product.Rating;
             product.Rating = (oldRating * (reviewCount - 1) + rating) / reviewCount;
 
             await _dbContext.SaveChangesAsync();
