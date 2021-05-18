@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -265,6 +266,26 @@ namespace WebShop_NULL.Controllers
                 }).ToList();
 
             return Json(properties);
+        }
+        
+        public IActionResult GetAllProductPictures()
+        {
+            using (var memoryStream = new MemoryStream())
+            {
+                using (var archive = new ZipArchive(memoryStream, ZipArchiveMode.Create, true))
+                {
+                    foreach (var filePath in Directory.EnumerateFiles(Path.Combine(_appEnvironment.WebRootPath,
+                        "applicationData/productImages")))
+                    {
+                        var file = archive.CreateEntry(Path.GetFileName(filePath));
+                        using var streamWriter = file.Open();
+                        using var fileReader = System.IO.File.OpenRead(filePath);
+                            fileReader.CopyTo(streamWriter);
+                    }
+                }
+
+                return File(memoryStream.ToArray(), "application/zip", "Images.zip");
+            }
         }
 
         public IActionResult Orders()
