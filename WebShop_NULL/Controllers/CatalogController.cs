@@ -23,7 +23,7 @@ namespace WebShop_NULL.Controllers
         private readonly ApplicationContext _dbContext;
         private readonly ILogger<CatalogController> _logger;
         private readonly FilterViewModelProvider _filterViewModelProvider;
-        private readonly int _productsPerPage = 6;
+        private readonly int _productsPerPage = 9;
         private readonly int _reviewsPerPage = 6;
         
         public CatalogController(ILogger<CatalogController> logger, ApplicationContext dbContext, FilterViewModelProvider filterViewModelProvider)
