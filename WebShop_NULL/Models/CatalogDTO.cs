@@ -27,6 +27,9 @@ namespace WebShop_NULL.Models
         public string Query { get; set; } = null;
         public decimal PriceMin { get; set; } = long.MinValue;
         public decimal PriceMax { get; set; } = long.MaxValue;
+        
+        public decimal RatingMin { get; set; } = 0;
+        public decimal RatingMax { get; set; } = 10;
         public List<FilterDTO> Filters { get; set; } = new List<FilterDTO>();
     }
 }
