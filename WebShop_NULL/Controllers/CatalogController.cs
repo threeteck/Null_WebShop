@@ -157,8 +157,7 @@ namespace WebShop_NULL.Controllers
 
             return View(productModel);
         }
-
-        [Authorize]
+        
         [HttpGet("~/product/{productId}/reviews")]
         public IActionResult GetReviews(int productId, int page = 0)
         {
