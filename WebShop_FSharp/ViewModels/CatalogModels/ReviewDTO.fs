@@ -1,32 +1,22 @@
 namespace WebShop_FSharp.ViewModels.CatalogModels
 
-type ReviewDTO() =
+open DomainModels
+
+type FilterViewModel() =
     [<DefaultValue>]
-    val mutable private userName : string
+    val mutable private propertyId : int
     
     [<DefaultValue>]
-    val mutable private userId : int
+    val mutable private propertyName : string
     
     [<DefaultValue>]
-    val mutable private userImagePath : string
-    
-    [<DefaultValue>]
-    val mutable private rating : int
-    
-    [<DefaultValue>]
-    val mutable private content : string
-    
-    member public this.UserName with get() = this.userName
-                                and set p = this.userName <- p
+    val mutable private propertyType : PropertyTypeEnum
                                 
-    member public this.UserId with get() = this.userId
-                              and set p = this.userId <- p
+    member public this.PropertyId with get() = this.propertyId
+                                  and set p = this.propertyId <- p
                                 
-    member public this.UserImagePath with get() = this.userImagePath
-                                     and set p = this.userImagePath <- p
+    member public this.PropertyName with get() = this.propertyName
+                                    and set p = this.propertyName <- p
                                 
-    member public this.Rating with get() = this.rating
-                              and set p = this.rating <- p
-                                
-    member public this.Content with get() = this.content
-                                and set p = this.content <- p                                                                                     
+    member public this.PropertyType with get() = this.propertyType
+                                    and set p = this.propertyType <- p                                                                      

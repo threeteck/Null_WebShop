@@ -7,9 +7,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using DomainModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.EntityFrameworkCore;
 using WebShop_FSharp;
 using WebShop_FSharp.ViewModels;
 using WebShop_FSharp.ViewModels.CatalogModels;
+using WebShop_NULL.Infrastructure.Filters;
+using WebShop_NULL.Models;
+using WebShop_NULL.Models.ViewModels;
 
 namespace WebShop_NULL.Controllers
 {
@@ -17,32 +22,42 @@ namespace WebShop_NULL.Controllers
     {
         private readonly ApplicationContext _dbContext;
         private readonly ILogger<CatalogController> _logger;
+        private readonly FilterViewModelProvider _filterViewModelProvider;
         private readonly int _productsPerPage = 6;
         private readonly int _reviewsPerPage = 6;
         
-        public CatalogController(ILogger<CatalogController> logger, ApplicationContext dbContext)
+        public CatalogController(ILogger<CatalogController> logger, ApplicationContext dbContext, FilterViewModelProvider filterViewModelProvider)
         {
             _logger = logger;
             _dbContext = dbContext;
+            _filterViewModelProvider = filterViewModelProvider;
         }
         // GET
-        public async Task<IActionResult> Index(int? categoryId = null, int page = 0, int sortingOption = 0)
+        public async Task<IActionResult> Index(CatalogDTO catalogDto)
         {
             var categories = _dbContext.Categories
                 .Select(c => new CategoryDTO(c.Id, c.Name))
                 .ToList();
             var query = _dbContext.Products.Select(p => p);
-            if (categoryId != null)
-                query = query.Where(p => p.Category.Id == categoryId.Value);
+            if (catalogDto.CategoryId != null)
+                query = query.Where(p => p.Category.Id == catalogDto.CategoryId.Value);
+            if (!string.IsNullOrWhiteSpace(catalogDto.Query))
+                query = query.Where(p => p.Name.ToLower().Contains(catalogDto.Query.ToLower()));
+            
+            query = query.Where(p => p.Price >= catalogDto.PriceMin && p.Price <= catalogDto.PriceMax);
 
-            if(sortingOption == 0)
+            if(catalogDto.Filters != null)
+                foreach (var filter in catalogDto.Filters)
+                    query = query.Where(filter.Expression);
+            
+            if(catalogDto.SortingOption == 0)
                 query = query.OrderByDescending(p => p.Rating).ThenBy(p => p.Name);
             else
                 query = query.OrderBy(p => p.Price).ThenBy(p => p.Name);
 
             int count = query.Count();
             
-            query = query.Skip(page * _productsPerPage).Take(_productsPerPage);
+            query = query.Skip(catalogDto.Page * _productsPerPage).Take(_productsPerPage);
 
             var products = query.Select(p => new ProductCardDTO()
             {
@@ -54,17 +69,43 @@ namespace WebShop_NULL.Controllers
             }).ToList();
 
             CategoryDTO category = null;
-            if (categoryId != null)
-                category = categories.FirstOrDefault(c => c.Id == categoryId);
-            
+            if (catalogDto.CategoryId != null)
+                category = categories.FirstOrDefault(c => c.Id == catalogDto.CategoryId);
+
             var model = new CatalogViewModel()
             {
                 Categories = categories,
                 Category = category,
                 ProductList = products,
-                Page = page,
-                NumberOfPages = ((count - 1) / _productsPerPage) + 1
+                Page = catalogDto.Page,
+                NumberOfPages = ((count - 1) / _productsPerPage) + 1,
+                Query = catalogDto.Query,
+                PriceMin = catalogDto.PriceMin,
+                PriceMax = catalogDto.PriceMax,
+                ProductsCount = count
             };
+            
+            if (catalogDto.CategoryId != null)
+            {
+                var properties = _dbContext.Categories.ById(catalogDto.CategoryId.Value)
+                    .SelectMany(cat => cat.Properties).Include(p => p.Type)
+                    .ToList();
+                if (catalogDto.Filters != null && catalogDto.Filters.Count > 0)
+                {
+                    var filterDtoMap = catalogDto.Filters
+                        .ToDictionary(dto => dto.PropertyId, dto => dto);
+                    model.Filters = properties
+                        .Select(p => _filterViewModelProvider.GetFilterViewModel(p, filterDtoMap[p.Id]))
+                        .ToList();
+                }
+                else
+                {
+                    model.Filters = properties
+                        .Select(p => _filterViewModelProvider.GetFilterViewModel(p))
+                        .ToList();
+                }
+            }
+            
             return View("Catalog", model);
         }
 
@@ -171,6 +212,35 @@ namespace WebShop_NULL.Controllers
         {
             return JsonSerializer.Deserialize<Dictionary<string, object>>(jDoc.ToJsonString())
                 .ToDictionary(pair => pair.Key, pair => pair.Value.ToString());
+        }
+        
+        [HttpGet("~/{categoryId:int}/search")]
+        public IActionResult Search(int categoryId)
+        {
+            var model = new SearchViewModel();
+            var properties = _dbContext.Categories.ById(categoryId)
+                .SelectMany(cat => cat.Properties).Include(p => p.Type)
+                .ToList();
+            model.Filters = properties
+                .Select(p => _filterViewModelProvider.GetFilterViewModel(p))
+                .ToList();
+            
+            return View(model);
+        }
+
+        [HttpPost("~/{categoryId:int}/search")]
+        public IActionResult Search(int categoryId, List<FilterDTO> filters)
+        {
+            var model = new SearchViewModel();
+            var properties = _dbContext.Categories.ById(categoryId)
+                .SelectMany(cat => cat.Properties).Include(p => p.Type)
+                .ToList();
+            var filterDtoMap = filters
+                .ToDictionary(dto => dto.PropertyId, dto => dto);
+            model.Filters = properties
+                .Select(p => _filterViewModelProvider.GetFilterViewModel(p, filterDtoMap[p.Id]))
+                .ToList();
+            return View(model);
         }
     }
 }
