@@ -12,13 +12,10 @@ using Microsoft.EntityFrameworkCore;
 using WebShop_FSharp;
 using WebShop_FSharp.ViewModels;
 using WebShop_FSharp.ViewModels.CatalogModels;
-<<<<<<< HEAD
 using Microsoft.EntityFrameworkCore;
-=======
 using WebShop_NULL.Infrastructure.Filters;
 using WebShop_NULL.Models;
 using WebShop_NULL.Models.ViewModels;
->>>>>>> 9c23fb62ac82cdb164a3f0d568107a7869d9b879
 
 namespace WebShop_NULL.Controllers
 {
@@ -218,7 +215,6 @@ namespace WebShop_NULL.Controllers
                 .ToDictionary(pair => pair.Key, pair => pair.Value.ToString());
         }
         
-<<<<<<< HEAD
         [Authorize]
         public async Task<IActionResult> AddProductToBasket(int userId, int  productId)
         {
@@ -244,7 +240,7 @@ namespace WebShop_NULL.Controllers
                 return RedirectToAction("ProductPage", "Catalog", new { productId = productId });
             }
             else return RedirectToAction("Index", "Catalog");
-=======
+        }
         [HttpGet("~/{categoryId:int}/search")]
         public IActionResult Search(int categoryId)
         {
@@ -272,7 +268,6 @@ namespace WebShop_NULL.Controllers
                 .Select(p => _filterViewModelProvider.GetFilterViewModel(p, filterDtoMap[p.Id]))
                 .ToList();
             return View(model);
->>>>>>> 9c23fb62ac82cdb164a3f0d568107a7869d9b879
         }
     }
 }
