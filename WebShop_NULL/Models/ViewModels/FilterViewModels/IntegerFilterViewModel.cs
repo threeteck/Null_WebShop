@@ -9,5 +9,8 @@ namespace WebShop_NULL.Models.ViewModels.FilterViewModels
     {
         public long Min { get; set; } = 0;
         public long Max { get; set; } = 0;
+        
+        public long MinConstraint { get; set; } = long.MinValue;
+        public long MaxConstraint { get; set; } = long.MaxValue;
     }
 }
