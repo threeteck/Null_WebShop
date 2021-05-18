@@ -25,7 +25,7 @@ namespace WebShop_NULL
         {
             //services.AddControllersFromAssembly("WebShop_FSharp"); //Uncomment when/if we will actually have F# controllers
             
-            var connectionString = Configuration.GetConnectionString("DanilTest");
+            var connectionString = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<ApplicationContext>(option =>
                 option.UseNpgsql(connectionString, b => b.MigrationsAssembly("WebShop_NULL")));
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
