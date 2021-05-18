@@ -156,11 +156,6 @@ namespace WebShop_NULL.Controllers
         {
             return View();
         }
-
-        [Authorize]
-        public IActionResult ShoppingCart()
-        {
-            return View();
-        }
+        
     }
 }
