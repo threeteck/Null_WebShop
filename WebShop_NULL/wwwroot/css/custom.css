@@ -494,10 +494,18 @@ footer {
     text-align: center;
     vertical-align: middle;
     border-top: solid 1px #eee;
-    display:block;
+    display: block;
+    color: #ff3f3f;
 }
 .choose-btn:hover{
     text-decoration:none;
+
+}
+.choose-delivery-link, .choose-delivery-link:hover{
+    color: inherit;
+    text-decoration: none;
+    display:block;
+}
+.choose-delivery-link:hover{
     box-shadow: #ff3f3f 0 0 1px 1px;
 }
-

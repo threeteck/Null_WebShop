@@ -20,18 +20,19 @@
                     <div class="content py-3">
                         <div class="row">
                             <div class="col-md-6">
-                                <div class="box shipping-method">
+                                <a class="box shipping-method choose-delivery-link" asp-controller="Order" asp-action="DeliveryToShop">
                                     <h4>Самовывоз</h4>
                                     <p>Заберите товар в магазине</p>
-                                    <a  class="choose-btn" asp-controller="Order" asp-action="DeliveryToShop">Выбрать</a>
-                                </div>
+                                    <div  class="choose-btn">Выбрать</div>
+                                </a>
                             </div>
                             <div class="col-md-6">
-                                <div class="box shipping-method">
+                                <a asp-controller="Order" asp-action="DeliveryToHome" class="box shipping-method choose-delivery-link">
                                     <h4>Доставка</h4>
                                     <p>Доставим товар к вам домой</p>
-                                    <a class="choose-btn" asp-controller="Order" asp-action="DeliveryToHome">Выбрать</a>
-                                </div>
+                                    <div class="choose-btn">Выбрать</div>
+                                </a>
+                                
                             </div>
                         </div>
                     </div>
