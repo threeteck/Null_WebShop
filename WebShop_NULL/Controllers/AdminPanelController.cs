@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using DomainModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,6 +16,7 @@ using Property = DomainModels.Property;
 
 namespace WebShop_NULL.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class AdminPanelController : Controller
     {
         private readonly CommandService _commandService;

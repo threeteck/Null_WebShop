@@ -11,10 +11,10 @@ using Microsoft.AspNetCore.Mvc.ViewComponents;
 
 namespace WebShop_NULL.Views.Catalog.ViewComponents
 {
-    public class AddToBasketBtn:ViewComponent
+    public class AddToBasketBtnViewComponent:ViewComponent
     {
         private readonly ApplicationContext _context;
-        public AddToBasketBtn(ApplicationContext context)
+        public AddToBasketBtnViewComponent(ApplicationContext context)
         {
             _context = context;
         }
@@ -27,17 +27,14 @@ namespace WebShop_NULL.Views.Catalog.ViewComponents
                 ProductId = productId,
                 IsInBasket = isInBasket,
             };
-            return View("_addToBasketBtn", viewModel);
+            var modelName = "_addToBasketBtn";
+            return View(modelName, viewModel);
         }
         private bool isProductInBasket(int userId, int productId)
         {
-            var user = _context.Users.Include(u => u.Basket).FirstOrDefault(u=>u.Id == userId);
-            var product = _context.Products.FirstOrDefault(p => p.Id == productId);
-            if(user!=null && product != null)
-            {
-                return user.Basket.Contains(product);
-            }
-            return false;
+            return _context.Users.ById(userId)
+                .SelectMany(user => user.Basket.Where(p => p.Id == productId))
+                .Any();
         } 
 
     }

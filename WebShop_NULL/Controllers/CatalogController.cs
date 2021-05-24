@@ -220,24 +220,20 @@ namespace WebShop_NULL.Controllers
         {
             var user = _dbContext.Users.Include(u => u.Basket).FirstOrDefault(u => u.Id == userId);
             var product = _dbContext.Products.FirstOrDefault(p => p.Id == productId);
+            var entry = _dbContext.ShoppingCartEntries.FirstOrDefault(e => e.UserId == userId && e.ProductId == productId);
             if(user!= null && product != null)
             {
-                user.Basket.Add(product);
+                if (entry != null)
+                    entry.Quantity++;
+                else
+                    _dbContext.ShoppingCartEntries.Add(new ShoppingCartEntry()
+                    {
+                        UserId = userId,
+                        ProductId = productId,
+                        Quantity = 1
+                    });
                 await _dbContext.SaveChangesAsync();
                 return RedirectToAction("ProductPage", "Catalog",new { productId = productId });
-            }
-            else return RedirectToAction("Index", "Catalog");
-        }
-        [Authorize]
-        public async Task<IActionResult> RemoveProductFromBasket(int userId, int productId)
-        {
-            var user = _dbContext.Users.Include(u => u.Basket).FirstOrDefault(u => u.Id == userId);
-            var product = _dbContext.Products.FirstOrDefault(p => p.Id == productId);
-            if (user != null && product != null)
-            {
-                user.Basket.Remove(product);
-                await _dbContext.SaveChangesAsync();
-                return RedirectToAction("ProductPage", "Catalog", new { productId = productId });
             }
             else return RedirectToAction("Index", "Catalog");
         }

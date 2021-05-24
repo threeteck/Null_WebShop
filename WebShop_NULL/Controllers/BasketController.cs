@@ -25,87 +25,65 @@ namespace WebShop_NULL.Controllers
         [Authorize]
         public IActionResult Index()
         {
-            var products = _dbContext.Users
+            var basketProducts = _dbContext.Users
                 .Where(u => u.Id == User.GetId())
-                .Select(p => p.Basket)
-                .Select(p => p
-                    .Select(p2 => new BasketProductViewModel()
-                    {
-                        ProductId = p2.Id,
-                        Name = p2.Name,
-                        Price = p2.Price,
-                        ImagePath = p2.Image.ImagePath,
-                        Quantity = p.Where(x => x.Id == p2.Id).Count(),
-                        Sum = p.Where(x=>x.Id==p2.Id).Sum(s=>s.Price),
-                    }))
-                .FirstOrDefault();
+                .SelectMany(u => u.Basket).Select(p2 => new BasketProductViewModel()
+                {
+                    ProductId = p2.ProductId,
+                    Name = p2.Product.Name,
+                    Price = p2.Product.Price,
+                    ImagePath = p2.User.Image.ImagePath,
+                    Quantity = p2.Quantity,
+                    Sum = p2.Product.Price * p2.Quantity
+                }).ToList();
 
-            if (products.Count()==0)
+            if (!basketProducts.Any())
             {
                 return View(null);
             }
             return View(new BasketViewModel() 
             { 
-                Products = products,
-                TotalSum = products.Sum(p=>p.Sum),
-                TotalQuantity = products.Sum(p=>p.Quantity),
+                Products = basketProducts,
+                TotalSum = basketProducts.Sum(p=>p.Sum),
+                TotalQuantity = basketProducts.Sum(p=>p.Quantity),
             });
         }
         [Authorize]
-        public async Task<IActionResult> RemoveProducts(int userId,int productId)
+        public async Task<IActionResult> RemoveProducts(int userId, int productId)
         {
-            var user = _dbContext.Users.Include(u=>u.Basket).FirstOrDefault(u=>u.Id==userId);
-            var products = _dbContext.Products.Where(p => p.Id == productId);
-            foreach(var p in products)
+            var user = _dbContext.Users.Include(u => u.Basket).FirstOrDefault(u => u.Id == userId);
+            var product = _dbContext.Products.FirstOrDefault(p => p.Id == productId);
+            var entry = _dbContext.ShoppingCartEntries.FirstOrDefault(e => e.UserId == userId && e.ProductId == productId);
+            if (user != null && product != null && entry != null)
             {
-                user.Basket.Remove(p);
+                _dbContext.ShoppingCartEntries.Remove(entry);
+                await _dbContext.SaveChangesAsync();
+                return RedirectToAction("ProductPage", "Catalog", new { productId = productId });
             }
-            await _dbContext.SaveChangesAsync();
-            return RedirectToAction("Index");
-           
+            else return RedirectToAction("Index", "Catalog");
         }
         [Authorize]
         public async Task<IActionResult> SetQuantity(int userId, int productId, int quantity)
         {
-            var user = _dbContext.Users.Include(u => u.Basket).FirstOrDefault(u => u.Id == userId);
-            var products = _dbContext.Products.Where(p => p.Id == productId);
-            var product = products.FirstOrDefault();
-            var count = quantity-products.Count();
-            if (quantity < 1)
+            var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == userId);
+            var basket = user.Basket;
+            var basketProduct = basket.FirstOrDefault(b => b.ProductId == productId);
+            basketProduct.Quantity = quantity;
+            var basketProducts = basket.Select(p2 => new BasketProductViewModel()
             {
-                return StatusCode(404);
-            }
-            else if (quantity > products.Count())
-            {
-                
-                for(int i=0; i < count; i++)
-                {
-                    user.Basket.Add(new Product(
-                        product.Id,
-                        product.Name,
-                        product.Description,
-                        product.Price,
-                        product.Rating,
-                        product.CategoryId,
-                        product.Category,
-                        product.ImageId,
-                        product.Image,
-                        product.AttributeValues,
-                        product.InBasketOf,
-                        product.Reviews
-                        ));
-                }
-            }
-            else
-            {
-                for(int i = 0; i < count; i++)
-                {
-                    user.Basket.Remove(product);
-                }
-            }
-            await _dbContext.SaveChangesAsync();
-            return StatusCode(200);
-
+                ProductId = p2.ProductId,
+                Name = p2.Product.Name,
+                Price = p2.Product.Price,
+                ImagePath = p2.User.Image.ImagePath,
+                Quantity = p2.Quantity,
+                Sum = p2.Product.Price * p2.Quantity
+            }).ToList();
+            return View("Index",new BasketViewModel() 
+            { 
+                Products = basketProducts,
+                TotalSum = basketProducts.Sum(p=>p.Sum),
+                TotalQuantity = basketProducts.Sum(p=>p.Quantity),
+            });
         }
     }
 }
