@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using WebShop_FSharp;
 using WebShop_FSharp.ViewModels;
 using WebShop_FSharp.ViewModels.CatalogModels;
+using Microsoft.EntityFrameworkCore;
 using WebShop_NULL.Infrastructure.Filters;
 using WebShop_NULL.Models;
 using WebShop_NULL.Models.ViewModels;
@@ -23,7 +24,7 @@ namespace WebShop_NULL.Controllers
         private readonly ApplicationContext _dbContext;
         private readonly ILogger<CatalogController> _logger;
         private readonly FilterViewModelProvider _filterViewModelProvider;
-        private readonly int _productsPerPage = 9;
+        private readonly int _productsPerPage = 6;
         private readonly int _reviewsPerPage = 6;
         
         public CatalogController(ILogger<CatalogController> logger, ApplicationContext dbContext, FilterViewModelProvider filterViewModelProvider)
@@ -45,7 +46,6 @@ namespace WebShop_NULL.Controllers
                 query = query.Where(p => p.Name.ToLower().Contains(catalogDto.Query.ToLower()));
             
             query = query.Where(p => p.Price >= catalogDto.PriceMin && p.Price <= catalogDto.PriceMax);
-            query = query.Where(p => p.Rating >= catalogDto.RatingMin && p.Rating <= catalogDto.RatingMax);
 
             if(catalogDto.Filters != null)
                 foreach (var filter in catalogDto.Filters)
@@ -83,8 +83,6 @@ namespace WebShop_NULL.Controllers
                 Query = catalogDto.Query,
                 PriceMin = catalogDto.PriceMin,
                 PriceMax = catalogDto.PriceMax,
-                RatingMin = catalogDto.RatingMin,
-                RatingMax = catalogDto.RatingMax,
                 ProductsCount = count
             };
             
@@ -157,7 +155,8 @@ namespace WebShop_NULL.Controllers
 
             return View(productModel);
         }
-        
+
+        [Authorize]
         [HttpGet("~/product/{productId}/reviews")]
         public IActionResult GetReviews(int productId, int page = 0)
         {
@@ -203,7 +202,7 @@ namespace WebShop_NULL.Controllers
             if (product == null)
                 return BadRequest();
             
-            var oldRating = product.Rating;
+            var oldRating = product.Rating == -1 ? 0 : product.Rating;
             product.Rating = (oldRating * (reviewCount - 1) + rating) / reviewCount;
 
             await _dbContext.SaveChangesAsync();
@@ -216,6 +215,28 @@ namespace WebShop_NULL.Controllers
                 .ToDictionary(pair => pair.Key, pair => pair.Value.ToString());
         }
         
+        [Authorize]
+        public async Task<IActionResult> AddProductToBasket(int userId, int  productId)
+        {
+            var user = _dbContext.Users.Include(u => u.Basket).FirstOrDefault(u => u.Id == userId);
+            var product = _dbContext.Products.FirstOrDefault(p => p.Id == productId);
+            var entry = _dbContext.ShoppingCartEntries.FirstOrDefault(e => e.UserId == userId && e.ProductId == productId);
+            if(user!= null && product != null)
+            {
+                if (entry != null)
+                    entry.Quantity++;
+                else
+                    _dbContext.ShoppingCartEntries.Add(new ShoppingCartEntry()
+                    {
+                        UserId = userId,
+                        ProductId = productId,
+                        Quantity = 1
+                    });
+                await _dbContext.SaveChangesAsync();
+                return RedirectToAction("ProductPage", "Catalog",new { productId = productId });
+            }
+            else return RedirectToAction("Index", "Catalog");
+        }
         [HttpGet("~/{categoryId:int}/search")]
         public IActionResult Search(int categoryId)
         {

@@ -4,15 +4,17 @@ using System.Text.Json;
 using DomainModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace WebShop_NULL.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20210524091316_ProductAndUser")]
+    partial class ProductAndUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -224,6 +226,9 @@ namespace WebShop_NULL.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
+                    b.Property<int?>("ProductId")
+                        .HasColumnType("integer");
+
                     b.Property<int>("RoleId")
                         .HasColumnType("integer");
 
@@ -236,6 +241,8 @@ namespace WebShop_NULL.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ImageId");
+
+                    b.HasIndex("ProductId");
 
                     b.HasIndex("RoleId");
 
@@ -335,6 +342,10 @@ namespace WebShop_NULL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("DomainModels.Product", null)
+                        .WithMany("InBasketOf")
+                        .HasForeignKey("ProductId");
+
                     b.HasOne("DomainModels.UserRole", "Role")
                         .WithMany()
                         .HasForeignKey("RoleId")
@@ -353,6 +364,8 @@ namespace WebShop_NULL.Migrations
 
             modelBuilder.Entity("DomainModels.Product", b =>
                 {
+                    b.Navigation("InBasketOf");
+
                     b.Navigation("Reviews");
                 });
 

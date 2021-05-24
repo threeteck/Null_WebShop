@@ -1,6 +1,6 @@
 ﻿namespace DomainModels
 
-type DeliveryMethod =
+type DeliveryMethods =
      | DeliveryToHome
      | DeliveryToShop
 
