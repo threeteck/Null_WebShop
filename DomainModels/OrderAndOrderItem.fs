@@ -64,6 +64,9 @@ type Order() =
 
 and OrderItems() =
         [<DefaultValue>]
+        [<Key>]
+        val mutable private id: int
+        [<DefaultValue>]
         val mutable private orderId:int
         [<DefaultValue>]
         val mutable private order:Order
@@ -75,6 +78,9 @@ and OrderItems() =
         val mutable productQuantity:int
         [<DefaultValue>]
         val mutable productId:int
+
+        member this.Id with public get() = this.id
+                                    and private set p = this.id <- p
 
         member public this.OrderId with get() = this.orderId
                                         and set p = this.orderId <- p

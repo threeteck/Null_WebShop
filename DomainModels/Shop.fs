@@ -1,6 +1,7 @@
 ﻿namespace DomainModels
 
 open System.ComponentModel.DataAnnotations
+[<CLIMutable>]
 type Shop=
     {
         [<Key>]
