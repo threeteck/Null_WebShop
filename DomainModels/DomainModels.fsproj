@@ -5,6 +5,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Compile Include="OrderAndOrderItem.fs" />
       <Compile Include="ImageMetadata.fs" />
       <Compile Include="PropertyType.fs" />
       <Compile Include="Property.fs" />
