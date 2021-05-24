@@ -3,6 +3,5 @@
 type DeliveryToShopViewModel()=
     [<DefaultValue>]
     val mutable private id:int
-    [<DefaultValue>]
-    val mutable private id:int
+
 

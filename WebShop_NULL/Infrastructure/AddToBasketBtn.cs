@@ -8,6 +8,7 @@ using WebShop_FSharp;
 using WebShop_FSharp.ViewModels.CatalogModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.ViewComponents;
+using WebShop_NULL.Infrastructure;
 
 namespace WebShop_NULL.Views.Catalog.ViewComponents
 {
