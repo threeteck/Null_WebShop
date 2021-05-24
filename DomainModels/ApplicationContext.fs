@@ -35,6 +35,13 @@ type ApplicationContext(options : DbContextOptions<ApplicationContext>) =
     [<DefaultValue>]
     val mutable shoppingCartEntries: DbSet<ShoppingCartEntry>
 
+    [<DefaultValue>]
+    val mutable orders: DbSet<Order>
+    [<DefaultValue>]
+    val mutable orderItems: DbSet<OrderItems>
+    [<DefaultValue>]
+    val mutable shops: DbSet<Shop>
+
     member public this.Reviews with get() = this.reviews
                                   and set p = this.reviews <- p
                                   
@@ -57,6 +64,12 @@ type ApplicationContext(options : DbContextOptions<ApplicationContext>) =
     
     member public this.ShoppingCartEntries with get() = this.shoppingCartEntries
                                                 and set p = this.shoppingCartEntries <- p
+    member public this.Orders with get() = this.orders
+                                    and set p = this.orders <- p
+    member public this.OrderItems with get() = this.orderItems
+                                    and set p = this.orderItems <- p
+    member public this.Shops with get() = this.shops
+                                    and set p = this.shops <- p
                                   
 //    override __.OnConfiguring(optionsBuilder : DbContextOptionsBuilder) =
 //        optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Username=postgres;Password=postgres;Database=dotnetsem") |> ignore

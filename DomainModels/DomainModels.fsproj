@@ -5,12 +5,16 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Compile Include="Shop.fs" />
+      <Compile Include="DeliveryMethod.fs" />
       <Compile Include="ImageMetadata.fs" />
       <Compile Include="PropertyType.fs" />
       <Compile Include="Property.fs" />
       <Compile Include="Category.fs" />
       <Compile Include="UserRole.fs" />
       <Compile Include="ProductAndUser.fs" />
+      <Compile Include="OrderStates.fs" />
+      <Compile Include="OrderAndOrderItem.fs" />
       <Compile Include="City.fs" />
       <Compile Include="ApplicationContext.fs" />
     </ItemGroup>
