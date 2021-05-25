@@ -18,7 +18,7 @@
                 @Html.Partial("ProfileMenuPartial", 0)
                 <div id="customer-orders" class="col-lg-9">
                     <div class="box">
-                        <h1>My orders</h1>
+                        <h1>Мои заказы</h1>
                         <p class="lead">Все заказы в одном месте</p>
                         <hr>
                         <div class="table-responsive">
@@ -37,9 +37,9 @@
                                     {
                                         <tr>
                                             <th>@m.OrderId</th>
-                                            <td class="td-text-centered">@m.CreateDate.ToString("dd-mm-yyyy")</td>
+                                            <td class="td-text-centered">@m.CreateDate.ToString("dd-MM-yyyy")</td>
                                             <td class="td-text-centered">@m.TotalPrice</td>
-                                            <td class="td-centered"><span class="badge badge-info">@m.State</span></td>
+                                            <td class="td-text-centered"><span class="badge badge-info">@m.State</span></td>
                                             <td class="td-text-centered"><a @Url.Action("OrderPage","Order",new { orderId = m.OrderId }) class="btn btn-primary btn-sm">View</a></td>
                                         </tr>
                                     }
