@@ -84,5 +84,9 @@ namespace WebShop_NULL.Controllers
             var model = _dbContext.Shops.Where(s => s.CityName == cityName).OrderBy(o => o.Address).Select(s => s.Address).ToList();
             return View(model);
         }
+        public IActionResult OrderPage(string orderId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

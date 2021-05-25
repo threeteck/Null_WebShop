@@ -10,6 +10,8 @@ using Microsoft.Extensions.Logging;
 using WebShop_FSharp;
 using WebShop_FSharp.ViewModels.AuthtorizationModels;
 using WebShop_FSharp.ViewModels.ProfileModels;
+using WebShop_FSharp.ViewModels.OrderModels;
+
 
 namespace WebShop_NULL.Controllers
 {
@@ -159,7 +161,16 @@ namespace WebShop_NULL.Controllers
         [Authorize]
         public IActionResult Orders()
         {
-            return View();
+            var userId = User.GetId();
+            var orders = _dbContext.Orders.Where(o => o.UserId == userId);
+            var model = orders.Select(o => new OrderInfoViewModel()
+            {
+                OrderId = o.Id,
+                CreateDate = o.CreateDate,
+                TotalPrice = o.TotalPrice,
+                State = o.State,
+            }).AsEnumerable();
+            return View(model);
         }
         
     }

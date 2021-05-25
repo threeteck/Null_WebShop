@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<WebShop_FSharp.ViewModels.OrderModels.OrderInfoViewModel>
 @{
     ViewData["Title"] = "Orders";
 }
@@ -33,41 +33,17 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <th># 1735</th>
-                                        <td>22/06/2013</td>
-                                        <td>$ 150.00</td>
-                                        <td><span class="badge badge-info">Being prepared</span></td>
-                                        <td><a href="#" class="btn btn-primary btn-sm">View</a></td>
-                                    </tr>
-                                    <tr>
-                                        <th># 1735</th>
-                                        <td>22/06/2013</td>
-                                        <td>$ 150.00</td>
-                                        <td><span class="badge badge-info">Being prepared</span></td>
-                                        <td><a href="#" class="btn btn-primary btn-sm">View</a></td>
-                                    </tr>
-                                    <tr>
-                                        <th># 1735</th>
-                                        <td>22/06/2013</td>
-                                        <td>$ 150.00</td>
-                                        <td><span class="badge badge-success">Received</span></td>
-                                        <td><a href="#" class="btn btn-primary btn-sm">View</a></td>
-                                    </tr>
-                                    <tr>
-                                        <th># 1735</th>
-                                        <td>22/06/2013</td>
-                                        <td>$ 150.00</td>
-                                        <td><span class="badge badge-danger">Cancelled</span></td>
-                                        <td><a href="#" class="btn btn-primary btn-sm">View</a></td>
-                                    </tr>
-                                    <tr>
-                                        <th># 1735</th>
-                                        <td>22/06/2013</td>
-                                        <td>$ 150.00</td>
-                                        <td><span class="badge badge-warning">On hold</span></td>
-                                        <td><a href="#" class="btn btn-primary btn-sm">View</a></td>
-                                    </tr>
+                                    @foreach (var m in Model)
+                                    {
+                                        <tr>
+                                            <th>@m.OrderId</th>
+                                            <td class="td-text-centered">@m.CreateDate.ToString("dd-mm-yyyy")</td>
+                                            <td class="td-text-centered">@m.TotalPrice</td>
+                                            <td class="td-centered"><span class="badge badge-info">@m.State</span></td>
+                                            <td class="td-text-centered"><a @Url.Action("OrderPage","Order",new { orderId = m.OrderId }) class="btn btn-primary btn-sm">View</a></td>
+                                        </tr>
+                                    }
+
                                 </tbody>
                             </table>
                         </div>
