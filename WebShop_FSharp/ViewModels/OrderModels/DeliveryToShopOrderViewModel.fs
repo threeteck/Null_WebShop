@@ -26,10 +26,10 @@ type DeliveryToShopViewModel()=
     [<DefaultValue>]
     val mutable private totalCount: int
 
-    [<Required>]
+    [<Required(ErrorMessage = "Обязательное поле")>]
     member public this.FirstName with  get() = this.firstName
                                     and set p = this.firstName <- p
-    [<Required>]
+    [<Required(ErrorMessage = "Обязательное поле")>]
     member public this.LastName with  get() = this.lastName
                                 and set p = this.lastName <- p
     member public this.TotalPrice with get() = this.totalPrice
@@ -37,12 +37,12 @@ type DeliveryToShopViewModel()=
     
     member public this.TotalCount with get() = this.totalCount
                                     and set p = this.totalCount <- p
-    [<Required>]
+    [<Required(ErrorMessage = "Обязательное поле")>]
     member public this.City with get() = this.city
                                     and set p = this.city <- p
     member public this.Cities with get() = this.cities
                                     and set p = this.cities <- p
-    [<Required>]
+    //[<Required(ErrorMessage = "Обязательное поле")>]
     member public this.ShopAddress with get() = this.shopAddress
                                     and set p = this.shopAddress <- p
     member public this.ShopAddresses with get() = this.shopAddresses

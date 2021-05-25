@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using WebShop_FSharp;
 using DomainModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.ObjectModel;
 
 namespace WebShop_NULL.Controllers
 {
@@ -47,9 +48,35 @@ namespace WebShop_NULL.Controllers
             };
             return View("CreateToShopOrder",model);
         }
-        public IActionResult StartCreateToHomeDeliveryOrder()
+        [HttpPost]
+        public async Task<IActionResult> DeliveryToShop(DeliveryToShopViewModel model)
         {
-            return null;
+            var userId = User.GetId();
+            IOrderStates orderStates = new ToShopDeliveryOrder();
+            var entry = _dbContext.ShoppingCartEntries.Where(u => u.UserId == userId).ToList();
+            var order = new Order()
+            {
+                UserId = userId,
+                DeliveryMethod = DeliveryMethods.DeliveryToShop.GetString,
+                CreateDate = DateTime.Now,
+                State = orderStates.GetDefaultState(),
+                OrderItems = new Collection<OrderItems>(entry.Select(s => new OrderItems()
+                {
+                    ProductName = s.Product.Name,
+                    ProductPrice = s.Product.Price,
+                    ProductQuantity = s.Quantity,
+                    productPrice = s.Product.Price * s.Quantity
+
+                }).ToList()),
+                TotalCount = entry.Sum(s=>s.Quantity),
+                TotalPrice = entry.Sum(s=>s.Quantity*s.Product.Price),
+                Address = model.ShopAddress,
+
+            };
+            _dbContext.Orders.Add(order);
+            _dbContext.ShoppingCartEntries.RemoveRange(entry);
+            await _dbContext.SaveChangesAsync();
+            return RedirectToAction("Orders","Profile");
         }
 
         public IActionResult GetShops(string cityName)

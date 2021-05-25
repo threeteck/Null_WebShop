@@ -3,9 +3,10 @@ open System.Collections;
 open System.Collections.Generic
 
 
-type IOrderStates = 
+type public IOrderStates = 
     abstract member GetAllStates : uint->string[]
     abstract member CheckIfCorrectOrderState: string -> bool
+    abstract member GetDefaultState : unit->string
 
 type ToHomeDeliveryOrder()=
     let states = [|"Заказ формируется";"Заказ в пути";"Заказ завершён";"Заказ отменён"|]
@@ -14,6 +15,8 @@ type ToHomeDeliveryOrder()=
             Array.contains str states
         member this.GetAllStates(arg1: uint): string [] = 
             states
+        member this.GetDefaultState(): string = 
+            "Заказ формируется"
 
 type ToShopDeliveryOrder()=
     let states = [|"Заказ формируется";"Заказ в пути";"Заказ прибыл в магазин";"Заказ завершён";"Заказ отменён"|]
@@ -22,3 +25,5 @@ type ToShopDeliveryOrder()=
             Array.contains str states
         member this.GetAllStates(arg1: uint): string [] = 
             states
+        member this.GetDefaultState(): string =
+            "Заказ формируется"
