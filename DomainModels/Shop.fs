@@ -9,4 +9,5 @@ type Shop=
         Name:string
         Address:string
         CityName:string
+        City:City
     }

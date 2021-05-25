@@ -24,6 +24,9 @@ type Order() =
 
     [<DefaultValue>]
     val mutable private orderItems: ICollection<OrderItems>
+
+    [<DefaultValue>]
+    val mutable private address: string
     [<DefaultValue>]
     val mutable private totalPrice: decimal
     [<DefaultValue>]
@@ -32,34 +35,28 @@ type Order() =
     [<DefaultValue>]
     val mutable private orderStates: IOrderStates
 
-    member this.Id with public get() = this.id
-                             and private set p = this.id <- p
+    member public this.Id with  get() = this.id
+                             and set p = this.id <- p
 
-    member this.UserId with public get() = this.userId
-                              and private set p = this.userId <- p
-    member this.User with public get() = this.user
-                                and private set p = this.user <- p
-    member this.DeliveryMethod with public get() = this.deliveryMethod
-                                   and private set p = this.deliveryMethod <- p
-    member this.CreateDate with public get() = this.createDate
-                                    and private set p = this.createDate <-p
-    member this.State with public get() = this.state
-                                    and private set p = this.state <-p
-    member this.OrderItems with public get() = this.orderItems
-                                    and private set p = this.orderItems<-p
-    member this.TotalPrice with public get() = this.totalPrice
-                                    and private set p = this.totalPrice<-p
-    member this.TotalCount with public get() = this.totalCount
-                                    and private set p = this.totalCount <- p
+    member public this.UserId with get() = this.userId
+                              and set p = this.userId <- p
+    member public this.User with  get() = this.user
+                                and set p = this.user <- p
+    member public this.DeliveryMethod with get() = this.deliveryMethod
+                                        and set p = this.deliveryMethod <- p
+    member public this.CreateDate with get() = this.createDate
+                                    and set p = this.createDate <-p
+    member public this.State with get() = this.state
+                                    and set p = this.state <-p
+    member public this.OrderItems with get() = this.orderItems
+                                    and set p = this.orderItems<-p
+    member public this.TotalPrice with get() = this.totalPrice
+                                    and set p = this.totalPrice<-p
+    member public this.TotalCount with get() = this.totalCount
+                                    and set p = this.totalCount <- p
+    member public this.Address with get() = this.address
+                                    and set p = this.address <- p
 
-    [<NotMapped>]
-    member this.OrderStates with public get() = this.orderStates
-                                and private set p = this.orderStates <- p
-
-    member this.SetOrderState(orderState:string) = 
-        match this.OrderStates.CheckIfCorrectOrderState(orderState) with
-        | true -> this.State = orderState
- 
  
 
 and OrderItems() =
