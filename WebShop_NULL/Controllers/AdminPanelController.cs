@@ -269,6 +269,36 @@ namespace WebShop_NULL.Controllers
             return Json(properties);
         }
 
+        public IActionResult Cities()
+        {
+            var cities = _dbContext.Cities.Select(c=>c.Name).AsEnumerable();
+            return View(cities);
+        }
+        public IActionResult DeleteCity(string cityName)
+        {
+            var city = _dbContext.Cities.FirstOrDefault(c => c.Name == cityName);
+            if (city != null)
+            {
+                _dbContext.Cities.Remove(city);
+                _dbContext.SaveChanges();
+            }
+            return RedirectToAction("Cities");
+        }
+        [HttpPost]
+        public IActionResult AddCity(string cityName)
+        {
+            var cities = _dbContext.Cities.Select(c => c.Name).AsEnumerable();
+            if (!cities.Contains(cityName))
+            {
+                _dbContext.Cities.Add(new City(cityName));
+                _dbContext.SaveChanges();
+            }
+            else
+            {
+                ModelState.AddModelError(cityName, "Такой город уже существует");
+            }
+            return View("Cities",cities);
+        }
         public IActionResult Orders()
         {
             return BadRequest();

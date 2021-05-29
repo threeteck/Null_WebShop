@@ -11,7 +11,7 @@ using WebShop_FSharp;
 using WebShop_FSharp.ViewModels.AuthtorizationModels;
 using WebShop_FSharp.ViewModels.ProfileModels;
 using WebShop_FSharp.ViewModels.OrderModels;
-
+using Microsoft.EntityFrameworkCore;
 
 namespace WebShop_NULL.Controllers
 {
@@ -170,6 +170,23 @@ namespace WebShop_NULL.Controllers
                 TotalPrice = o.TotalPrice,
                 State = o.State,
             }).AsEnumerable();
+            return View(model);
+        }
+        [Authorize]
+        public IActionResult OrderPage(int orderId)
+        {
+            var order = _dbContext.Orders.Where(o => o.Id == orderId).Include(o => o.OrderItems).FirstOrDefault();
+            var model = new OrderPageViewModel()
+            {
+                OrderId = orderId,
+                OrderState = order.State,
+                OrderItems = order.OrderItems,
+                DeliveryMethod = order.DeliveryMethod,
+                CreateDate = order.CreateDate,
+                Address = order.Address,
+                TotalCount = order.TotalCount,
+                TotalPrice = order.TotalPrice,
+            };
             return View(model);
         }
         

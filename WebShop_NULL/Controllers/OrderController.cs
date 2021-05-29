@@ -8,6 +8,7 @@ using WebShop_FSharp;
 using DomainModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.ObjectModel;
+using Microsoft.EntityFrameworkCore;
 
 namespace WebShop_NULL.Controllers
 {
@@ -21,11 +22,9 @@ namespace WebShop_NULL.Controllers
         }
         public IActionResult ChooseDeliveryMethod(OrderSummaryViewModel model)
         {
-            return View(new OrderSummaryViewModel()
-            {
-                TotalPrice = 77350,
-                TotalCount = 3,
-            });
+
+            return View(model);
+
         }
         [HttpGet]
         public IActionResult DeliveryToShop()
@@ -53,7 +52,7 @@ namespace WebShop_NULL.Controllers
         {
             var userId = User.GetId();
             IOrderStates orderStates = new ToShopDeliveryOrder();
-            var entry = _dbContext.ShoppingCartEntries.Where(u => u.UserId == userId).ToList();
+            var entry = _dbContext.ShoppingCartEntries.Where(u => u.UserId == userId).Include(e=>e.Product).ToList();
             var order = new Order()
             {
                 UserId = userId,
@@ -65,7 +64,7 @@ namespace WebShop_NULL.Controllers
                     ProductName = s.Product.Name,
                     ProductPrice = s.Product.Price,
                     ProductQuantity = s.Quantity,
-                    productPrice = s.Product.Price * s.Quantity
+                    ProductId = s.ProductId,
 
                 }).ToList()),
                 TotalCount = entry.Sum(s=>s.Quantity),

@@ -545,3 +545,30 @@ footer {
 .mb-0 {
     text-align: center;
 }
+
+.order-info{
+    display:flex;
+    justify-content:space-between;
+}
+
+.order-info-column{
+    display:flex;
+    flex-direction:column;
+    align-items:start;
+}
+.order-info-item{
+    margin:10px 0px;
+}
+.order-info-item-header{
+    font-size:18px;
+    font-weight:600;
+}
+.order-info-item-value {
+    padding-left:10px;
+}
+.add-city-form{
+    margin:5px 15px;
+}
+.add-city-form .btn{
+    margin: 10px 0px;
+}
