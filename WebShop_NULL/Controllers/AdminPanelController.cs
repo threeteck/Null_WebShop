@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using WebShop_FSharp;
 using WebShop_FSharp.ViewModels;
 using WebShop_FSharp.ViewModels.AdminPanelModels;
@@ -298,6 +300,59 @@ namespace WebShop_NULL.Controllers
                 ModelState.AddModelError(cityName, "Такой город уже существует");
             }
             return View("Cities",cities);
+        }
+
+        public IActionResult Shops()
+        {
+            var shops = _dbContext.Shops.Include(s=>s.City).ToList();
+            var cities = _dbContext.Cities.Select(c => new SelectListItem(c.Name,c.Name)).AsEnumerable();
+            var model = new ShopsViewModel()
+            {
+                Shops = shops,
+                CityNames = cities,
+            };
+            return View(model);
+        }
+
+        public IActionResult AddShop(ShopsViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var shop = new Shop()
+                {
+                    CityName = model.CityName,
+                    Name = model.ShopName,
+                    Address = model.ShopAddress,
+                };
+                if(_dbContext.Shops.FirstOrDefault(s => s.Address == shop.Address && s.Name == shop.Name && s.CityName == shop.CityName) == null)
+                {
+                    _dbContext.Shops.Add(shop);
+                    _dbContext.SaveChanges();
+                    return RedirectToAction("Shops");
+                }
+                else
+                {
+                    ModelState.AddModelError(model.ShopName, "Такой магазин уже существует");
+                }
+                
+            }
+            var shops = _dbContext.Shops.Include(s => s.City).ToList();
+            var cities = _dbContext.Cities.Select(c => new SelectListItem(c.Name, c.Name)).AsEnumerable();
+            model.Shops = shops;
+            model.CityNames = cities;
+            return View("Shops", model);
+
+        }
+
+        public IActionResult DeleteShop(int shopId)
+        {
+            var shop = _dbContext.Shops.FirstOrDefault(s => s.Id == shopId);
+            if (shop != null)
+            {
+                _dbContext.Remove(shop);
+                _dbContext.SaveChanges();
+            }
+            return RedirectToAction("Shops");
         }
         public IActionResult Orders()
         {

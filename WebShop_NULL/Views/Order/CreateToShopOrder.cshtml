@@ -58,15 +58,16 @@
             $('#City').change(function()
             {
                 // получаем выбранный id
-                var cityName = $(this).val();
+                var cityName = $("#City").val();
+                console.log(cityName)
                 $.ajax({
                     type: 'GET',
-                    url: '@Url.Action("GetShops")/' + cityName,
+                    url: '@Url.Action("GetShops")'+"?cityName="+cityName,
                     success: function (data) {
                      
                         // заменяем содержимое присланным частичным представлением
-                        $('#City').replaceWith(data);
-                        console.log("done")
+                        $('#ShopAddress').replaceWith(data);
+                        console.log(data)
                     }
                 });
             });

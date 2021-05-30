@@ -557,7 +557,7 @@ footer {
     align-items:start;
 }
 .order-info-item{
-    margin:10px 0px;
+    margin:10px 0px 20px 0px;
 }
 .order-info-item-header{
     font-size:18px;
@@ -571,4 +571,12 @@ footer {
 }
 .add-city-form .btn{
     margin: 10px 0px;
+}
+.city-page-header h1 {
+    text-align:center;
+}
+@media screen and (max-width:400px){
+    .order-info{
+        flex-direction:column;
+    }
 }

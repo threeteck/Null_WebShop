@@ -1,6 +1,6 @@
 ﻿@using System.Collections.Generic
 @using DomainModels 
-@model IEnumerable<Shop>
+@model WebShop_FSharp.ViewModels.AdminPanelModels.ShopsViewModel
 @{
     Layout = "_AdminPanelLayout";
 }
@@ -8,7 +8,9 @@
     @await Html.PartialAsync("_GetAdminMenu")
     <div class="col-lg-10 col-md-12 admin-content">
         <div class="content">
-            <h1>Магазины сети</h1>
+            <div class="city-page-header">
+                <h1>Магазины сети</h1>
+            </div>
             <div class="table-responsive">
                 <table class="table">
                     <thead>
@@ -20,7 +22,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var s in Model)
+                        @foreach (var s in Model.Shops)
                         {
                             <tr class="product-item">
                                 <td>@s.City.Name</td>
@@ -34,20 +36,28 @@
                     </tbody>
                 </table>
             </div>
-
             <div class="add-city-form">
                 <h2>Добавить магазин</h2>
-                @Html.ValidationSummary()
-                <form class="post" asp-action="AddShop">
-
-                    <div class="form-group">
-                        <input class="form-control" type="text" name="shopName" />
-                    </div>
-                    <div class="form-group">
-                        <input class="form-control" type="text" name="shopAddress" />
-                    </div>
-                    <input class="btn btn-primary" type="submit" value="Добавить магазин" />
-                </form>
+                @Html.ValidationSummary(true)
+            <form class="post" asp-action="AddShop">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.CityName, "Укажите город")
+                    <select class="form-control" asp-for="CityName" asp-items="@Model.CityNames">
+                    </select>
+                    @Html.ValidationMessageFor(m => m.CityName)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ShopName, "Укажите название магазина")
+                    <input class="form-control" type="text" name="shopName" />
+                    @Html.ValidationMessageFor(m => m.ShopName)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ShopAddress, "Укажите адрес магазина")
+                    <input class="form-control" type="text" name="shopAddress" />
+                    @Html.ValidationMessageFor(m => m.ShopAddress)
+                </div>
+                <input class="btn btn-primary" type="submit" value="Добавить магазин" />
+            </form>
             </div>
         </div>
     </div>
