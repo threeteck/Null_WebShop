@@ -15,10 +15,12 @@ namespace WebShop_NULL.Controllers
     public class OrderController : Controller
     {
         private readonly ApplicationContext _dbContext;
+        private readonly IAddressValidator _addressValidator;
 
-        public OrderController(ApplicationContext context)
+        public OrderController(ApplicationContext context, IAddressValidator addressValidator)
         {
             _dbContext = context;
+            _addressValidator = addressValidator;
         }
         public IActionResult ChooseDeliveryMethod(OrderSummaryViewModel model)
         {
@@ -38,6 +40,7 @@ namespace WebShop_NULL.Controllers
             {
                 FirstName = user?.Name,
                 LastName = user?.Surname,
+                Email = user?.Email,
                 City = "Город",
                 Cities = (cities.Count>0 ? new SelectList(cities, cities[0]):null),
                 ShopAddress = "Адрес",
@@ -83,9 +86,60 @@ namespace WebShop_NULL.Controllers
             var model = _dbContext.Shops.Where(s => s.CityName == cityName).OrderBy(o => o.Address).Select(s => s.Address).ToList();
             return View(model);
         }
-        public IActionResult OrderPage(string orderId)
+        
+        [HttpGet]
+        public IActionResult DeliveryToHome()
         {
-            throw new NotImplementedException();
+            var userId = User.GetId();
+            var user = _dbContext.Users.ById(userId).FirstOrDefault();
+            var entries = _dbContext.ShoppingCartEntries.Where(s => s.UserId == userId).Select(s => new { count = s.Quantity, price = s.Product.Price }).ToList();
+            var model = new DeliveryToHomeViewModel()
+            {
+                FirstName = user?.Name,
+                LastName = user?.Surname,
+                Email = user?.Email,
+                TotalCount = entries.Sum(e => e.count),
+                TotalPrice = entries.Sum(e => e.count * e.price),
+            };
+            return View("CreateToHomeOrder", model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> DeliveryToHome(DeliveryToHomeViewModel model)
+        {
+            var userId = User.GetId();
+            IOrderStates orderStates = new ToHomeDeliveryOrder();
+            var entry = _dbContext.ShoppingCartEntries.Where(u => u.UserId == userId).Include(e => e.Product).ToList();
+            var order = new Order()
+            {
+                UserId = userId,
+                DeliveryMethod = DeliveryMethods.DeliveryToHome.GetString,
+                CreateDate = DateTime.Now,
+                State = orderStates.GetDefaultState(),
+                OrderItems = new Collection<OrderItems>(entry.Select(s => new OrderItems()
+                {
+                    ProductName = s.Product.Name,
+                    ProductPrice = s.Product.Price,
+                    ProductQuantity = s.Quantity,
+                    ProductId = s.ProductId,
+
+                }).ToList()),
+                TotalCount = entry.Sum(s => s.Quantity),
+                TotalPrice = entry.Sum(s => s.Quantity * s.Product.Price),
+                Address = model.Address,
+
+            };
+            _dbContext.Orders.Add(order);
+            _dbContext.ShoppingCartEntries.RemoveRange(entry);
+            await _dbContext.SaveChangesAsync();
+            return RedirectToAction("Orders", "Profile");
+        }
+
+        [AcceptVerbs("GET", "POST")]
+        public IActionResult VerifyAddress(string address)
+        {
+
+            var result = _addressValidator.IsAddressValid(address);
+            return Json(result);
         }
     }
 }

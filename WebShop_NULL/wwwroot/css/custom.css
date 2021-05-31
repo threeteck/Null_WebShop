@@ -580,3 +580,7 @@ footer {
         flex-direction:column;
     }
 }
+
+.suggestions-promo{
+    display:none!important;
+}

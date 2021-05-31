@@ -4,8 +4,9 @@ open System
 open System.Collections.Generic
 open Microsoft.AspNetCore.Mvc.Rendering
 open System.ComponentModel.DataAnnotations
+open Microsoft.AspNetCore.Mvc
 
-type DeliveryToShopViewModel()=
+type DeliveryToHomeViewModel()=
     [<DefaultValue>]
     val mutable private firstName: string
     [<DefaultValue>]
@@ -18,14 +19,8 @@ type DeliveryToShopViewModel()=
     val mutable private phone: string
 
     [<DefaultValue>]
-    val mutable private city: string
-    [<DefaultValue>]
-    val mutable private cities: SelectList
+    val mutable private address:string
 
-    [<DefaultValue>]
-    val mutable private shopAddress: string
-    [<DefaultValue>]
-    val mutable private shopAddresses: SelectList
 
     [<DefaultValue>]
     val mutable private totalPrice: decimal
@@ -39,11 +34,11 @@ type DeliveryToShopViewModel()=
     member public this.LastName with  get() = this.lastName
                                 and set p = this.lastName <- p
 
+    
     [<Required(ErrorMessage = "Обязательное поле")>]
     [<DataType(DataType.EmailAddress)>]
     member public this.Email with  get() = this.email
                                 and set p = this.email<-p
-   
 
     member public this.TotalPrice with get() = this.totalPrice
                                     and set p = this.totalPrice<-p
@@ -51,13 +46,9 @@ type DeliveryToShopViewModel()=
     member public this.TotalCount with get() = this.totalCount
                                     and set p = this.totalCount <- p
     [<Required(ErrorMessage = "Обязательное поле")>]
-    member public this.City with get() = this.city
-                                    and set p = this.city <- p
-    member public this.Cities with get() = this.cities
-                                    and set p = this.cities <- p
-    //[<Required(ErrorMessage = "Обязательное поле")>]
-    member public this.ShopAddress with get() = this.shopAddress
-                                    and set p = this.shopAddress <- p
-    member public this.ShopAddresses with get() = this.shopAddresses
-                                        and set p = this.shopAddresses <- p
+    [<Remote("VerifyAddress","Order",ErrorMessage ="Не удаётся распознать адрес")>]
+    member public this.Address with get() = this.address
+                                    and set p = this.address <- p
+
+
 

@@ -5,6 +5,8 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Compile Include="IAddressValidator.fs" />
+      <Compile Include="AddressValidator.fs" />
       <Compile Include="NullCoalescing.fs" />
       <Compile Include="Middleware\CitiesMiddleware.fs" />
       <Compile Include="IEmailSender.fs" />
@@ -12,6 +14,7 @@
       <Compile Include="EmailSettings.fs" />
       <Compile Include="IdentityExtensions.fs" />
       <Compile Include="ServicesExtensions.fs" />
+      <Compile Include="ViewModels\OrderModels\DeliveryToHomeOrderViewModel.fs" />
       <Compile Include="ViewModels\OrderModels\OrderPageViewModel.fs" />
       <Compile Include="ViewModels\OrderModels\OrderInfoViewModel.fs" />
       <Compile Include="ViewModels\OrderModels\DeliveryToShopOrderViewModel.fs" />
@@ -47,8 +50,10 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="Dadata" Version="21.3.0" />
       <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
       <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
+      <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     </ItemGroup>
 
 </Project>
