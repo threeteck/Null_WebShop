@@ -39,7 +39,7 @@
                                             <th>@m.OrderId</th>
                                             <td class="td-text-centered">@m.CreateDate.ToString("dd-MM-yyyy")</td>
                                             <td class="td-text-centered">@m.TotalPrice</td>
-                                            <td class="td-text-centered"><span class="badge badge-info">@m.State</span></td>
+                                            <td class="td-text-centered"><span class="badge @m.State.CssClass">@m.State.State</span></td>
                                             <td class="td-text-centered"><a href="@Url.Action("OrderPage","Profile",new { orderId = m.OrderId })" class="btn btn-primary btn-sm">View</a></td>
                                         </tr>
                                     }

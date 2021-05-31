@@ -1,6 +1,7 @@
 ﻿namespace WebShop_FSharp.ViewModels.OrderModels
 
 open System
+open WebShop_FSharp.ViewModels.AdminPanelModels
 
 type OrderInfoViewModel() = 
     [<DefaultValue>]
@@ -10,7 +11,7 @@ type OrderInfoViewModel() =
     [<DefaultValue>]
     val mutable private totalPrice: decimal
     [<DefaultValue>]
-    val mutable private state:string
+    val mutable private state: OrderState
 
     member public this.OrderId with get() = this.orderId
                                 and set p = this.orderId <- p
