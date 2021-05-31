@@ -32,7 +32,7 @@ namespace WebShop_NULL.Controllers
                     ProductId = p2.ProductId,
                     Name = p2.Product.Name,
                     Price = p2.Product.Price,
-                    ImagePath = p2.User.Image.ImagePath,
+                    ImagePath = p2.Product.Image.ImagePath,
                     Quantity = p2.Quantity,
                     Sum = p2.Product.Price * p2.Quantity
                 }).ToList();
@@ -63,27 +63,20 @@ namespace WebShop_NULL.Controllers
             else return RedirectToAction("Index", "Catalog");
         }
         [Authorize]
-        public async Task<IActionResult> SetQuantity(int userId, int productId, int quantity)
+        
+        [HttpGet]
+        [Route("~/Basket/SetQuantity")]
+        public async Task<IActionResult> SetQuantity([FromQuery] int userId, [FromQuery] int productId, [FromQuery] int quantity)
         {
-            var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == userId);
-            var basket = user.Basket;
-            var basketProduct = basket.FirstOrDefault(b => b.ProductId == productId);
-            basketProduct.Quantity = quantity;
-            var basketProducts = basket.Select(p2 => new BasketProductViewModel()
+            var cartEntry = _dbContext.ShoppingCartEntries.
+                FirstOrDefault(entry => entry.UserId == userId && entry.ProductId == productId);
+            if (cartEntry == null)
             {
-                ProductId = p2.ProductId,
-                Name = p2.Product.Name,
-                Price = p2.Product.Price,
-                ImagePath = p2.User.Image.ImagePath,
-                Quantity = p2.Quantity,
-                Sum = p2.Product.Price * p2.Quantity
-            }).ToList();
-            return View("Index",new BasketViewModel() 
-            { 
-                Products = basketProducts,
-                TotalSum = basketProducts.Sum(p=>p.Sum),
-                TotalQuantity = basketProducts.Sum(p=>p.Quantity),
-            });
+                return View("Index");
+            }
+            cartEntry.Quantity = quantity;
+            await _dbContext.SaveChangesAsync();
+            return StatusCode(200);
         }
     }
 }

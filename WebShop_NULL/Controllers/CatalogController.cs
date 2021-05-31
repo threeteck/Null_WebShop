@@ -226,12 +226,19 @@ namespace WebShop_NULL.Controllers
                 if (entry != null)
                     entry.Quantity++;
                 else
-                    _dbContext.ShoppingCartEntries.Add(new ShoppingCartEntry()
+                {
+                    var shoppingCartEntry = new ShoppingCartEntry()
                     {
+                        User = user,
                         UserId = userId,
+                        Product = product,
                         ProductId = productId,
                         Quantity = 1
-                    });
+                    };
+                    await _dbContext.ShoppingCartEntries.AddAsync(shoppingCartEntry);
+                    user.Basket.Add(shoppingCartEntry);
+                }
+
                 await _dbContext.SaveChangesAsync();
                 return RedirectToAction("ProductPage", "Catalog",new { productId = productId });
             }
