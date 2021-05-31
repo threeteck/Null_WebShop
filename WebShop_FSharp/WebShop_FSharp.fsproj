@@ -33,6 +33,9 @@
       <Compile Include="ViewModels\ProfileModels\UserViewModel.fs" />
       <Compile Include="ViewModels\AuthtorizationModels\LoginModel.fs" />
       <Compile Include="ViewModels\AuthtorizationModels\RegisterModel.fs" />
+      <Compile Include="ViewModels\AdminPanelModels\AdminPanelOrderInfoViewModel.fs" />
+      <Compile Include="ViewModels\AdminPanelModels\AdminPanelOrdersViewModel.fs" />
+      <Compile Include="ViewModels\AdminPanelModels\AdminPanelOrderPageViewModel.fs" />
       <Compile Include="ViewModels\AdminPanelModels\ShopsViewModel.fs" />
       <Compile Include="ViewModels\AdminPanelModels\AdminPanelProductDTO.fs" />
       <Compile Include="ViewModels\AdminPanelModels\AdminPanelProductsViewModel.fs" />

@@ -522,7 +522,7 @@ footer {
     content: "Найти"
 }
 
-.td-centered > * {
+.td-centered > *, .td-centered {
     margin: auto;
 }
 
@@ -549,6 +549,7 @@ footer {
 .order-info{
     display:flex;
     justify-content:space-between;
+    padding: 5px 10px;
 }
 
 .order-info-column{
@@ -564,7 +565,7 @@ footer {
     font-weight:600;
 }
 .order-info-item-value {
-    padding-left:10px;
+    padding-left:0px;
 }
 .add-city-form{
     margin:5px 15px;
@@ -583,4 +584,19 @@ footer {
 
 .suggestions-promo{
     display:none!important;
+}
+#queryIdWrapper{
+    display:flex;
+    flex-direction:row-reverse;
+}
+
+.change-state{
+    background-color:white;
+    margin:15px;
+    padding:10px;
+    display:flex;
+    flex-direction:column;
+}
+.change-state h3{
+    margin-top:15px;
 }

@@ -1,6 +1,6 @@
-﻿@model WebShop_FSharp.ViewModels.OrderModels.OrderPageViewModel
-@{ 
-    ViewData["Title"] = "Мои заказы";
+﻿@model WebShop_FSharp.ViewModels.AdminPanelModels.AdminPanelOrderPageViewModel
+@{
+    ViewData["Title"] = "Заказы";
 }
 
 <div id="all">
@@ -12,15 +12,15 @@
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a asp-are="" asp-controller="Home" asp-action="Index">Главная</a></li>
-                            <li aria-current="page" class="breadcrumb-item"><a asp-controller="Profile" asp-action="Orders">Мои заказы</a></li>
+                            <li aria-current="page" class="breadcrumb-item"><a asp-controller="AdminPanel" asp-action="Orders">Заказы</a></li>
                             <li aria-current="page" class="breadcrumb-item active">Заказ номер @Model.OrderId</li>
                         </ol>
                     </nav>
                 </div>
-                @await Html.PartialAsync("ProfileMenuPartial", 0)
-                <div id="customer-orders" class="col-lg-9">
+                <div id="customer-orders" class="col-lg-12">
                     <div class="box">
                         <h1>Номер заказа: @Model.OrderId</h1>
+                        <hr />
                         <div class="order-info">
                             <div class="order-info-column">
                                 <div class="order-info-item">
@@ -59,7 +59,7 @@
                                 </div>
                             </div>
                         </div>
-                        <h3>Содержимое заказа</h3>
+                        <h3 style="text-align:center;">Содержимое заказа</h3>
                         <div class="table-responsive">
                             <table class="table table-hover">
                                 <thead>
@@ -87,8 +87,26 @@
                         <hr />
                         <p>Всего продуктов: @Model.TotalCount</p>
                         <p>Итоговая сумма заказа: @Model.TotalPrice</p>
+                        <p>Электронная почта заказчика: @Model.Email</p>
                     </div>
                 </div>
+
+                <div class="change-state container box">
+                    <h3 style="text-align:center;">Изменение статуса заказа</h3>
+                    <form asp-action="OrderPage" asp-controller="AdminPanel" method="POST">
+                        <div class="form-group" style="display:none;">
+                            <input type="number" value="@Model.OrderId" name="orderId" />
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.OrderState, "Статус заказа")
+                            <select asp-for="OrderState" asp-items="Model.OrderStates" class="form-control">
+                            </select>
+                            @Html.ValidationMessageFor(m => m.OrderState)
+                        </div>
+                        <input type="submit" class="btn btn-primary" value="Применить" \>
+                    </form>
+                </div>
+
             </div>
         </div>
     </div>
