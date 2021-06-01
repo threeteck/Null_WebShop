@@ -2,7 +2,7 @@
 
 open System.Collections.Generic
 
-type BasketViewModel()=
+type BasketViewModel() =
     [<DefaultValue>]
     val mutable private products : IEnumerable<BasketProductViewModel>
     [<DefaultValue>]

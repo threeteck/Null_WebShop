@@ -1,6 +1,6 @@
 ﻿namespace WebShop_FSharp.ViewModels.BasketModels
 
-type BasketProductViewModel()=
+type BasketProductViewModel() =
     [<DefaultValue>]
     val mutable private productId : int
     [<DefaultValue>]
@@ -13,7 +13,6 @@ type BasketProductViewModel()=
     val mutable private quantity : int
     [<DefaultValue>]
     val mutable private sum : decimal
-
 
     member public this.ProductId with get() = this.productId
                                    and set p = this.productId <- p

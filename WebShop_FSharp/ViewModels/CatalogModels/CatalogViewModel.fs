@@ -20,6 +20,12 @@ type CatalogViewModel() =
     val mutable private priceMax: decimal
     
     [<DefaultValue>]
+    val mutable private ratingMin: decimal
+    
+    [<DefaultValue>]
+    val mutable private ratingMax: decimal
+    
+    [<DefaultValue>]
     val mutable private numberOfPages: int
     
     [<DefaultValue>]
@@ -45,6 +51,13 @@ type CatalogViewModel() =
                                 and set p = this.priceMin <- p
     member public this.PriceMax with get() = this.priceMax
                                 and set p = this.priceMax <- p
+                                
+    member public this.RatingMin with get() = this.ratingMin
+                                 and set p = this.ratingMin <- p
+                                
+    member public this.RatingMax with get() = this.ratingMax
+                                 and set p = this.ratingMax <- p
+                                
     member public this.Page with get() = this.page
                                 and set p = this.page <- p
                                 
