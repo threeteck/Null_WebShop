@@ -41,10 +41,23 @@ namespace WebShop_NULL.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        // [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginModel model)
         {
-            if (ModelState.IsValid)
+            var modelStateBypass = false;
+            if (model == null || !ModelState.IsValid)
+            {
+                var emailCookie = HttpContext.Request.Cookies["email"];
+                var passwordCookie = HttpContext.Request.Cookies["password"];
+                var user = _dbContext.Users.SingleOrDefault(x => x.Email == emailCookie);
+                if (user != null && passwordCookie != null && HashPassword(passwordCookie) == user.HashedPassword)
+                {
+                    model = new LoginModel {Email = emailCookie, Password = passwordCookie};
+                    modelStateBypass = true;
+                }
+            }
+            
+            if (ModelState.IsValid || modelStateBypass)
             {
                 User user = await _dbContext.Users.Include(u => u.Role).FirstOrDefaultAsync(u =>
                     u.Email == model.Email && u.HashedPassword == HashPassword(model.Password));
@@ -130,7 +143,7 @@ namespace WebShop_NULL.Controllers
         public async Task<IActionResult> EmailConfirmationEnd(string key, int userId)
         {
             var actualUserId = _confirmationService.ConfirmEmail(key);
-            var user = _dbContext.Users.FirstOrDefault(u => u.Id == userId);
+            var user = _dbContext.Users.Include(u=> u.Role).FirstOrDefault(u => u.Id == userId);
             if (user != null && actualUserId == userId)
             {
                 user.IsConfirmed = true;
