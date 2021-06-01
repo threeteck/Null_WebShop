@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DomainModels;
 using WebShop_FSharp;
+using WebShop_FSharp.ViewModels.BasketModels;
 using WebShop_FSharp.ViewModels.CatalogModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.ViewComponents;
