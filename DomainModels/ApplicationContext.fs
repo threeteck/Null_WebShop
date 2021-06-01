@@ -32,6 +32,8 @@ type ApplicationContext(options : DbContextOptions<ApplicationContext>) =
     
     [<DefaultValue>]
     val mutable cities : DbSet<City>
+    [<DefaultValue>]
+    val mutable shoppingCartEntries: DbSet<ShoppingCartEntry>
 
     member public this.Reviews with get() = this.reviews
                                   and set p = this.reviews <- p
@@ -52,6 +54,9 @@ type ApplicationContext(options : DbContextOptions<ApplicationContext>) =
                                   and set p = this.userRole <- p
     member public this.Cities with get() = this.cities
                                   and set p = this.cities <- p
+    
+    member public this.ShoppingCartEntries with get() = this.shoppingCartEntries
+                                                and set p = this.shoppingCartEntries <- p
                                   
 //    override __.OnConfiguring(optionsBuilder : DbContextOptionsBuilder) =
 //        optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Username=postgres;Password=postgres;Database=dotnetsem") |> ignore

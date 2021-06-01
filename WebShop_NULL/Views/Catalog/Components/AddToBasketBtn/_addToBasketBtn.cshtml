@@ -1,0 +1,14 @@
+﻿@model WebShop_FSharp.ViewModels.CatalogModels.AddToBasketBtnViewModel
+@{
+    Layout = null;
+}
+@{
+    if (Model.IsInBasket)
+    {
+        <a href="@Url.Action("RemoveProducts","Basket",new { userId=Model.UserId,productId = Model.ProductId })" class ="btn btn-primary" id="addToBasketBtn"><i class="fa fa-shopping-cart"></i>Убрать из корзины</a>
+    }
+    else
+    {
+        <a href="@Url.Action("AddProductToBasket","Catalog",new { userId=Model.UserId,productId = Model.ProductId })" class="btn btn-primary" id="addToBasketBtn"><i class="fa fa-shopping-cart"></i>В корзину</a>
+    }
+}
