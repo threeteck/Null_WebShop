@@ -33,9 +33,11 @@ namespace WebShop_NULL.Views.Catalog.ViewComponents
         }
         private bool isProductInBasket(int userId, int productId)
         {
-            return _context.Users.ById(userId)
-                .SelectMany(user => user.Basket.Where(p => p.Id == productId))
-                .Any();
+            var user = _context.Users.Where(u=>u.Id == userId).Include(u=>u.Basket).FirstOrDefault();
+            var res = user.Basket.Select(e => e.ProductId).Contains(productId);
+            return res;
+            
+                
         } 
 
     }

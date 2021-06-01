@@ -63,7 +63,7 @@ namespace WebShop_NULL.Controllers
             else return RedirectToAction("Index", "Catalog");
         }
         [Authorize]
-        
+
         [HttpGet]
         [Route("~/Basket/SetQuantity")]
         public async Task<IActionResult> SetQuantity([FromQuery] int userId, [FromQuery] int productId, [FromQuery] int quantity)

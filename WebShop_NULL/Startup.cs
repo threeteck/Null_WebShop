@@ -10,6 +10,8 @@ using Microsoft.Extensions.Hosting;
 using WebShop_NULL.Infrastructure.Filters;
 using WebShop_FSharp;
 using WebShop_FSharp.Middleware;
+using DomainModels;
+using WebShop_FSharp;
 
 namespace WebShop_NULL
 {
@@ -46,6 +48,7 @@ namespace WebShop_NULL
             services.AddSingleton(serviceProvider =>
                 new EmailConfirmationService(TimeSpan.FromMinutes(5), serviceProvider.GetService<CommandService>())
             );
+            services.AddSingleton<IAddressValidator, AddressValidator>();
             services.AddControllersWithViews();
             services.AddHttpContextAccessor();
         }
