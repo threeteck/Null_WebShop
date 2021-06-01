@@ -184,29 +184,52 @@ namespace WebShop_NULL.Controllers
         public async Task<IActionResult> SendReview(int productId, string content, int rating)
         {
             int userId = User.GetId();
-            var review = new Review()
+            
+            var oldReview = _dbContext.Reviews.FirstOrDefault(r => r.UserId == userId && r.ProductId == productId);
+            if (oldReview != null)
             {
-                Content = content,
-                Date = DateTime.Now,
-                ProductId = productId,
-                UserId = userId,
-                Rating = rating
-            };
-
-            _dbContext.Reviews.Add(review);
-            await _dbContext.SaveChangesAsync();
-
-            var reviewCount = _dbContext.Reviews
-                .Count(r => r.ProductId == productId);
+                var reviewCount = _dbContext.Reviews
+                    .Count(r => r.ProductId == productId);
             
-            var product = _dbContext.Products.ById(productId).FirstOrDefault();
-            if (product == null)
-                return BadRequest();
+                var product = _dbContext.Products.ById(productId).FirstOrDefault();
+                if (product == null)
+                    return BadRequest();
             
-            var oldRating = product.Rating;
-            product.Rating = (oldRating * (reviewCount - 1) + rating) / reviewCount;
+                var oldRating = product.Rating - oldReview.Rating;
+                product.Rating = (oldRating * (reviewCount - 1) + rating) / reviewCount;
+                
+                oldReview.Content = content;
+                oldReview.Date = DateTime.Now;
+                oldReview.Rating = rating;
 
-            await _dbContext.SaveChangesAsync();
+                await _dbContext.SaveChangesAsync();
+            }
+            else
+            {
+                var review = new Review()
+                {
+                    Content = content,
+                    Date = DateTime.Now,
+                    ProductId = productId,
+                    UserId = userId,
+                    Rating = rating
+                };
+
+                _dbContext.Reviews.Add(review);
+                await _dbContext.SaveChangesAsync();
+                
+                var reviewCount = _dbContext.Reviews
+                    .Count(r => r.ProductId == productId);
+            
+                var product = _dbContext.Products.ById(productId).FirstOrDefault();
+                if (product == null)
+                    return BadRequest();
+            
+                var oldRating = product.Rating;
+                product.Rating = (oldRating * (reviewCount - 1) + rating) / reviewCount;
+                await _dbContext.SaveChangesAsync();
+            }
+
             return Redirect(Url.Content($"~/product/{productId}"));
         }
         
