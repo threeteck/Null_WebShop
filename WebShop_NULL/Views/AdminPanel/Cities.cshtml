@@ -1,0 +1,51 @@
+﻿@using System.Collections.Generic
+@model IEnumerable<string>
+@{
+    Layout = "_AdminPanelLayout";
+}
+<div class="row">
+    @await Html.PartialAsync("_GetAdminMenu")
+    <div class="col-lg-10 col-md-12 admin-content">
+        <div class="content">
+            <div class="city-page-header">
+                <h1>Города в которых достпупны магазины сети</h1>
+            </div>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Название города</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var s in Model)
+                            {
+                                <tr class="product-item">
+                                    <td>@s</td>
+
+                                    <td>
+                                        <a href="@Url.Action("DeleteCity","AdminPanel",new { cityName = s })" class="delete-button"><i class="fa fa-trash-o fa-fw"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="add-city-form">
+                    <h2>Добавить город</h2>
+                    @Html.ValidationSummary()
+                    <form class="post" asp-action="AddCity">
+                        <div class="form-group">
+                            <input class="form-control" type="text" name="cityName" />
+                        </div>
+                        <div class="form-group">
+                            <input class="btn btn-primary" type="submit" value="Добавить город" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+</div>
+

@@ -10,6 +10,9 @@ using Microsoft.Extensions.Logging;
 using WebShop_FSharp;
 using WebShop_FSharp.ViewModels.AuthtorizationModels;
 using WebShop_FSharp.ViewModels.ProfileModels;
+using WebShop_FSharp.ViewModels.OrderModels;
+using Microsoft.EntityFrameworkCore;
+using WebShop_FSharp.ViewModels.AdminPanelModels;
 
 namespace WebShop_NULL.Controllers
 {
@@ -159,7 +162,38 @@ namespace WebShop_NULL.Controllers
         [Authorize]
         public IActionResult Orders()
         {
-            return View();
+            var userId = User.GetId();
+            var orders = _dbContext.Orders.Where(o => o.UserId == userId);
+            IOrderStates toShopOrderManager = new ToShopDeliveryOrder();
+            IOrderStates toHomeOrderManager = new ToHomeDeliveryOrder();
+            var model = orders.Select(o => new OrderInfoViewModel()
+            {
+                OrderId = o.Id,
+                CreateDate = o.CreateDate,
+                TotalPrice = o.TotalPrice,
+                State = 
+                o.DeliveryMethod == DeliveryMethods.DeliveryToHome.GetString?
+                new OrderState() { State = o.State, CssClass = toHomeOrderManager.GetStateCssClass(o.State)}:
+                new OrderState() { State = o.State, CssClass = toShopOrderManager.GetStateCssClass(o.State) },
+            }).AsEnumerable();
+            return View(model);
+        }
+        [Authorize]
+        public IActionResult OrderPage(int orderId)
+        {
+            var order = _dbContext.Orders.Where(o => o.Id == orderId).Include(o => o.OrderItems).FirstOrDefault();
+            var model = new OrderPageViewModel()
+            {
+                OrderId = orderId,
+                OrderState = order.State,
+                OrderItems = order.OrderItems,
+                DeliveryMethod = order.DeliveryMethod,
+                CreateDate = order.CreateDate,
+                Address = order.Address,
+                TotalCount = order.TotalCount,
+                TotalPrice = order.TotalPrice,
+            };
+            return View(model);
         }
         
     }

@@ -1,5 +1,5 @@
 ﻿console.log($('#quantitySetter').data('userid'))
-let hostUrl = window.location.protocol + '//' + window.location.host + '/';
+
 
 
 function checkValid(quantity) {
@@ -15,6 +15,7 @@ function setQuantity() {
     let productId = $('#quantitySetter').data('productid');
     let userId = $('#quantitySetter').data('userid');
     let quantity = $('#quantitySetter').val();
+    let hostUrl = window.location.protocol + '//' + window.location.host + '/';
     console.log(productId)
     console.log(userId)
     console.log(quantity)
