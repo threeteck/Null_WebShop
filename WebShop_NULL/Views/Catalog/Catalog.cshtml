@@ -135,7 +135,7 @@
                         <div id="products-container" class="row products">
                             @foreach (var p in Model.ProductList)
                             {
-                                @Html.PartialAsync("ProductCardPartial", p)
+                                @Html.Partial("ProductCardPartial", p)
                             }
 
                             <!-- /.products-->
