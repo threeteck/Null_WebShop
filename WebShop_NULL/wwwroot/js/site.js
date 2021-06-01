@@ -51,6 +51,8 @@ function sendFiles(files) {
             Data.append('image', file);
         }
     });
+    $('#upload-alert').attr('hidden', 'hidden');
+    $('#upload-alert-error').attr('hidden', 'hidden');
     $.ajax({
         url: dropZone.attr('action'),
         type: dropZone.attr('method'),
@@ -64,6 +66,9 @@ function sendFiles(files) {
                 '    height: 300px;\n' +
                 '    object-fit: contain;');
             reader.readAsDataURL(files[0]);
+        },
+        error: function (data){
+            $('#upload-alert-error').removeAttr('hidden');
         }
     });
 };
