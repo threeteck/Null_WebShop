@@ -487,122 +487,21 @@ footer {
 .custom-file-label::after{
     content: "Найти"
 }
-.choose-btn {
-    padding: 20px;
-    margin: 30px -20px -20px;
-    background: #f7f7f7;
-    text-align: center;
-    vertical-align: middle;
-    border-top: solid 1px #eee;
-    display: block;
-    color: #ff3f3f;
+.td-centered>*{
+    margin:auto;
 }
-.choose-btn:hover{
-    text-decoration:none;
-
+.td-text-centered{
+    text-align:center;
 }
-.choose-delivery-link, .choose-delivery-link:hover{
-    color: inherit;
-    text-decoration: none;
-    display:block;
-}
-.choose-delivery-link:hover{
-    box-shadow: #ff3f3f 0 0 1px 1px;
-}
-
-.property-field > * {
-    margin-right: 0px !important;
-}
-
-#category .a {
-    pointer-events: none;
-}
-
-.custom-file-label::after {
-    content: "Найти"
-}
-
-.td-centered > *, .td-centered {
-    margin: auto;
-}
-
-.td-text-centered {
-    text-align: center;
-}
-
-.box-footer > * {
+.box-footer > *{
     margin: 5px 0px;
 }
-
 .box-footer .right > * {
-    margin: 0px 5px;
+    margin:0px 5px;
 }
-
 .box-footer .left > * {
     margin: 0px 5px;
 }
-
-.mb-0 {
-    text-align: center;
-}
-
-.order-info{
-    display:flex;
-    justify-content:space-between;
-    padding: 5px 10px;
-}
-
-.order-info-column{
-    display:flex;
-    flex-direction:column;
-    align-items:start;
-}
-.order-info-item{
-    margin:10px 0px 20px 0px;
-}
-.order-info-item-header{
-    font-size:18px;
-    font-weight:600;
-}
-.order-info-item-value {
-    padding-left:0px;
-}
-.add-city-form{
-    margin:5px 15px;
-}
-.add-city-form .btn{
-    margin: 10px 0px;
-}
-.city-page-header h1 {
+.mb-0{
     text-align:center;
-}
-@media screen and (max-width:400px){
-    .order-info{
-        flex-direction:column;
-    }
-}
-
-.suggestions-promo{
-    display:none!important;
-}
-#queryIdWrapper{
-    display:flex;
-    flex-direction:row-reverse;
-}
-
-.change-state{
-    background-color:white;
-    margin:15px;
-    padding:10px;
-    display:flex;
-    flex-direction:column;
-}
-.change-state h3{
-    margin-top:15px;
-}
-.table td{
-    vertical-align:middle;
-}
-#queryIdWrapper{
-    align-items:center;
 }
