@@ -41,10 +41,26 @@ namespace WebShop_NULL.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        // [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginModel model)
         {
-            if (ModelState.IsValid)
+            var modelStateBypass = false;
+            if (model == null || !ModelState.IsValid)
+            {
+                var emailCookie = HttpContext.Request.Cookies["email"];
+                var passwordCookie = HttpContext.Request.Cookies["password"];
+                if (!string.IsNullOrEmpty(emailCookie) && !string.IsNullOrEmpty(passwordCookie))
+                {
+                    var user = _dbContext.Users.SingleOrDefault(x => x.Email == emailCookie);
+                    if (user != null && !string.IsNullOrEmpty(passwordCookie) && HashPassword(passwordCookie) == user.HashedPassword)
+                    {
+                        model = new LoginModel {Email = emailCookie, Password = passwordCookie};
+                        modelStateBypass = true;
+                    }
+                }
+            }
+
+            if (ModelState.IsValid || modelStateBypass)
             {
                 User user = await _dbContext.Users.Include(u => u.Role).FirstOrDefaultAsync(u =>
                     u.Email == model.Email && u.HashedPassword == HashPassword(model.Password));
