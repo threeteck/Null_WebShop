@@ -48,7 +48,6 @@ namespace WebShop_NULL
             );
             services.AddControllersWithViews();
             services.AddHttpContextAccessor();
-            services.AddSingleton<IAddressValidator, AddressValidator>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -2,7 +2,6 @@
     ViewData["Title"] = "Корзина";
 }
 @using WebShop_FSharp
-@using WebShop_FSharp.ViewModels.OrderModels
 @model WebShop_FSharp.ViewModels.BasketModels.BasketViewModel
 <div id="all">
     <div id="content">
@@ -21,7 +20,7 @@
                     </div>
                     <div id="basket" class="col-lg-9">
                         <div class="box">
-                            <form>
+                            <form method="post" action="https://demo.bootstrapious.com/obaju/2-1-1/checkout1.html">
                                 <h1>Корзина</h1>
                                 <p class="text-muted">Продуктов в корзине: @Model.TotalQuantity</p>
                                 <div class="table-responsive">
@@ -63,13 +62,33 @@
                                     <div class="left"><a asp-controller="Catalog" asp-action="Index" class="btn btn-outline-secondary"><i class="fa fa-chevron-left"></i>В каталог</a></div>
                                     <div class="right">
                                         <a href="@Url.Action("Index", "Basket")" class="btn btn-outline-secondary"><i class="fa fa-refresh"></i>Обновить корзину</a>
-                                        <a a href="@Url.Action("ChooseDeliveryMethod","Order",new OrderSummaryViewModel() { TotalCount = Model.TotalQuantity, TotalPrice = Model.TotalSum })" class="btn btn-primary">Перейти к оформлению заказа <i class="fa fa-chevron-right"></i></a>
+                                        <button type="submit" class="btn btn-primary">Перейти к оформлению заказа <i class="fa fa-chevron-right"></i></button>
                                     </div>
                                 </div>
                             </form>
                         </div>
                     </div>
-                    @await Html.PartialAsync("OrderSummary",new OrderSummaryViewModel(){ TotalCount = Model.TotalQuantity,TotalPrice= Model.TotalSum})
+                    <div class="col-lg-3">
+                        <div id="order-summary" class="box">
+                            <div class="box-header">
+                                <h3 class="mb-0">О заказе</h3>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td>Продуктов</td>
+                                            <th>@Model.TotalQuantity</th>
+                                        </tr>
+                                        <tr>
+                                            <td>Сумма заказа</td>
+                                            <th>@Model.TotalSum</th>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
             }
