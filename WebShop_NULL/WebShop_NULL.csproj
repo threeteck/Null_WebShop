@@ -19,6 +19,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\AdminPanel\AdminPanel.csproj" />
       <ProjectReference Include="..\DomainModels\DomainModels.fsproj" />
       <ProjectReference Include="..\WebShop_FSharp\WebShop_FSharp.fsproj" />
     </ItemGroup>

@@ -11,7 +11,7 @@ namespace WebShop_NULL.Models.ViewModels.AdminPanelModels
     public class CreateProductPropertyInfo
     {
         public int PropertyId { get; set; }
-        public string Value { get; set; }
+        public string? Value { get; set; }
     }
     
     public class AdminPanelCreateProductViewModel
@@ -20,16 +20,16 @@ namespace WebShop_NULL.Models.ViewModels.AdminPanelModels
         public int? Category { get; set; } = null;
         [Required(ErrorMessage = "Имя товара должно быть указано")]
         [MaxLength(64)]
-        public string ProductName { get; set; }
+        public string? ProductName { get; set; }
         [MaxLength(1024)]
-        public string ProductDescription { get; set; }
+        public string? ProductDescription { get; set; }
         [Required(ErrorMessage = "Цена товара должна быть указана")]
         [Range(0, 10000000000, ErrorMessage = "Цена должна быть положительным числом, не превосходящим 10 000 000 000")]
         public double? ProductPrice { get; set; } = null;
 
-        public IEnumerable<CategoryDTO> Categories;
+        public IEnumerable<CategoryDTO>? Categories;
 
-        public IFormFile Image { get; set; }
-        public List<CreateProductPropertyInfo> PropertyInfos { get; set; }
+        public IFormFile? Image { get; set; }
+        public List<CreateProductPropertyInfo>? PropertyInfos { get; set; }
     }
 }

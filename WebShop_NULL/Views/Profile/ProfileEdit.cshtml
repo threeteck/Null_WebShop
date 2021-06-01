@@ -18,7 +18,7 @@
                         </ol>
                     </nav>
                 </div>
-                @Html.Partial("ProfileMenuPartial", 1)
+                @Html.PartialAsync("ProfileMenuPartial", 1)
                 <div class="col-lg-9">
                     <div class="box">
                         @if (!ViewData.ModelState.IsValid || passwordChangeError != null)
@@ -50,7 +50,7 @@
                         {
                             <div class="alert alert-success">Пароль успешно изменен.</div>
                         }
-                        @Html.Partial("EditPasswordPartial", new PasswordChangeModel())
+                        @Html.PartialAsync("EditPasswordPartial", new PasswordChangeModel())
                         <h3 class="mt-5">Данные</h3>
                         <form action="" method="post">
                             <div class="row">

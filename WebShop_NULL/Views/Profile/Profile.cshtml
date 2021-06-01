@@ -19,7 +19,7 @@
                 </div>
                 @if (isCurrentUser)
                 {
-                    @Html.Partial("ProfileMenuPartial", 1)
+                    @Html.PartialAsync("ProfileMenuPartial", 1)
                 }
                 <div class="@(isCurrentUser?"col-lg-9":"col-lg-12")">
                     <div class="box d-flex align-items-center flex-column">
