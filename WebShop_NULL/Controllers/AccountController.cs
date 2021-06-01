@@ -81,21 +81,21 @@ namespace WebShop_NULL.Controllers
                 User user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
                 if (user == null)
                 {
+                    UserRole userRole = await _dbContext.UserRoles.FirstOrDefaultAsync(r => r.Name == "user");
                     user = new User
                     {
                         Email = model.Email,
                         Name = model.Name,
                         Surname = model.Surname,
                         HashedPassword = HashPassword(model.Password),
-                        IsConfirmed = false
+                        IsConfirmed = false,
+                        Role = userRole,
+                        Basket = new List<ShoppingCartEntry>(),
                     };
-                    UserRole userRole = await _dbContext.UserRoles.FirstOrDefaultAsync(r => r.Name == "user");
                     if (userRole != null)
                         user.Role = userRole;
                     var image = ImageMetadata.DefaultImage;
                     _dbContext.ImageMetadata.Add(image);
-                    await _dbContext.SaveChangesAsync();
-
                     user.Image = image;
                     _dbContext.Users.Add(user);
                     await _dbContext.SaveChangesAsync();
@@ -130,11 +130,12 @@ namespace WebShop_NULL.Controllers
         public async Task<IActionResult> EmailConfirmationEnd(string key, int userId)
         {
             var actualUserId = _confirmationService.ConfirmEmail(key);
+
             var user = _dbContext.Users.Include(u => u.Role).FirstOrDefault(u => u.Id == userId);
             if (user != null && actualUserId == userId)
             {
                 user.IsConfirmed = true;
-                _dbContext.SaveChanges();
+                await _dbContext.SaveChangesAsync();
                 await _authenticationService.Authenticate(user,false);
             }
             else ModelState.AddModelError("","Your token is expired. Try again");

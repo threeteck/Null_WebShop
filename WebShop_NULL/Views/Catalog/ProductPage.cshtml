@@ -3,7 +3,8 @@
 @{ 
     ViewData["Title"] = Model.Name;
 }
-
+@using WebShop_FSharp.ViewModels.CatalogModels
+@using WebShop_FSharp
 
 <div id="all">
     <div id="content">
@@ -28,9 +29,9 @@
                     <div id="productMain" class="row">
                         <div class="col-md-6">
                             <div data-slider-id="1" class="owl-carousel shop-detail-carousel">
-                                <div class="item"> <img src="@Url.Content($"~/{Model.ImagePath}")" alt="@Url.Content("~/applicationData/productImages/placeholder.jpeg")" class="img-fluid product-img"></div>
-                                <div class="item"> <img src="@Url.Content($"~/{Model.ImagePath}")" alt="@Url.Content("~/applicationData/productImages/placeholder.jpeg")" class="img-fluid product-img"></div>
-                                <div class="item"> <img src="@Url.Content($"~/{Model.ImagePath}")" alt="@Url.Content("~/applicationData/productImages/placeholder.jpeg")" class="img-fluid product-img"></div>
+                                <div class="item"> <img src="@Url.Content($"~/{Model.ImagePath}")" alt="" class="img-fluid product-img"></div>
+                                <div class="item"> <img src="@Url.Content($"~/{Model.ImagePath}")" alt="" class="img-fluid product-img"></div>
+                                <div class="item"> <img src="@Url.Content($"~/{Model.ImagePath}")" alt="" class="img-fluid product-img"></div>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -40,18 +41,22 @@
                                 <p class="price mt-2">
                                     <del></del><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
                                         <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
-                                    </svg> @(Model.Rating == 0 ? "Без рейтинга" : $"{Model.Rating:#.#}")
+                                    </svg> @(Model.Rating == -1 ? "Без рейтинга" : $"{Model.Rating:#.#}")
                                 </p>
-                                <p class="text-center buttons"><a href="#" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>В корзину</a></p>
+                                <div id="addToBasketBtnContainer">
+                                    <p class="text-center buttons">
+                                        @await Component.InvokeAsync("AddToBasketBtn", new { userId = User.GetId(), productId = Model.Id })
+                                    </p>
+                                </div>
                             </div>
                             <div class="box">
                                 <h2 class="text-center">Описание</h2>
                                 <p>@Model.Description</p>
                             </div>
                             <div data-slider-id="1" class="owl-thumbs">
-                                <button class="owl-thumb-item"><img src="@Url.Content($"~/{Model.ImagePath}")" alt="@Url.Content("~/applicationData/productImages/placeholder.jpeg")" class="img-fluid"></button>
-                                <button class="owl-thumb-item"><img src="@Url.Content($"~/{Model.ImagePath}")" alt="@Url.Content("~/applicationData/productImages/placeholder.jpeg")" class="img-fluid"></button>
-                                <button class="owl-thumb-item"><img src="@Url.Content($"~/{Model.ImagePath}")" alt="@Url.Content("~/applicationData/productImages/placeholder.jpeg")" class="img-fluid"></button>
+                                <button class="owl-thumb-item"><img src="@Url.Content($"~/{Model.ImagePath}")" alt="" class="img-fluid"></button>
+                                <button class="owl-thumb-item"><img src="@Url.Content($"~/{Model.ImagePath}")" alt="" class="img-fluid"></button>
+                                <button class="owl-thumb-item"><img src="@Url.Content($"~/{Model.ImagePath}")" alt="" class="img-fluid"></button>
                             </div>
                         </div>
                     </div>
@@ -75,16 +80,12 @@
                                             <textarea id="review-text" name="content" placeholder="Текст отзыва" data-val="true" data-val-required="Текст отзыва не может быть пустым"
                                             data-val-length="Текст отзыва не может содержать более 1000 символов" data-val-length-max=1000></textarea>
                                             <span class="field-validation-valid" data-valmsg-for="content" data-valmsg-replace="true"></span>
-                                            <div id="review-rating">
-                                                <select id="review-rating-select" class="form-control" name="rating" data-val="true" data-val-required="Оценка должна быть указана">
-                                                    <!option value="" selected disabled>Оценка</!option>
-                                                    @for (int i = 1; i <= 10; i++)
-                                                    {
-                                                        <option value="@i">@i</option>
-                                                    }
-                                                </select>
-                                                <span class="field-validation-valid" data-valmsg-for="rating" data-valmsg-replace="true"></span>
-                                            </div>
+                                            <select id="review-rating" class="form-control" name="rating">
+                                                @for (int i = 1; i <= 10; i++)
+                                                {
+                                                    <option value="@i">@i</option>
+                                                }
+                                            </select>
                                             <input id="review-submit" type="submit" class="btn btn-primary" value="Оставить отзыв"/>
                                         </div>
                                     </form>

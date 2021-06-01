@@ -239,6 +239,36 @@ namespace WebShop_NULL.Controllers
                 .ToDictionary(pair => pair.Key, pair => pair.Value.ToString());
         }
         
+        [Authorize]
+        public async Task<IActionResult> AddProductToBasket(int userId, int  productId)
+        {
+            var user = _dbContext.Users.Include(u => u.Basket).FirstOrDefault(u => u.Id == userId);
+            var product = _dbContext.Products.FirstOrDefault(p => p.Id == productId);
+            var entry = _dbContext.ShoppingCartEntries.FirstOrDefault(e => e.UserId == userId && e.ProductId == productId);
+            if(user!= null && product != null)
+            {
+                if (entry != null)
+                    entry.Quantity++;
+                else
+                {
+                    var shoppingCartEntry = new ShoppingCartEntry()
+                    {
+                        User = user,
+                        UserId = userId,
+                        Product = product,
+                        ProductId = productId,
+                        Quantity = 1
+                    };
+                    await _dbContext.ShoppingCartEntries.AddAsync(shoppingCartEntry);
+                    user.Basket.Add(shoppingCartEntry);
+                }
+
+                await _dbContext.SaveChangesAsync();
+                return RedirectToAction("ProductPage", "Catalog",new { productId = productId });
+            }
+            else return RedirectToAction("Index", "Catalog");
+        }
+
         [HttpGet("~/{categoryId:int}/search")]
         public IActionResult Search(int categoryId)
         {

@@ -5,6 +5,8 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Compile Include="IAddressValidator.fs" />
+      <Compile Include="AddressValidator.fs" />
       <Compile Include="NullCoalescing.fs" />
       <Compile Include="Middleware\CitiesMiddleware.fs" />
       <Compile Include="IEmailSender.fs" />
@@ -23,12 +25,24 @@
       <Compile Include="ViewModels\ProfileModels\UserViewModel.fs" />
       <Compile Include="ViewModels\AuthtorizationModels\LoginModel.fs" />
       <Compile Include="ViewModels\AuthtorizationModels\RegisterModel.fs" />
+      <Compile Include="ViewModels\AdminPanelModels\AdminPanelOrderInfoViewModel.fs" />
+      <Compile Include="ViewModels\AdminPanelModels\AdminPanelOrdersViewModel.fs" />
+      <Compile Include="ViewModels\AdminPanelModels\AdminPanelOrderPageViewModel.fs" />
+      <Compile Include="ViewModels\AdminPanelModels\ShopsViewModel.fs" />
       <Compile Include="ViewModels\AdminPanelModels\AdminPanelProductDTO.fs" />
       <Compile Include="ViewModels\AdminPanelModels\AdminPanelProductsViewModel.fs" />
       <Compile Include="ViewModels\AdminPanelModels\CommandLineResponse.fs" />
       <Compile Include="ViewModels\AdminPanelModels\AdminPanelCreateProductViewModel.fs" />
       <Compile Include="ViewModels\AdminPanelModels\AdminPanelCreateCategoryViewModel.fs" />
+      <Compile Include="ViewModels\OrderModels\DeliveryToHomeOrderViewModel.fs" />
+      <Compile Include="ViewModels\OrderModels\OrderPageViewModel.fs" />
+      <Compile Include="ViewModels\OrderModels\OrderInfoViewModel.fs" />
+      <Compile Include="ViewModels\OrderModels\DeliveryToShopOrderViewModel.fs" />
+      <Compile Include="ViewModels\OrderModels\OrderSummaryViewModel.fs" />
       <Compile Include="ViewModels\FilterViewModel.fs" />
+      <Compile Include="ViewModels\AddToBasketBtnViewModel.fs" />
+      <Compile Include="ViewModels\BasketModels\BasketProductViewModel.fs" />
+      <Compile Include="ViewModels\BasketModels\BasketViewModel.fs" />
       <Compile Include="Controllers\HomeController.fs" />
       <Compile Include="Utilities.fs" />
       <Compile Include="CustomTagHelpers.fs" />
@@ -39,8 +53,10 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="Dadata" Version="21.3.0" />
       <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
       <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
+      <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     </ItemGroup>
 
 </Project>

@@ -4,15 +4,17 @@ using System.Text.Json;
 using DomainModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace WebShop_NULL.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20210524094817_ProductAndUser2")]
+    partial class ProductAndUser2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -61,70 +63,6 @@ namespace WebShop_NULL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ImageMetadata");
-                });
-
-            modelBuilder.Entity("DomainModels.Order", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<string>("Address")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("DeliveryMethod")
-                        .HasColumnType("text");
-
-                    b.Property<string>("State")
-                        .HasColumnType("text");
-
-                    b.Property<int>("TotalCount")
-                        .HasColumnType("integer");
-
-                    b.Property<decimal>("TotalPrice")
-                        .HasColumnType("numeric");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Orders");
-                });
-
-            modelBuilder.Entity("DomainModels.OrderItems", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<int>("OrderId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("ProductName")
-                        .HasColumnType("text");
-
-                    b.Property<decimal>("ProductPrice")
-                        .HasColumnType("numeric");
-
-                    b.Property<int>("ProductQuantity")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrderId");
-
-                    b.ToTable("OrderItems");
                 });
 
             modelBuilder.Entity("DomainModels.Product", b =>
@@ -241,29 +179,6 @@ namespace WebShop_NULL.Migrations
                     b.ToTable("Reviews");
                 });
 
-            modelBuilder.Entity("DomainModels.Shop", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<string>("Address")
-                        .HasColumnType("text");
-
-                    b.Property<string>("CityName")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CityName");
-
-                    b.ToTable("Shops");
-                });
-
             modelBuilder.Entity("DomainModels.ShoppingCartEntry", b =>
                 {
                     b.Property<int>("Id")
@@ -344,28 +259,6 @@ namespace WebShop_NULL.Migrations
                     b.ToTable("UserRoles");
                 });
 
-            modelBuilder.Entity("DomainModels.Order", b =>
-                {
-                    b.HasOne("DomainModels.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("DomainModels.OrderItems", b =>
-                {
-                    b.HasOne("DomainModels.Order", "Order")
-                        .WithMany("OrderItems")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Order");
-                });
-
             modelBuilder.Entity("DomainModels.Product", b =>
                 {
                     b.HasOne("DomainModels.Category", "Category")
@@ -417,15 +310,6 @@ namespace WebShop_NULL.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("DomainModels.Shop", b =>
-                {
-                    b.HasOne("DomainModels.City", "City")
-                        .WithMany()
-                        .HasForeignKey("CityName");
-
-                    b.Navigation("City");
-                });
-
             modelBuilder.Entity("DomainModels.ShoppingCartEntry", b =>
                 {
                     b.HasOne("DomainModels.Product", "Product")
@@ -467,11 +351,6 @@ namespace WebShop_NULL.Migrations
             modelBuilder.Entity("DomainModels.Category", b =>
                 {
                     b.Navigation("Properties");
-                });
-
-            modelBuilder.Entity("DomainModels.Order", b =>
-                {
-                    b.Navigation("OrderItems");
                 });
 
             modelBuilder.Entity("DomainModels.Product", b =>

@@ -5,9 +5,12 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using DomainModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using WebShop_FSharp;
 using WebShop_FSharp.ViewModels;
 using WebShop_FSharp.ViewModels.AdminPanelModels;
@@ -16,6 +19,7 @@ using Property = DomainModels.Property;
 
 namespace WebShop_NULL.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class AdminPanelController : Controller
     {
         private readonly CommandService _commandService;
@@ -293,9 +297,181 @@ namespace WebShop_NULL.Controllers
             }
         }
 
-        public IActionResult Orders()
+        public IActionResult Cities()
         {
-            return BadRequest();
+            var cities = _dbContext.Cities.Select(c=>c.Name).AsEnumerable();
+            return View(cities);
+        }
+        public IActionResult DeleteCity(string cityName)
+        {
+            var city = _dbContext.Cities.FirstOrDefault(c => c.Name == cityName);
+            if (city != null)
+            {
+                _dbContext.Cities.Remove(city);
+                _dbContext.SaveChanges();
+            }
+            return RedirectToAction("Cities");
+        }
+        [HttpPost]
+        public IActionResult AddCity(string cityName)
+        {
+            var cities = _dbContext.Cities.Select(c => c.Name).AsEnumerable();
+            if (!cities.Contains(cityName))
+            {
+                _dbContext.Cities.Add(new City(cityName));
+                _dbContext.SaveChanges();
+            }
+            else
+            {
+                ModelState.AddModelError(cityName, "Такой город уже существует");
+            }
+            return View("Cities",cities);
+        }
+
+        public IActionResult Shops()
+        {
+            var shops = _dbContext.Shops.Include(s=>s.City).ToList();
+            var cities = _dbContext.Cities.Select(c => new SelectListItem(c.Name,c.Name)).AsEnumerable();
+            var model = new ShopsViewModel()
+            {
+                Shops = shops,
+                CityNames = cities,
+            };
+            return View(model);
+        }
+
+        public IActionResult AddShop(ShopsViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var shop = new Shop()
+                {
+                    CityName = model.CityName,
+                    Name = model.ShopName,
+                    Address = model.ShopAddress,
+                };
+                if(_dbContext.Shops.FirstOrDefault(s => s.Address == shop.Address && s.Name == shop.Name && s.CityName == shop.CityName) == null)
+                {
+                    _dbContext.Shops.Add(shop);
+                    _dbContext.SaveChanges();
+                    return RedirectToAction("Shops");
+                }
+                else
+                {
+                    ModelState.AddModelError(model.ShopName, "Такой магазин уже существует");
+                }
+                
+            }
+            var shops = _dbContext.Shops.Include(s => s.City).ToList();
+            var cities = _dbContext.Cities.Select(c => new SelectListItem(c.Name, c.Name)).AsEnumerable();
+            model.Shops = shops;
+            model.CityNames = cities;
+            return View("Shops", model);
+
+        }
+
+        public IActionResult DeleteShop(int shopId)
+        {
+            var shop = _dbContext.Shops.FirstOrDefault(s => s.Id == shopId);
+            if (shop != null)
+            {
+                _dbContext.Remove(shop);
+                _dbContext.SaveChanges();
+            }
+            return RedirectToAction("Shops");
+        }
+        public IActionResult Orders(AdminPanelOrdersViewModel model)
+        {
+            var orders = _dbContext.Orders.Where(x=>x==x);
+            if (model.QueryId != 0)
+            {
+                if(model.StringSearchBy == ((int)SearchByEnum.Order).ToString())
+                {
+                    orders = orders.Where(o => o.Id == model.QueryId);
+                }
+                if (model.StringSearchBy == ((int)SearchByEnum.User).ToString())
+                {
+                    orders = orders.Where(o => o.UserId == model.QueryId);
+                }
+            }
+            var ordersInMemory = orders.ToList();
+
+            IOrderStates toHomeDeliveryOrderManager = new ToHomeDeliveryOrder();
+            IOrderStates toShopDeliveryOrderManager = new ToShopDeliveryOrder();
+            var ordersResult = ordersInMemory.Select(o => new AdminPanelOrderInfoViewModel()
+            {
+                OrderId = o.Id,
+                OwnerId = o.UserId,
+                CreateDate = o.CreateDate,
+                OrderState = o.DeliveryMethod == DeliveryMethods.DeliveryToHome.GetString ?
+                    new OrderState
+                    {
+                        State = o.State,
+                        CssClass = toHomeDeliveryOrderManager.GetStateCssClass(o.State)
+                    }
+                    :
+                    new OrderState
+                    {
+                        State = o.State,
+                        CssClass = toShopDeliveryOrderManager.GetStateCssClass(o.State)
+                    }
+
+            });
+           
+            var newModel = new AdminPanelOrdersViewModel()
+            
+            {
+                Orders = ordersResult,
+                QueryId = model.QueryId == 0 ? 1 : model.QueryId,
+                StringSearchBy = model.StringSearchBy,
+                SearchBy = model.SearchBy==null ? new List<SelectListItem>() { 
+                    new SelectListItem("Номеру заказа",((int)SearchByEnum.Order).ToString(),((int)SearchByEnum.Order).ToString()==model.StringSearchBy? true : false),
+                    new SelectListItem("Идентификатору пользователя",((int)SearchByEnum.User).ToString(), ((int)SearchByEnum.User).ToString()==model.StringSearchBy? true : false)} : model.SearchBy
+
+            };
+            ModelState.Clear();
+            TryValidateModel(newModel, nameof(newModel));
+            return View(newModel);
+        }
+
+        public IActionResult RefreshFilter()
+        {
+            return RedirectToAction("Orders",new AdminPanelOrdersViewModel());
+        }
+
+        public IActionResult OrderPage(int orderId)
+        {
+            var order = _dbContext.Orders.Include(o=>o.OrderItems).FirstOrDefault(o => o.Id==orderId);
+            var user = _dbContext.Users.FirstOrDefault(u => u.Id == order.UserId);
+            IOrderStates toHomeOrderStatesManager = new ToHomeDeliveryOrder();
+            IOrderStates toShopOrderStatesManager = new ToShopDeliveryOrder();
+            var orderStates = DeliveryMethods.DeliveryToHome.GetString == order.DeliveryMethod ?
+                toHomeOrderStatesManager.GetAllStates() :
+                toShopOrderStatesManager.GetAllStates();
+            var selectList = orderStates.Select(o => new SelectListItem(o, o));
+            var model = new AdminPanelOrderPageViewModel()
+            {
+                OrderId = orderId,
+                OrderState = order.State,
+                DeliveryMethod = order.DeliveryMethod,
+                CreateDate = order.CreateDate,
+                Address = order.Address,
+                OrderItems = order.OrderItems,
+                TotalPrice = order.TotalPrice,
+                TotalCount = order.TotalCount,
+                Email = user.Email,
+                OrderStates = selectList,
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult OrderPage(AdminPanelOrderPageViewModel model)
+        {
+            var order = _dbContext.Orders.FirstOrDefault(o => o.Id == model.OrderId);
+            order.State = model.OrderState;
+            _dbContext.SaveChanges();
+            return RedirectToAction("Orders");
         }
     }
 }

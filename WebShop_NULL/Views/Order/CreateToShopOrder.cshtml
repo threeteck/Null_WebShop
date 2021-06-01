@@ -1,0 +1,82 @@
+﻿@{
+    ViewData["Title"] = "Оформление заказа";
+}
+@model WebShop_FSharp.ViewModels.OrderModels.DeliveryToShopViewModel
+@using WebShop_FSharp.ViewModels.OrderModels
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <!-- breadcrumb-->
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home">Главная</a></li>
+                    <li aria-current="page" class="breadcrumb-item active">Оформление заказа</li>
+                </ol>
+            </nav>
+        </div>
+        <div id="checkout" class="col-lg-9">
+            <div class="box">
+                <form method="post" asp-controller="Order" asp-action="DeliveryToShop">
+                    <h1>Заполнение данных</h1>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.FirstName, "Имя")
+                        @Html.EditorFor(m => m.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(m => m.FirstName)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.LastName, "Фамилия")
+                        @Html.EditorFor(m => m.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(m => m.LastName)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Email, "Электронная почта")
+                        @Html.EditorFor(m => m.Email, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                        @Html.ValidationMessageFor(m => m.Email)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.City, "Город")
+                        <select id="City" class="form-control" asp-for="City" asp-items="Model.Cities">
+                        </select>
+                        @Html.ValidationMessageFor(m => m.City)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.ShopAddress, "Магазин")
+                        <select id="ShopAddress" class="form-control" asp-for="ShopAddress" asp-items="@Model.ShopAddresses">
+                        </select>
+                        @Html.ValidationMessageFor(m => m.ShopAddress)
+                    </div>
+                    <div class="box-footer d-flex justify-content-between">
+                        <a asp-controller="Basket" asp-action="Index" class="btn btn-outline-secondary"><i class="fa fa-chevron-left"></i>В корзину</a>
+                        <input type="submit" class="btn btn-primary" value="Создать заказ" />
+                    </div>
+                </form>
+            </div>
+            <!-- /.box-->
+        </div>
+        <!-- /.col-md-9-->
+        @await Html.PartialAsync("OrderSummary", new OrderSummaryViewModel() { TotalCount = Model.TotalCount, TotalPrice = Model.TotalPrice })
+        <!-- /.col-md-3-->
+    </div>
+    @section scripts{
+    <script type="text/javascript">
+        $(function () {
+            $('#City').change(function()
+            {
+                // получаем выбранный id
+                var cityName = $("#City").val();
+                console.log(cityName)
+                $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("GetShops")'+"?cityName="+cityName,
+                    success: function (data) {
+                     
+                        // заменяем содержимое присланным частичным представлением
+                        $('#ShopAddress').replaceWith(data);
+                        console.log(data)
+                    }
+                });
+            });
+        })
+    </script>
+    }
+</div>
