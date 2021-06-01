@@ -130,7 +130,7 @@ namespace WebShop_NULL.Controllers
         public async Task<IActionResult> EmailConfirmationEnd(string key, int userId)
         {
             var actualUserId = _confirmationService.ConfirmEmail(key);
-            var user = _dbContext.Users.FirstOrDefault(u => u.Id == userId);
+            var user = _dbContext.Users.Include(u => u.Role).FirstOrDefault(u => u.Id == userId);
             if (user != null && actualUserId == userId)
             {
                 user.IsConfirmed = true;
