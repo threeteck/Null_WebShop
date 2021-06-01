@@ -38,7 +38,7 @@ namespace WebShop_NULL
             _commandService.AddCommand("TokenClear", ClearTokensCommand);
             
             _expirationTimerCancellationSource = new CancellationTokenSource();
-            var _ = ExpirationTimer(_expirationTimerCancellationSource.Token); //Done to get rid of build warning
+            ExpirationTimer(_expirationTimerCancellationSource.Token); //Done to get rid of build warning
         }
 
         public string GenerateEmailConfirmationToken(int userId)
