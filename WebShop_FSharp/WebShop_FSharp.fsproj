@@ -12,8 +12,11 @@
       <Compile Include="EmailSettings.fs" />
       <Compile Include="IdentityExtensions.fs" />
       <Compile Include="ServicesExtensions.fs" />
+      <Compile Include="ViewModels\BasketModels\BasketProductViewModel.fs" />
+      <Compile Include="ViewModels\BasketModels\BasketViewModel.fs" />
       <Compile Include="ViewModels\ErrorViewModel.fs" />
       <Compile Include="ViewModels\CategoryDTO.fs" />
+      <Compile Include="ViewModels\AddToBasketBtnViewModel.fs" />
       <Compile Include="ViewModels\CatalogModels\ReviewDTO.fs" />
       <Compile Include="ViewModels\CatalogModels\PropertyDTO.fs" />
       <Compile Include="ViewModels\CatalogModels\ProductViewModel.fs" />
@@ -28,7 +31,10 @@
       <Compile Include="ViewModels\AdminPanelModels\CommandLineResponse.fs" />
       <Compile Include="ViewModels\AdminPanelModels\AdminPanelCreateProductViewModel.fs" />
       <Compile Include="ViewModels\AdminPanelModels\AdminPanelCreateCategoryViewModel.fs" />
+      <Compile Include="ViewModels\FilterViewModel.fs" />
       <Compile Include="Controllers\HomeController.fs" />
+      <Compile Include="Utilities.fs" />
+      <Compile Include="CustomTagHelpers.fs" />
     </ItemGroup>
 
     <ItemGroup>

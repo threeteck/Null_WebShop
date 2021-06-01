@@ -21,13 +21,17 @@ namespace WebShop_NULL.Controllers
         private readonly ILogger<AccountController> _logger;
         private readonly IEmailSender _sender;
         private readonly EmailConfirmationService _confirmationService;
+        private readonly AuthenticationService _authenticationService;
 
-        public AccountController(ILogger<AccountController> logger, ApplicationContext dbContext, IEmailSender sender, EmailConfirmationService confirmationService)
+        public AccountController(ILogger<AccountController> logger, ApplicationContext dbContext,
+            IEmailSender sender, EmailConfirmationService confirmationService, 
+            AuthenticationService authenticationService)
         {
             _logger = logger;
             _dbContext = dbContext;
             _sender = sender;
             _confirmationService = confirmationService;
+            _authenticationService = authenticationService;
         }
 
         [HttpGet]
@@ -54,7 +58,7 @@ namespace WebShop_NULL.Controllers
                 }
                 else
                 {
-                    await Authenticate(user,model.RememberMe != null);
+                    await _authenticationService.Authenticate(user,model.RememberMe != null);
                     return RedirectToAction("Index", "Home");
                 }
             }
@@ -77,21 +81,21 @@ namespace WebShop_NULL.Controllers
                 User user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
                 if (user == null)
                 {
+                    UserRole userRole = await _dbContext.UserRoles.FirstOrDefaultAsync(r => r.Name == "user");
                     user = new User
                     {
                         Email = model.Email,
                         Name = model.Name,
                         Surname = model.Surname,
                         HashedPassword = HashPassword(model.Password),
-                        IsConfirmed = false
+                        IsConfirmed = false,
+                        Role = userRole,
+                        Basket = new List<ShoppingCartEntry>(),
                     };
-                    UserRole userRole = await _dbContext.UserRoles.FirstOrDefaultAsync(r => r.Name == "user");
                     if (userRole != null)
                         user.Role = userRole;
                     var image = ImageMetadata.DefaultImage;
                     _dbContext.ImageMetadata.Add(image);
-                    await _dbContext.SaveChangesAsync();
-
                     user.Image = image;
                     _dbContext.Users.Add(user);
                     await _dbContext.SaveChangesAsync();
@@ -123,14 +127,15 @@ namespace WebShop_NULL.Controllers
             return View(model: user.Email);
         }
 
-        public IActionResult EmailConfirmationEnd(string key, int userId)
+        public async Task<IActionResult> EmailConfirmationEnd(string key, int userId)
         {
             var actualUserId = _confirmationService.ConfirmEmail(key);
-            var user = _dbContext.Users.FirstOrDefault(u => u.Id == userId);
+            var user = _dbContext.Users.Include(us => us.Role).FirstOrDefault(u => u.Id == userId);
             if (user != null && actualUserId == userId)
             {
                 user.IsConfirmed = true;
-                _dbContext.SaveChanges();
+                await _dbContext.SaveChangesAsync();
+                await _authenticationService.Authenticate(user,false);
             }
             else ModelState.AddModelError("","Your token is expired. Try again");
 
@@ -139,32 +144,10 @@ namespace WebShop_NULL.Controllers
 
         public async Task<IActionResult> Logout()
         {
-            await HttpContext.SignOutAsync();
+            await _authenticationService.Logout();
             return RedirectToAction("Login");
         }
-
-        private async Task Authenticate(User user, bool rememberMe)
-        {
-            var claims = new List<Claim>
-            {    
-                new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
-                new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role?.Name),
-                new Claim("username", user.Name),
-                new Claim("id",user.Id.ToString())
-            };
-            ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie",
-                ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
-            if(!rememberMe)
-                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
-            else
-            {
-                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id)
-                    ,new AuthenticationProperties
-                    {
-                        IsPersistent = true
-                    });
-            }
-        }
+        
 
         public static string HashPassword(string password)
         {
