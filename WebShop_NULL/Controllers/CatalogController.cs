@@ -33,7 +33,7 @@ namespace WebShop_NULL.Controllers
             _filterViewModelProvider = filterViewModelProvider;
         }
         // GET
-        public async Task<IActionResult> Index(CatalogDTO catalogDto)
+        public IActionResult Index(CatalogDTO catalogDto)
         {
             var categories = _dbContext.Categories
                 .Select(c => new CategoryDTO(c.Id, c.Name))
@@ -113,7 +113,7 @@ namespace WebShop_NULL.Controllers
         }
 
         [HttpGet("~/product/{productId}")]
-        public async Task<IActionResult> ProductPage(int productId)
+        public IActionResult ProductPage(int productId)
         {
             if (productId == -1)
             {
