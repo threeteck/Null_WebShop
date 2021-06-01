@@ -216,33 +216,34 @@ namespace WebShop_NULL.Controllers
                 .ToDictionary(pair => pair.Key, pair => pair.Value.ToString());
         }
         
-        [HttpGet("~/{categoryId:int}/search")]
-        public IActionResult Search(int categoryId)
+        [Authorize]
+        public async Task<IActionResult> AddProductToBasket(int userId, int  productId)
         {
-            var model = new SearchViewModel();
-            var properties = _dbContext.Categories.ById(categoryId)
-                .SelectMany(cat => cat.Properties).Include(p => p.Type)
-                .ToList();
-            model.Filters = properties
-                .Select(p => _filterViewModelProvider.GetFilterViewModel(p))
-                .ToList();
-            
-            return View(model);
-        }
+            var user = _dbContext.Users.Include(u => u.Basket).FirstOrDefault(u => u.Id == userId);
+            var product = _dbContext.Products.FirstOrDefault(p => p.Id == productId);
+            var entry = _dbContext.ShoppingCartEntries.FirstOrDefault(e => e.UserId == userId && e.ProductId == productId);
+            if(user!= null && product != null)
+            {
+                if (entry != null)
+                    entry.Quantity++;
+                else
+                {
+                    var shoppingCartEntry = new ShoppingCartEntry()
+                    {
+                        User = user,
+                        UserId = userId,
+                        Product = product,
+                        ProductId = productId,
+                        Quantity = 1
+                    };
+                    await _dbContext.ShoppingCartEntries.AddAsync(shoppingCartEntry);
+                    user.Basket.Add(shoppingCartEntry);
+                }
 
-        [HttpPost("~/{categoryId:int}/search")]
-        public IActionResult Search(int categoryId, List<FilterDTO> filters)
-        {
-            var model = new SearchViewModel();
-            var properties = _dbContext.Categories.ById(categoryId)
-                .SelectMany(cat => cat.Properties).Include(p => p.Type)
-                .ToList();
-            var filterDtoMap = filters
-                .ToDictionary(dto => dto.PropertyId, dto => dto);
-            model.Filters = properties
-                .Select(p => _filterViewModelProvider.GetFilterViewModel(p, filterDtoMap[p.Id]))
-                .ToList();
-            return View(model);
+                await _dbContext.SaveChangesAsync();
+                return RedirectToAction("ProductPage", "Catalog",new { productId = productId });
+            }
+            else return RedirectToAction("Index", "Catalog");
         }
     }
 }

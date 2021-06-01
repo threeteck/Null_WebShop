@@ -4,6 +4,7 @@ open System
 open System.Collections.Generic;
 open System.ComponentModel.DataAnnotations
 open System.Text.Json
+open Microsoft.EntityFrameworkCore.Metadata.Internal
 
 [<CLIMutable>]
 type Product =
@@ -23,7 +24,6 @@ type Product =
         
         AttributeValues:JsonDocument
         
-        InBasketOf:ICollection<User>
         Reviews:ICollection<Review>
     }
 and [<CLIMutable>] User =
@@ -44,7 +44,7 @@ and [<CLIMutable>] User =
         
         TotalPayment:decimal
         
-        Basket:ICollection<Product>
+        Basket:ICollection<ShoppingCartEntry>
         
         IsConfirmed:bool
     }
@@ -63,3 +63,16 @@ and [<CLIMutable>] User =
             Rating:int
             Date:DateTime
         }
+ and [<CLIMutable>] ShoppingCartEntry =
+     {
+         [<Key>]
+         Id:int
+         
+         UserId:int
+         User:User
+         
+         ProductId:int
+         Product:Product
+          
+         Quantity:int
+     }
