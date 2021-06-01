@@ -9,8 +9,9 @@
             <div class="search">
                 <form class="form-inline">
                     <div class="form-group" id="queryIdWrapper">
-                        @Html.LabelFor(m => m.QueryId, "Введите запрос")
+
                         @Html.EditorFor(m => m.QueryId, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.LabelFor(m => m.QueryId, "Введите запрос")
                         @Html.ValidationMessageFor(m => m.QueryId)
                     </div>
                     <div class="form-group">
@@ -40,10 +41,10 @@
                         @foreach (var order in Model.Orders)
                         {
                         <tr class="product-item">
-                            <td class="td-text-centered">@order.OrderId</td>
-                            <td class="td-text-centered">@order.CreateDate.ToString("dd-MM-yyyy")</td>
-                            <td class="td-text-centered">@order.OwnerId</td>
-                            <td class="td-text-centered">@order.OrderState.State</td>
+                            <td class="td-text-centered td-centered">@order.OrderId</td>
+                            <td class="td-text-centered td-centered">@order.CreateDate.ToString("dd-MM-yyyy")</td>
+                            <td class="td-text-centered td-centered">@order.OwnerId</td>
+                            <td class="td-text-centered td-centered">@order.OrderState.State</td>
                             <td>
                                 <a href="@Url.Action("OrderPage","AdminPanel", new { orderId = order.OrderId })"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
                             </td>

@@ -600,3 +600,9 @@ footer {
 .change-state h3{
     margin-top:15px;
 }
+.table td{
+    vertical-align:middle;
+}
+#queryIdWrapper{
+    align-items:center;
+}
