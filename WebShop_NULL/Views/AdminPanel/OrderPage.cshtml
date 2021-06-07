@@ -97,6 +97,8 @@
                         <div class="form-group" style="display:none;">
                             <input type="number" value="@Model.OrderId" name="orderId" />
                         </div>
+                        <input type="hidden" asp-for="Email" />
+                        <input type="hidden" asp-for="OrderId" />
                         <div class="form-group">
                             @Html.LabelFor(m => m.OrderState, "Статус заказа")
                             <select asp-for="OrderState" asp-items="Model.OrderStates" class="form-control">
