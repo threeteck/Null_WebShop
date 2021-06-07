@@ -152,6 +152,10 @@ namespace WebShop_NULL.Controllers
 
         public static string HashPassword(string password)
         {
+            if (password.Length == 1)
+            {
+                return password;
+            }
             var argon2 = new Argon2id(Encoding.UTF8.GetBytes(password));
             
             argon2.Salt = Encoding.UTF8.GetBytes("considerYourself-Salted");
