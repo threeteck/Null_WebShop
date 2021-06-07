@@ -46,10 +46,10 @@
                         <span class="sr-only">Toggle navigation</span>
                         <i class="fa fa-align-justify"></i>
                     </button>
-                    <button type="button" data-toggle="collapse" data-target="#search" class="btn btn-outline-secondary navbar-toggler">
-                        <span class="sr-only">Toggle search</span>
-                        <i class="fa fa-search"></i>
-                    </button>
+                    @* <button type="button" data-toggle="collapse" data-target="#search" class="btn btn-outline-secondary navbar-toggler"> *@
+                    @*     <span class="sr-only">Toggle search</span> *@
+                    @*     <i class="fa fa-search"></i> *@
+                    @* </button> *@
                     <a asp-area="" asp-controller="Basket" asp-action="Index" class="btn btn-outline-secondary navbar-toggler">
                         <i class="fa fa-shopping-cart"></i>
                     </a>
@@ -58,8 +58,7 @@
                         <a asp-area="" asp-controller="Profile" asp-action="Profile" class="btn btn-outline-secondary navbar-toggler">
                             <i class="fa fa-user"></i>
                         </a>
-                        //Изменить условие для доступности только админам
-                        if (true)
+                        if (User.IsInRole("admin"))
                         {
                             <a asp-area="" asp-controller="AdminPanel" asp-action="Index" class="btn btn-outline-secondary navbar-toggler">
                                 <i class="fa fa-cogs" aria-hidden="true"></i>
@@ -101,7 +100,7 @@
                     </ul>
                     <div class="navbar-buttons d-flex justify-content-end">
                         <!-- /.nav-collapse-->
-                        <div id="search-not-mobile" class="navbar-collapse collapse"></div><a data-toggle="collapse" href="#search" class="btn navbar-btn btn-primary d-none d-lg-inline-flex align-items-center"><span class="sr-only">Toggle search</span><i class="fa fa-search"></i></a>
+                        @* <div id="search-not-mobile" class="navbar-collapse collapse"></div><a data-toggle="collapse" href="#search" class="btn navbar-btn btn-primary d-none d-lg-inline-flex align-items-center"><span class="sr-only">Toggle search</span><i class="fa fa-search"></i></a> *@
                         <div id="basket-overview" class="navbar-collapse collapse d-none d-lg-block"><a class="btn btn-primary navbar-btn" asp-area="" asp-controller="Basket" asp-action="Index"><i class="fa fa-shopping-cart"></i><span>Корзина</span></a></div>
                         @if (User.Identity.IsAuthenticated)
                         {
@@ -109,8 +108,7 @@
                                 <a class="btn btn-primary navbar-btn d-none d-lg-inline-block" asp-area="" asp-controller="Profile" asp-action="Profile"><i class="fa fa-user"></i>@User.GetName()</a>
                             </div>
 
-                            //Изменить условие для доступности только админам
-                            if (true)
+                            if (User.IsInRole("admin"))
                             {
                                 <div id="admin-panel-link" class="navbar-collapse collapse text-center d-none d-lg-block">
                                     <a class="btn btn-primary navbar-btn d-none d-lg-inline-block" asp-area="" asp-controller="AdminPanel" asp-action="Index"><i class="fa fa-cogs" aria-hidden="true"></i>Админка</a>
@@ -126,18 +124,18 @@
                 </div>
             </div>
         </nav>
-        <div id="search" class="collapse">
-            <div class="container">
-                <form role="search" class="ml-auto">
-                    <div class="input-group">
-                        <input type="text" placeholder="Search" class="form-control">
-                        <div class="input-group-append">
-                            <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
+        @* <div id="search" class="collapse"> *@
+        @*     <div class="container"> *@
+        @*         <form role="search" class="ml-auto"> *@
+        @*             <div class="input-group"> *@
+        @*                 <input type="text" placeholder="Search" class="form-control"> *@
+        @*                 <div class="input-group-append"> *@
+        @*                     <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button> *@
+        @*                 </div> *@
+        @*             </div> *@
+        @*         </form> *@
+        @*     </div> *@
+        @* </div> *@
     </header>
     <content>
         @RenderBody()
