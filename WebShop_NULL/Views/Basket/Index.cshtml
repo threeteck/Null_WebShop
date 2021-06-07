@@ -21,7 +21,7 @@
                     </div>
                     <div id="basket" class="col-lg-9">
                         <div class="box">
-                            <form>
+                            <form id="basket-form" data-userid="@User.GetId()">
                                 <h1>Корзина</h1>
                                 <p class="text-muted">Продуктов в корзине: @Model.TotalQuantity</p>
                                 <div class="table-responsive">
@@ -42,7 +42,7 @@
                                                     <td><a asp-controller="Catalog" asp-action="ProductPage" asp-route-productId="@p.ProductId"><img src="@(p.ImagePath)" alt="@(p.Name)" /></a></td>
                                                     <td class="td-text-centered"><a asp-controller="Catalog" asp-action="ProductPage" asp-route-productId="@p.ProductId">@p.Name</a></td>
                                                     <td class="td-centered">
-                                                        <input id="quantitySetter" onchange="setQuantity()" type="number" min="1"  data-productid="@p.ProductId" data-userid="@User.GetId()" value="@(p.Quantity)" class="form-control">
+                                                        <input id="@("quantitySetter_"+p.ProductId)" onchange="setQuantity(@User.GetId(),@p.ProductId)" type="number" min="1"  value="@(p.Quantity)" class="form-control">
                                                     </td>
                                                     <td class="td-text-centered">@p.Price</td>
                                                     <td class="td-text-centered">@p.Sum</td>

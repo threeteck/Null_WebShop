@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebShop_FSharp;
 using WebShop_FSharp.ViewModels.BasketModels;
+using WebShop_FSharp.ViewModels.OrderModels;
 
 namespace WebShop_NULL.Controllers
 {
@@ -60,7 +61,7 @@ namespace WebShop_NULL.Controllers
                 await _dbContext.SaveChangesAsync();
                 return RedirectToAction("ProductPage", "Catalog", new { productId = productId });
             }
-            else return RedirectToAction("Index", "Catalog");
+            else return RedirectToAction("Index", "Basket");
         }
         [Authorize]
         
@@ -77,6 +78,19 @@ namespace WebShop_NULL.Controllers
             cartEntry.Quantity = quantity;
             await _dbContext.SaveChangesAsync();
             return StatusCode(200);
+        }
+        public async Task<IActionResult> GetBasketMenuPartial(int userId)
+        {
+            var model = await _dbContext
+                .Users
+                .Where(s => s.Id == userId)
+                .Select(s => new OrderSummaryViewModel()
+                {
+                    TotalCount = s.Basket.Sum(x => x.Quantity),
+                    TotalPrice = s.Basket.Sum(x => x.Product.Price * x.Quantity)
+                })
+                .FirstOrDefaultAsync();
+            return View("OrderSummary", model);
         }
     }
 }

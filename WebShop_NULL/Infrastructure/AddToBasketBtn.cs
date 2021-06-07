@@ -32,9 +32,12 @@ namespace WebShop_NULL.Views.Catalog.ViewComponents
         }
         private bool isProductInBasket(int userId, int productId)
         {
-            return _context.Users.ById(userId)
-                .SelectMany(user => user.Basket.Where(p => p.Id == productId))
-                .Any();
+            var basket = _context.Users
+                .ById(userId)
+                .Select(s => s.Basket)
+                .FirstOrDefault();
+            return basket.FirstOrDefault(x => x.ProductId == productId) != null;
+                
         } 
 
     }
