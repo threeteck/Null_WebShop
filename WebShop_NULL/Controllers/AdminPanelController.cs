@@ -475,11 +475,12 @@ namespace WebShop_NULL.Controllers
             {
                 order.State = model.OrderState;
                 _dbContext.SaveChanges();
-                await _emailSender.SendEmailAsync(
+                var success = await _emailSender.SendEmailAsync(
                     model.Email,
                     "Смена статуса заказа",
                     string.Format("Ваш заказ номер {0} сменил статус на \"{1}\"", model.OrderId, model.OrderState));
-
+                if (!success)
+                    ModelState.AddModelError("", $"Уведомление о смене статуса заказа не может быть отправлено, т.к оно заблокированно по подозрению в спаме.\n");
             }
             return RedirectToAction("Orders");
         }
