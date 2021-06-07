@@ -470,7 +470,7 @@ namespace WebShop_NULL.Controllers
         [HttpPost]
         public async Task<IActionResult> OrderPage(AdminPanelOrderPageViewModel model)
         {
-            var order = _dbContext.Orders.FirstOrDefault(o => o.Id == model.OrderId);
+            var order = _dbContext.Orders.Include(o=>o.OrderItems).FirstOrDefault(o => o.Id == model.OrderId);
             if(order.State!= model.OrderState)
             {
                 order.State = model.OrderState;
@@ -480,7 +480,22 @@ namespace WebShop_NULL.Controllers
                     "Смена статуса заказа",
                     string.Format("Ваш заказ номер {0} сменил статус на \"{1}\"", model.OrderId, model.OrderState));
                 if (!success)
+                {
+                    IOrderStates toHomeOrderStatesManager = new ToHomeDeliveryOrder();
+                    IOrderStates toShopOrderStatesManager = new ToShopDeliveryOrder();
+                    var orderStates = DeliveryMethods.DeliveryToHome.GetString == order.DeliveryMethod ?
+                        toHomeOrderStatesManager.GetAllStates() :
+                        toShopOrderStatesManager.GetAllStates();
                     ModelState.AddModelError("", $"Уведомление о смене статуса заказа не может быть отправлено, т.к оно заблокированно по подозрению в спаме.\n");
+                    var selectList = orderStates.Select(o => new SelectListItem(o, o));
+                    model.OrderStates = selectList;
+                    model.OrderItems = order.OrderItems;
+                    model.Address = order.Address;
+                    model.CreateDate = order.CreateDate;
+                    model.TotalCount = order.TotalCount;
+                    model.TotalPrice = order.TotalPrice;
+                    return View("OrderPage", model);
+                }
             }
             return RedirectToAction("Orders");
         }
