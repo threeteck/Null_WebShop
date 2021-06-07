@@ -46,10 +46,10 @@
                         <span class="sr-only">Toggle navigation</span>
                         <i class="fa fa-align-justify"></i>
                     </button>
-                    <button type="button" data-toggle="collapse" data-target="#search" class="btn btn-outline-secondary navbar-toggler">
-                        <span class="sr-only">Toggle search</span>
-                        <i class="fa fa-search"></i>
-                    </button>
+                    @* <button type="button" data-toggle="collapse" data-target="#search" class="btn btn-outline-secondary navbar-toggler"> *@
+                    @*     <span class="sr-only">Toggle search</span> *@
+                    @*     <i class="fa fa-search"></i> *@
+                    @* </button> *@
                     <a asp-area="" asp-controller="Basket" asp-action="Index" class="btn btn-outline-secondary navbar-toggler">
                         <i class="fa fa-shopping-cart"></i>
                     </a>
@@ -101,7 +101,7 @@
                     </ul>
                     <div class="navbar-buttons d-flex justify-content-end">
                         <!-- /.nav-collapse-->
-                        <div id="search-not-mobile" class="navbar-collapse collapse"></div><a data-toggle="collapse" href="#search" class="btn navbar-btn btn-primary d-none d-lg-inline-flex align-items-center"><span class="sr-only">Toggle search</span><i class="fa fa-search"></i></a>
+                        @* <div id="search-not-mobile" class="navbar-collapse collapse"></div><a data-toggle="collapse" href="#search" class="btn navbar-btn btn-primary d-none d-lg-inline-flex align-items-center"><span class="sr-only">Toggle search</span><i class="fa fa-search"></i></a> *@
                         <div id="basket-overview" class="navbar-collapse collapse d-none d-lg-block"><a class="btn btn-primary navbar-btn" asp-area="" asp-controller="Basket" asp-action="Index"><i class="fa fa-shopping-cart"></i><span>Корзина</span></a></div>
                         @if (User.Identity.IsAuthenticated)
                         {
