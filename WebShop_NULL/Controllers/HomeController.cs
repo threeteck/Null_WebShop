@@ -20,7 +20,7 @@ namespace WebShop_NULL.Controllers
 
         public IActionResult Index()
         {
-            return RedirectToAction("Index", "Catalog");
+            return RedirectToAction("Index", "Catalog"); //Redirects to catalog
         }
     }
 }
