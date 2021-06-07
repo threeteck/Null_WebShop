@@ -93,10 +93,14 @@
 
                 <div class="change-state container box">
                     <h3 style="text-align:center;">Изменение статуса заказа</h3>
+                    <p>@Html.ValidationSummary(true)</p>
                     <form asp-action="OrderPage" asp-controller="AdminPanel" method="POST">
                         <div class="form-group" style="display:none;">
                             <input type="number" value="@Model.OrderId" name="orderId" />
                         </div>
+                        <input type="hidden" asp-for="Email" />
+                        <input type="hidden" asp-for="DeliveryMethod" />
+                        <input type="hidden" asp-for="OrderId" />
                         <div class="form-group">
                             @Html.LabelFor(m => m.OrderState, "Статус заказа")
                             <select asp-for="OrderState" asp-items="Model.OrderStates" class="form-control">
