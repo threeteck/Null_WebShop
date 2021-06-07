@@ -201,9 +201,10 @@ namespace WebShop_NULL.Controllers
             }).ToList();
 
             data.Categories = categories;
-
             if(data.Image == null)
                 ModelState.AddModelError("", "Фото товара должно быть установлено");
+            if (!data.Image.IsImage())
+                ModelState.AddModelError("", "Загруженный файл не является изображением");
             if (!ModelState.IsValid)
                 return View(data);
 

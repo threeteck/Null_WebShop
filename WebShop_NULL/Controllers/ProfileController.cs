@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using DomainModels;
@@ -78,9 +79,9 @@ namespace WebShop_NULL.Controllers
         public async Task<IActionResult> UploadImage(IFormFile image)
         {
             var imageData = _dbContext.Users.ImageById(User.GetId()).FirstOrDefault();
-            if (imageData == null)
+            if (imageData == null || image == null || !image.IsImage())
                 return BadRequest();
-            
+
             var oldImagePath = Path.Combine(_appEnvironment.WebRootPath, imageData.ImagePath);
 
             var imageName = Path.GetFileNameWithoutExtension(Path.GetRandomFileName()) + Path.GetExtension(image.FileName);
