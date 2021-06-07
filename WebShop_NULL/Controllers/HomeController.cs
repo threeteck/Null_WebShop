@@ -20,12 +20,7 @@ namespace WebShop_NULL.Controllers
 
         public IActionResult Index()
         {
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
+            return RedirectToAction("Index", "Catalog"); //Redirects to catalog
         }
     }
 }
