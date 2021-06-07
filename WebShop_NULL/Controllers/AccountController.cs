@@ -159,7 +159,7 @@ namespace WebShop_NULL.Controllers
             argon2.Iterations = 4;
             argon2.MemorySize = 1024 * 1024;
 
-            return password;
+            return Encoding.UTF8.GetString(argon2.GetBytes(16));
         }
     }
 }
