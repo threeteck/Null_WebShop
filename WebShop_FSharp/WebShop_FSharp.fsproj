@@ -46,6 +46,7 @@
       <Compile Include="Controllers\HomeController.fs" />
       <Compile Include="Utilities.fs" />
       <Compile Include="CustomTagHelpers.fs" />
+      <Compile Include="FormFileExtensions.fs" />
     </ItemGroup>
 
     <ItemGroup>

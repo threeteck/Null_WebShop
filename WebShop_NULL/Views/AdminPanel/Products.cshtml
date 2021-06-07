@@ -55,7 +55,7 @@
                             <td>@product.Price</td>
                             <td>
                                 <a href="@Url.Content($"~/product/{product.Id}")"><i class="fa fa-eye"></i></a>
-                                <a asp-controller="AdminPanel" asp-action="Products"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                                @* <a asp-controller="AdminPanel" asp-action="Products"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> *@
                                 <a class="delete-button"><i class="fa fa-trash-o fa-fw"></i></a>
                             </td>
                         </tr>
