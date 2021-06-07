@@ -11,10 +11,8 @@ function checkValid(quantity) {
     return true
 }
 
-function setQuantity() {
-    let productId = $('#quantitySetter').data('productid');
-    let userId = $('#quantitySetter').data('userid');
-    let quantity = $('#quantitySetter').val();
+function setQuantity(userId, productId) {
+    let quantity = $('#quantitySetter_' + productId).val();
     let hostUrl = window.location.protocol + '//' + window.location.host + '/';
     console.log(productId)
     console.log(userId)
@@ -25,7 +23,18 @@ function setQuantity() {
             method: "GET",
             success: function (data) {
                 console.log("Значение изменено")
+                getBasketMenu()
             }
         })
     }
+}
+function getBasketMenu() {
+    let userId = $('#basket-form').data('userid');
+        $.ajax({
+            url: "Basket/GetBasketMenuPartial/?userId=" + userId,
+            method: "GET",
+            success: function (data) {
+                $('#order-summary').replaceWith(data);
+            }
+        })
 }
