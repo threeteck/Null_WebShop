@@ -10,6 +10,8 @@ open Factory
 [<InlineData("/Product/1")>]
 [<InlineData("/Account/Login")>]
 [<InlineData("/Account/Register")>]
+[<InlineData("/Account/ConfirmEmail")>]
+//[<InlineData("/Account/EmailConfirmationEnd")>]
 let readTest(url : string) =
     let factory = new TestFactory()
     let client = ref (factory.CreateClient())

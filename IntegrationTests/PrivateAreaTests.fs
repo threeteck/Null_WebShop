@@ -22,7 +22,7 @@ let baseAddress = Uri("http://localhost:5001")
 
 let cookieContainer = CookieContainer()
 cookieContainer.Add(baseAddress, Cookie("email", "artemgur01@gmail.com"))
-cookieContainer.Add(baseAddress, Cookie("password", "qw"))
+cookieContainer.Add(baseAddress, Cookie("password", "a"))
 
 let factory = new TestFactory()
 
@@ -38,9 +38,17 @@ let client =
 [<InlineData("/Profile")>]
 [<InlineData("/Profile/Orders")>]
 [<InlineData("/Profile/ProfileEdit")>]
+[<InlineData("/Profile/ShoppingCart")>]
 [<InlineData("/adminpanel/CreateCategory")>]
 [<InlineData("/adminpanel/Products")>]
 [<InlineData("/adminpanel/CreateProduct")>]
+[<InlineData("/adminpanel/OrderPage/1")>]
+[<InlineData("/adminpanel/Cities")>]
+[<InlineData("/Order/ChooseDeliveryMethod")>]
+[<InlineData("/Order/CreateToHomeOrder")>]
+[<InlineData("/Order/CreateToShopOrder")>]
+[<InlineData("/Order/GetShops")>]
+[<InlineData("/Basket")>]
 let readTest(url : string) =
     let response = client.Value.GetAsync(url) |> Async.AwaitTask |> Async.RunSynchronously
     Assert.True(response.Content.Headers.ContentType.MediaType = "text/html")
