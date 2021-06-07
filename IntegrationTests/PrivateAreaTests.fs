@@ -42,11 +42,10 @@ let client =
 [<InlineData("/adminpanel/CreateCategory")>]
 [<InlineData("/adminpanel/Products")>]
 [<InlineData("/adminpanel/CreateProduct")>]
-[<InlineData("/adminpanel/OrderPage/1")>]
+[<InlineData("/adminpanel/CommandLine")>]
+//[<InlineData("/adminpanel/OrderPage/1")>]
 [<InlineData("/adminpanel/Cities")>]
 [<InlineData("/Order/ChooseDeliveryMethod")>]
-[<InlineData("/Order/CreateToHomeOrder")>]
-[<InlineData("/Order/CreateToShopOrder")>]
 [<InlineData("/Order/GetShops")>]
 [<InlineData("/Basket")>]
 let readTest(url : string) =
