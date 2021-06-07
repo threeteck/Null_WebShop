@@ -25,12 +25,14 @@ namespace WebShop_NULL.Controllers
         private readonly CommandService _commandService;
         private readonly ApplicationContext _dbContext;
         private readonly IWebHostEnvironment _appEnvironment;
+        private readonly IEmailSender _emailSender;
 
-        public AdminPanelController(CommandService commandService, ApplicationContext dbContext, IWebHostEnvironment appEnvironment)
+        public AdminPanelController(CommandService commandService, ApplicationContext dbContext, IWebHostEnvironment appEnvironment, IEmailSender emailSender)
         {
             _commandService = commandService;
             _dbContext = dbContext;
             _appEnvironment = appEnvironment;
+            _emailSender = emailSender;
         }
 
         public IActionResult Index()
@@ -467,11 +469,15 @@ namespace WebShop_NULL.Controllers
         }
 
         [HttpPost]
-        public IActionResult OrderPage(AdminPanelOrderPageViewModel model)
+        public async Task<IActionResult> OrderPage(AdminPanelOrderPageViewModel model)
         {
             var order = _dbContext.Orders.FirstOrDefault(o => o.Id == model.OrderId);
             order.State = model.OrderState;
             _dbContext.SaveChanges();
+
+            var user = _dbContext.Users.ById(order.UserId).FirstOrDefault();
+            await _emailSender.SendEmailAsync(user.Email, $"Статус заказа {order.Id} изменен на {order.State}", $" Заказ {order.Id} теперь имеет статус: {order.State}");
+            
             return RedirectToAction("Orders");
         }
     }
