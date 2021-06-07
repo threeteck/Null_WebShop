@@ -152,12 +152,12 @@ namespace WebShop_NULL.Controllers
 
         public static string HashPassword(string password)
         {
-            // var argon2 = new Argon2id(Encoding.UTF8.GetBytes(password));
-            //
-            // argon2.Salt = Encoding.UTF8.GetBytes("considerYourself-Salted");
-            // argon2.DegreeOfParallelism = 8;
-            // argon2.Iterations = 4;
-            // argon2.MemorySize = 1024 * 1024;
+            var argon2 = new Argon2id(Encoding.UTF8.GetBytes(password));
+            
+            argon2.Salt = Encoding.UTF8.GetBytes("considerYourself-Salted");
+            argon2.DegreeOfParallelism = 8;
+            argon2.Iterations = 4;
+            argon2.MemorySize = 1024 * 1024;
 
             return password;
         }
