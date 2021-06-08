@@ -7,6 +7,7 @@ open Factory
 [<Theory>]
 [<InlineData("/Home")>]
 [<InlineData("/")>]
+[<InlineData("/1/search")>]
 [<InlineData("/Product/1")>]
 [<InlineData("/Account/Login")>]
 [<InlineData("/Account/Register")>]
