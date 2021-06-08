@@ -48,7 +48,11 @@ let client =
 [<InlineData("/Order/ChooseDeliveryMethod")>]
 [<InlineData("/Order/GetShops")>]
 [<InlineData("/Basket")>]
+[<InlineData("/Order/DeliveryToShop")>]
+[<InlineData("/Order/GetShops?cityName=Казань")>]
+[<InlineData("/Order/DeliveryToHome")>]
 let readTest(url : string) =
     let response = client.Value.GetAsync(url) |> Async.AwaitTask |> Async.RunSynchronously
     Assert.True(response.Content.Headers.ContentType.MediaType = "text/html")
     Assert.True(response.StatusCode = HttpStatusCode.OK)
+    
