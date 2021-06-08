@@ -43,7 +43,7 @@ let client =
 [<InlineData("/adminpanel/Products")>]
 [<InlineData("/adminpanel/CreateProduct")>]
 [<InlineData("/adminpanel/CommandLine")>]
-[<InlineData("/adminpanel/Index")>]
+//[<InlineData("/adminpanel/Index")>]
 [<InlineData("/adminpanel/Shops")>]
 [<InlineData("/adminpanel/OrderPage?orderId=15")>]
 [<InlineData("/adminpanel/Cities")>]
