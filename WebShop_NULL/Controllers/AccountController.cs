@@ -46,8 +46,11 @@ namespace WebShop_NULL.Controllers
         {
             if (ModelState.IsValid)
             {
-                User user = await _dbContext.Users.Include(u => u.Role).FirstOrDefaultAsync(u =>
-                    u.Email == model.Email && u.HashedPassword == HashPassword(model.Password));
+                var hashPassword = HashPassword(model.Password);
+                User user = _dbContext.Users.Where(u =>
+                    u.Email == model.Email && u.HashedPassword == hashPassword)
+                    .Include(u => u.Role)
+                    .FirstOrDefault();
                 if (user == null)
                 {
                     ModelState.AddModelError("", "Некорректные логин и(или) пароль");
